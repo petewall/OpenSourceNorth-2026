@@ -16,9 +16,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./dashboards:/dashboards
+      - ./provisioning:/etc/grafana/provisioning
     #   - ./data:/var/lib/grafana
-    #   - ./provisioning:/etc/grafana/provisioning
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:3000/api/health || exit 1"]
