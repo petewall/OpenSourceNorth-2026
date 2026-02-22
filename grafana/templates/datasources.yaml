@@ -1,0 +1,27 @@
+---
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: REPLACE_WITH_PROMETHEUS_URL
+    basicAuth: true
+    basicAuthUser: REPLACE_WITH_PROMETHEUS_USERNAME
+    jsonData:
+      timeInterval: 60s
+    secureJsonData:
+      basicAuthPassword: REPLACE_WITH_PROMETHEUS_PASSWORD
+
+  - name: Google Sheets
+    type: grafana-googlesheets-datasource
+    access: proxy
+    basicAuth: false
+    isDefault: false
+    jsonData:
+      authenticationType: jwt
+      clientEmail: REPLACE_WITH_GCP_CLIENT_EMAIL
+      defaultProject: REPLACE_WITH_GCP_PROJECT
+      pdcInjected: false
+      tokenUri: https://oauth2.googleapis.com/token
+    secureJsonData:
+      privateKey: REPLACE_WITH_GCP_SERVICE_ACCOUNT_TOKEN
