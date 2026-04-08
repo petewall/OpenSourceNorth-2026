@@ -1,0 +1,134 @@
+apiVersion: provisioning.grafana.app/v0alpha1
+kind: Repository
+metadata:
+  annotations:
+    grafana.app/createdBy: user:efebewl6et79cf
+    grafana.app/updatedBy: user:efebewl6et79cf
+    grafana.app/updatedTimestamp: "2026-02-25T15:16:02Z"
+  creationTimestamp: "2026-02-25T15:15:35Z"
+  finalizers:
+    - cleanup
+    - remove-orphan-resources
+  generation: 5
+  managedFields:
+    - apiVersion: provisioning.grafana.app/v0alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:secure:
+          .: {}
+          f:token:
+            .: {}
+            f:create: {}
+        f:spec:
+          f:github:
+            .: {}
+            f:path: {}
+            f:url: {}
+          f:sync:
+            f:enabled: {}
+            f:intervalSeconds: {}
+            f:target: {}
+          f:title: {}
+          f:type: {}
+          f:workflows: {}
+        f:status:
+          f:health:
+            f:healthy: {}
+      manager: Mozilla
+      operation: Update
+      time: "2026-02-25T15:16:02Z"
+    - apiVersion: provisioning.grafana.app/v0alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:github:
+            f:branch: {}
+        f:status:
+          f:conditions:
+            k:{"type":"NamespaceQuota"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:observedGeneration: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Ready"}:
+              f:observedGeneration: {}
+            k:{"type":"ResourceQuota"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:observedGeneration: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:sync:
+            f:finished: {}
+            f:started: {}
+            f:state: {}
+      manager: grafana
+      operation: Update
+      subresource: status
+      time: "2026-02-25T15:17:53Z"
+  name: repository-6b97bf1
+  namespace: default
+  resourceVersion: "1772032673493996"
+  uid: 50c0d192-9b66-4fd2-a0dd-9ded1ebaef9d
+secure:
+  token:
+    name: inline-cfebh8ot8bitcb
+spec:
+  github:
+    branch: main
+    path: grafana/dashboards
+    url: https://github.com/petewall/OpenSourceNorth-2026
+  sync:
+    enabled: true
+    intervalSeconds: 60
+    target: folder
+  title: petewall/OpenSourceNorth-2026
+  type: github
+  workflows:
+    - write
+    - branch
+status:
+  conditions:
+    - lastTransitionTime: "2026-02-25T15:15:36Z"
+      message: Resource is available
+      observedGeneration: 5
+      reason: Available
+      status: "True"
+      type: Ready
+    - lastTransitionTime: "2026-02-25T15:16:03Z"
+      message: No quota limits configured
+      observedGeneration: 5
+      reason: QuotaUnlimited
+      status: "True"
+      type: ResourceQuota
+    - lastTransitionTime: "2026-02-25T15:17:52Z"
+      message: "within quota: 1/10 repositories"
+      observedGeneration: 5
+      reason: WithinQuota
+      status: "True"
+      type: NamespaceQuota
+  health:
+    checked: 1772032536441
+    healthy: true
+  observedGeneration: 5
+  quota:
+    maxRepositories: 10
+  stats:
+    - count: 1
+      group: folder.grafana.app
+      resource: folders
+  sync:
+    finished: 1772032563273
+    job: repository-6b97bf1-sync
+    lastRef: 4b09410eb4157dcab9946eb160687e82998617d9
+    message: null
+    started: 1772032562991
+    state: success
+  token: {}
+  webhook: null

@@ -1,23 +1,21 @@
 services:
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:main
     environment:
       # - GF_PLUGINS_PREINSTALL_SYNC=yesoreyeram-infinity-datasource,grafana-mongodb-datasource,grafana-googlesheets-datasource
       GF_PLUGINS_PREINSTALL_SYNC: grafana-googlesheets-datasource,yesoreyeram-infinity-datasource
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
-      GF_AUTH_ANONYMOUS_ENABLED: true
-      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
-      GF_AUTH_DISABLE_LOGIN_FORM: true
-      GF_AUTH_BASIC_ENABLED: false
+      GF_AUTH_BASIC_ENABLED: true
+      GF_SECURITY_PASSWORD_POLICY: basic
       GF_FEATURE_TOGGLES_ENABLE: provisioning,kubernetesDashboards
-      GF_RENDERING_SERVER_URL: http://renderer:8081/render
-      GF_RENDERING_CALLBACK_URL: http://grafana:3000/
+      # GF_RENDERING_SERVER_URL: http://renderer:8081/render
+      # GF_RENDERING_CALLBACK_URL: http://grafana:3000/
     ports:
       - "3000:3000"
     volumes:
       - ./provisioning:/etc/grafana/provisioning
-    #   - ./data:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:3000/api/health || exit 1"]
@@ -25,5 +23,29 @@ services:
       timeout: 5s
       retries: 12
 
-  renderer:
-    image: grafana/grafana-image-renderer:latest
+  # renderer:
+  #   image: grafana/grafana-image-renderer:latest
+
+  grafana-set-admin:
+    image: grafana/grafana:main
+    depends_on:
+      grafana:
+        condition: service_healthy
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_SECURITY_PASSWORD_POLICY: basic
+      GRAFANA_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-Sup3rStr0ngP@ss2026!}
+    volumes:
+      - grafana-data:/var/lib/grafana
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -euo pipefail
+        grafana-cli admin reset-admin-password "$${GRAFANA_ADMIN_PASSWORD}"
+        echo "Grafana admin password reset"
+    restart: "no"
+
+volumes:
+  grafana-data:

@@ -15,3 +15,9 @@ provisioning/datasources/datasources.yaml: templates/datasources.yaml
 	  .datasources[1].jsonData.defaultProject = strenv(GS_PROJECT) | \
 	  .datasources[1].secureJsonData.privateKey = strenv(GS_PRIVATE_KEY) \
 	' $< > $@
+
+resources/connection.yaml: templates/connection.yaml
+	@mkdir -p $(shell dirname $@)
+	GITHUB_PAT="$$(op read 'op://Lab/Open Source North 2026 PAT/password')" && \
+	export GITHUB_PAT && \
+	yq eval '.secure.token.create = strenv(GITHUB_PAT)' $< > $@

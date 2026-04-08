@@ -1,2 +1,3 @@
-grafana/provisioning/datasources/
+grafana/provisioning/datasources/datasources.yaml
+grafana/resources/connection.yaml
 presentation/node_modules/

@@ -41,5 +41,3 @@
 
 ### House dashboard
 
-* Get Home Assistant running again
-

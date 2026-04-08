@@ -1,0 +1,24 @@
+---
+apiVersion: provisioning.grafana.app/v0alpha1
+kind: Connection
+metadata:
+  name: github-open-source-north-2026
+  namespace: default
+spec:
+  title: Open Source North 2026 GitHub
+  type: github
+  github:
+    url: https://github.com/petewall/OpenSourceNorth-2026
+    branch: main
+    path: grafana/dashboards
+    generateDashboardPreviews: true
+  sync:
+    enabled: true
+    intervalSeconds: 60
+    target: folder
+  workflows:
+    - write
+    - branch
+secure:
+  token:
+    create: REPLACE_WITH_GITHUB_PAT

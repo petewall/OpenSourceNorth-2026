@@ -1,0 +1,47 @@
+[
+  {
+    "id": "title",
+    "type": "content",
+    "title": "Building Real-World Grafana Dashboards",
+    "subtitle": "Open Source North 2026",
+    "body": [
+      "Three dashboards, three data journeys.",
+      "Live demos stay in the same browser with inline Grafana embeds.",
+      "Arrow keys or on-screen controls advance the story."
+    ]
+  },
+  {
+    "id": "home-overview",
+    "type": "iframe",
+    "title": "Demo: Home Overview",
+    "url": "https://play.grafana.org/d/000000012/grafana-play-home?orgId=1&kiosk=tv",
+    "notes": "Replace the URL with your local Grafana dashboard when presenting."
+  },
+  {
+    "id": "mortgage",
+    "type": "content",
+    "title": "Mortgage Burndown Takeaways",
+    "body": [
+      "Synthetic dataset mirrors a $600k / 30-year loan for privacy.",
+      "Grafana transformations split principal vs. escrow vs. remaining balance.",
+      "What-if toggles showcase extra payments without leaving the deck."
+    ]
+  },
+  {
+    "id": "marathon",
+    "type": "iframe",
+    "title": "Demo: Classic Marathon Tracker",
+    "url": "https://play.grafana.org/d/000000002/grafana-play-home?orgId=1&kiosk=tv",
+    "notes": "Point this at the marathon dashboard once built."
+  },
+  {
+    "id": "wrap",
+    "type": "content",
+    "title": "Wrap-Up",
+    "body": [
+      "Dashboards succeed when the audience question is explicit.",
+      "Keep data freshness visible: timestamps, status badges, annotations.",
+      "Reuse this deck server to avoid Cmd+Tab chaos."
+    ]
+  }
+]
