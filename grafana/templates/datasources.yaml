@@ -25,3 +25,10 @@ datasources:
       tokenUri: https://oauth2.googleapis.com/token
     secureJsonData:
       privateKey: REPLACE_WITH_GCP_SERVICE_ACCOUNT_TOKEN
+
+  - name: Infinity
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    jsonData:
+      allowedHosts:
+        - localhost

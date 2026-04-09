@@ -36,9 +36,14 @@ start-grafana: git-sync-secrets
 	cd grafana && docker compose up -d
 
 .PHONY: start-presentation
-## Start the presentation server
+## Start the presentation server (petewall/slides via Docker)
 start-presentation:
-	cd presentation && npm start
+	docker run --rm -d --name slides -p 8080:3000 -v $(CURDIR)/presentation:/content ghcr.io/petewall/slides
+
+.PHONY: stop-presentation
+## Stop the presentation server
+stop-presentation:
+	docker stop slides
 
 .PHONY: start
 ## Start Grafana and the presentation stack

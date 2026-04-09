@@ -16,6 +16,7 @@ services:
     volumes:
       - ./provisioning:/etc/grafana/provisioning
       - grafana-data:/var/lib/grafana
+      - ../FlightDiary.csv:/var/lib/grafana/data/FlightDiary.csv:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:3000/api/health || exit 1"]

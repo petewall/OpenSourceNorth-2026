@@ -26,9 +26,8 @@ cd grafana && make   # Generates provisioning/datasources/datasources.yaml and r
 
 ### Presentation server
 ```bash
-cd presentation && npm install  # Install dependencies
-cd presentation && npm start    # Start server (http://localhost:8080)
-cd presentation && npm run dev  # Start in development mode
+make start-presentation  # Start slides server via Docker (port 8080)
+make stop-presentation   # Stop slides server
 ```
 
 ### Generate mortgage demo data
@@ -47,10 +46,10 @@ python3 scripts/generate_mortgage_data.py [options]
 - `provisioning/datasources/datasources.yaml` and `resources/connection.yaml` are git-ignored (contain credentials).
 
 ### Presentation Server (`presentation/`)
-- Express 5 server (`server.js`) serving a single-page app on port 8080.
-- `GET /api/slides` returns `slides.json`; all other routes serve `public/index.html`.
-- Slides defined in `slides.json` as an array with `type: "content"` (bullet points) or `type: "iframe"` (embedded URLs, typically Grafana dashboards).
-- Frontend is vanilla JS (`public/app.js`) with keyboard navigation (←/→/Space) and fullscreen support.
+- Uses [petewall/slides](https://github.com/petewall/slides) via Docker (`ghcr.io/petewall/slides`).
+- Slide content defined in `presentation/content.yaml` (YAML format with `meta` and `slides` sections).
+- Supports `text`, `iframe`, `image`, `columns`, and `html` content types.
+- Runs on port 8080 (mapped from container port 3000). Keyboard navigation with arrow keys and spacebar.
 
 ### Data (`MortgageData.csv`, `scripts/`)
 - `scripts/generate_mortgage_data.py`: Generates synthetic mortgage amortization CSV used for the mortgage dashboard demo. Output goes to `MortgageData.csv` at repo root by default.
