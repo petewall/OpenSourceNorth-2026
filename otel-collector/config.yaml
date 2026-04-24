@@ -1,0 +1,20 @@
+---
+receivers:
+  prometheus:
+    config:
+      scrape_configs:
+        # Gets CO2 and Temperature metrics from locally running CO2 Meter
+        - job_name: co2metrics
+          scrape_interval: 60s
+          static_configs:
+            - targets: ['host.docker.internal:9800']
+
+exporters:
+  prometheusremotewrite:
+    endpoint: http://prometheus:9090/api/v1/write
+
+service:
+  pipelines:
+    metrics:
+      receivers: [prometheus]
+      exporters: [prometheusremotewrite]

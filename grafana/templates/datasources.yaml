@@ -4,13 +4,33 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
-    url: REPLACE_WITH_PROMETHEUS_URL
-    basicAuth: true
-    basicAuthUser: REPLACE_WITH_PROMETHEUS_USERNAME
+    url: http://prometheus:9090
+    isDefault: true
     jsonData:
-      timeInterval: 60s
+      timeInterval: 15s
+
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+
+  - name: PostgreSQL
+    type: postgres
+    access: proxy
+    url: postgres:5432
+    database: ironwall
+    user: ironwall
     secureJsonData:
-      basicAuthPassword: REPLACE_WITH_PROMETHEUS_PASSWORD
+      password: ironwall
+    jsonData:
+      sslmode: disable
+
+  - name: Infinity
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    jsonData:
+      allowedHosts:
+        - localhost
 
   - name: Google Sheets
     type: grafana-googlesheets-datasource
@@ -25,10 +45,3 @@ datasources:
       tokenUri: https://oauth2.googleapis.com/token
     secureJsonData:
       privateKey: REPLACE_WITH_GCP_SERVICE_ACCOUNT_TOKEN
-
-  - name: Infinity
-    type: yesoreyeram-infinity-datasource
-    access: proxy
-    jsonData:
-      allowedHosts:
-        - localhost

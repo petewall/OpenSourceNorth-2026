@@ -13,28 +13,15 @@ Building Real-World Grafana Dashboards: From Data Source to Design
 
 ### 1. Introduction (5 minutes)
 - Quick personal context: Grafana usage, projects that drove the dashboards.
-- Why Grafana dashboards still matter in 2026 (observability sprawl, faster onboarding, cross-team visibility).
 - Set expectations: three stories + actionable wrap-up.
 
-### 2. Dashboard Case Studies (25 minutes)
-For each dashboard below, cover:
-- Problem statement and intended audience.
-- Data sources and how the data was ingested (agents, exporters, OTLP, scraping, etc.).
-- Key panels / visualizations chosen and why.
-- Lessons learned (focusing on pitfalls and adjustments).
-- What you would do differently now.
-
 #### Dashboard A: "Home Overview"
-- Audience: family members who want a quick read on comfort and safety.
-- Data sources: indoor temperature/humidity sensors, CO2 and PM2.5 air-quality monitors, outdoor weather API.
-- Ingestion: MQTT broker → Telegraf → InfluxDB for historical data plus Home Assistant exporter for live metrics.
-- Lessons learned:
-  - Start by answering "What do you want to use this dashboard for?"; the answer trims endless sensor sprawl.
-  - Normalize units (°F vs °C, ppm) so the family reads the dashboard without mental conversions.
-  - Aggregate sensors by room and highlight actionable thresholds (e.g., "open a window" annotation) instead of raw number grids.
+- First dashboard is a one showing the climate and air quality in my house.
+- lessons learned:
+  - Ask yourself "Why do I want this dashboard?"
+  - Don't build what you can already use
 
 #### Dashboard B: Mortgage Burndown
-- Audience: anyone tracking long-term personal finance goals (homeowners, partners).
 - Data sources: mortgage servicer CSV exports with payment history, amortization schedule calculator, household budget spreadsheet.
 - Ingestion: Scheduled Python script normalizes CSV → pushes into Google Sheets; Grafana connects via Google Sheets data source plus static JSON for amortization projections.
 - Lessons learned:

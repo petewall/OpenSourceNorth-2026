@@ -1,0 +1,7 @@
+current-context: local
+contexts:
+  local:
+    grafana:
+      server: http://localhost:3000
+      user: admin
+      org-id: 1
