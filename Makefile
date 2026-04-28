@@ -2,17 +2,18 @@
 
 grafana/resources/repository.yaml: grafana/templates/repository.yaml ## Create the Git Sync repository
 	@mkdir -p $(shell dirname $@)
-	GITHUB_PAT="$$(op read 'op://Lab/Open Source North 2026 PAT/password')" && \
-	export GITHUB_PAT && \
+	export GITHUB_PAT="$$(op read 'op://Lab/Open Source North 2026 PAT/password')" && \
 	yq eval '.secure.token.create = strenv(GITHUB_PAT)' $< > $@
-	@echo "[grafana] wrote $@"
 
 grafana/provisioning/datasources/datasources.yaml: grafana/templates/datasources.yaml
 	@mkdir -p $(shell dirname $@)
+	export GCP_CLIENT_EMAIL=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.client_email') && \
+	export GCP_PROJECT=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.project_id') && \
+	export GCP_PRIVATE_KEY=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.private_key') && \
 	yq eval ' \
 		(.datasources[] | select(.name == "Google Sheets")).jsonData.clientEmail = strenv(GCP_CLIENT_EMAIL) | \
 		(.datasources[] | select(.name == "Google Sheets")).jsonData.defaultProject = strenv(GCP_PROJECT) | \
-		(.datasources[] | select(.name == "Google Sheets")).secureJsonData.privateKey = strenv(GCP_SERVICE_ACCOUNT_TOKEN) \
+		(.datasources[] | select(.name == "Google Sheets")).secureJsonData.privateKey = strenv(GCP_PRIVATE_KEY) \
 	  ' $< > $@
 
 grafana/dashboards/house-climate.json: ../dashboards/house-climate.json
