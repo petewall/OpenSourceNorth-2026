@@ -18,8 +18,8 @@ from __future__ import annotations
 import argparse
 import csv
 import calendar
+import sys
 from datetime import date
-from pathlib import Path
 from typing import Dict
 
 
@@ -141,10 +141,14 @@ def append_transaction(
     )
 
 
-def build_transactions(rows: list[dict[str, float]], start_date: date) -> list[dict[str, str]]:
+def build_transactions(
+    rows: list[dict[str, float]], start_date: date, end_date: date
+) -> list[dict[str, str]]:
     entries: list[dict[str, str]] = []
     for index, row in enumerate(rows):
         payment_date = add_months(start_date, index)
+        if payment_date > end_date:
+            break
         append_transaction(
             entries, payment_date, "Interest Payment Split Out", row["Interest"]
         )
@@ -215,14 +219,17 @@ def build_parser() -> argparse.ArgumentParser:
         default=date(2023, 9, 6),
         help="Starting payment date in YYYY-MM-DD format (default: 2023-09-06).",
     )
-    default_output = (
-        Path(__file__).resolve().parent.parent / "MortgageData.csv"
+    parser.add_argument(
+        "--end-date",
+        type=parse_date,
+        default=date.today(),
+        help="Last payment date to include in YYYY-MM-DD format (default: today).",
     )
     parser.add_argument(
         "--output",
-        type=Path,
-        default=default_output,
-        help=f"Output CSV path (default: {default_output})",
+        type=argparse.FileType("w"),
+        default="-",
+        help="Output CSV path (default: stdout).",
     )
     return parser
 
@@ -239,20 +246,14 @@ def main() -> None:
         escrow=args.escrow,
         extra_payments=extra_map,
     )
-    transactions = build_transactions(amort_rows, args.start_date)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    with args.output.open("w", newline="") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=[
-                "Date",
-                "Description",
-                "Amount",
-            ],
-        )
-        writer.writeheader()
-        writer.writerows(transactions)
-    print(f"Wrote {len(transactions)} rows to {args.output}")
+    transactions = build_transactions(amort_rows, args.start_date, args.end_date)
+    writer = csv.DictWriter(
+        args.output,
+        fieldnames=["Date", "Description", "Amount"],
+    )
+    writer.writeheader()
+    writer.writerows(transactions)
+    print(f"Wrote {len(transactions)} rows", file=sys.stderr)
 
 
 if __name__ == "__main__":

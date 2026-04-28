@@ -36,6 +36,11 @@ copy-dashboards: grafana/dashboards/house-climate.json grafana/dashboards/mortga
 clean: ## Remove generated files
 	rm grafana/provisioning/datasources/datasources.yaml grafana/resources/repository.yaml
 
+##@ Test Data
+
+data/mortgage-burndown-data.csv:
+	python3 scripts/generate_mortgage_data.py > $@
+
 ##@ Local Instance
 .PHONY: start
 start: grafana/provisioning/datasources/datasources.yaml ## Start the local services
