@@ -1,1 +1,2 @@
-grafana/provisioning/datasources/datasources.yaml
+grafana/provisioning
+grafana/resources

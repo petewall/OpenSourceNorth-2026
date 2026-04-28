@@ -1,0 +1,23 @@
+Create a Grafana dashboard called "Talk Performance" using the Prometheus and Loki datasources. Set the default time
+range to the last 1 hour with a 10s auto-refresh.
+
+Include these panels:
+
+Row 1 — Environment (full width time series)
+Plot `co2meter_co2_ppm` (label: "CO2", unit: ppm, right Y-axis) and `co2meter_temperature_c` (label: "Temperature",
+unit: celsius, left Y-axis) on the same panel.
+
+Row 2 — Words Per Minute (full width time series)
+Plot `talk_wpm` (unit: words/min).
+
+Both time series panels should have three annotation layers driven by LogQL queries:
+- 🔴 Red — filler words: {job="talk"} | json | event="filler"
+- 🟢 Green — applause: {job="talk"} | json | event="applause"
+- 🔵 Blue — laughter: {job="talk"} | json | event="laughter"
+
+Row 3 — three equal-width stat panels (gauges)
+- "Filler Words" — count_over_time({job="talk"} | json | event="filler" [1h]) — thresholds: green < 10, yellow < 20, red >= 20
+- "Applause" — count_over_time({job="talk"} | json | event="applause" [1h]) — color: green
+- "Laughter" — count_over_time({job="talk"} | json | event="laughter" [1h]) — color: blue
+
+Return the complete Grafana dashboard JSON so I can push it with `gcx dashboard push`.

@@ -1,11 +1,11 @@
 ---
 apiVersion: provisioning.grafana.app/v0alpha1
-kind: Connection
+kind: Repository
 metadata:
-  name: github-open-source-north-2026
+  name: dashboards
   namespace: default
 spec:
-  title: Open Source North 2026 GitHub
+  title: dashboards
   type: github
   github:
     url: https://github.com/petewall/OpenSourceNorth-2026
