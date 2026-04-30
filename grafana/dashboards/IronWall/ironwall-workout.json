@@ -493,14 +493,14 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "",
-            "value": ""
+            "text": "All",
+            "value": "$__all"
           },
           "datasource": {
             "name": "${datasource}"
           },
-          "hide": "variable",
-          "includeAll": false,
+          "hide": "hideVariable",
+          "includeAll": true,
           "label": "Exercise",
           "multi": true,
           "name": "workout_exercises",
