@@ -18,12 +18,12 @@ datasources:
     type: postgres
     access: proxy
     url: postgres:5432
-    database: ironwall
     user: ironwall
-    secureJsonData:
-      password: ironwall
     jsonData:
       sslmode: disable
+      database: ironwall
+    secureJsonData:
+      password: ironwall
 
   - name: Infinity
     type: yesoreyeram-infinity-datasource

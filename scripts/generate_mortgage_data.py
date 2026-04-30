@@ -253,7 +253,9 @@ def main() -> None:
     )
     writer.writeheader()
     writer.writerows(transactions)
+    total_extra = sum(row["ExtraPrincipal"] for row in amort_rows)
     print(f"Wrote {len(transactions)} rows", file=sys.stderr)
+    print(f"Extra principal applied: {format_currency(total_extra)}", file=sys.stderr)
 
 
 if __name__ == "__main__":

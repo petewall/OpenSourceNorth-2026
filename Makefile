@@ -40,9 +40,26 @@ clean: ## Remove generated files
 
 ##@ Test Data
 
-data/mortgage-burndown-data.csv:
+FAKE_HOME_VALUE=500000
+FAKE_MORTGAGE_AMOUNT=350000
+FAKE_MORTGAGE_RATE=0.045
+data/mortgage-burndown.csv:
 	@mkdir -p $(shell dirname $@)
-	python3 scripts/generate_mortgage_data.py > $@
+	python3 scripts/generate_mortgage_data.py \
+		--principal $(FAKE_MORTGAGE_AMOUNT) \
+		--annual-rate $(FAKE_MORTGAGE_RATE) \
+		--extra-principal 6:1000 \
+		--extra-principal 12:1000 \
+		--extra-principal 18:1000 \
+		> $@
+
+data/mortgage-details.csv:
+	@mkdir -p $(shell dirname $@)
+	echo "Original Amount,Interest Rate,Current Home Value" > $@
+	echo "$(FAKE_MORTGAGE_AMOUNT),$(FAKE_MORTGAGE_RATE),$(FAKE_HOME_VALUE)" >> $@
+
+.PHONY: mortgage-data
+mortgage-data: data/mortgage-burndown.csv data/mortgage-details.csv ## Generate fake mortgage data
 
 data/pg/seeds/users.sql: ../ironwall/seeds/users.sql
 	@mkdir -p $(shell dirname $@)
