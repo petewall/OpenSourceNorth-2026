@@ -364,8 +364,8 @@
                 "showHeader": true,
                 "sortBy": [
                   {
-                    "desc": false,
-                    "displayName": "Exercises"
+                    "desc": true,
+                    "displayName": "Date"
                   }
                 ]
               }
