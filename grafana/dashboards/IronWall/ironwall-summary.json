@@ -243,8 +243,27 @@
                       "group": "postgres",
                       "kind": "DataQuery",
                       "spec": {
+                        "editorMode": "code",
                         "format": "table",
-                        "rawSql": "SELECT w.id::text as \"id\", to_char(w.started_at AT TIME ZONE 'America/Chicago', 'YYYY-MM-DD') as \"Date\", STRING_AGG(DISTINCT e.name, ', ' ORDER BY e.name) as \"Exercises\", CASE WHEN w.ended_at IS NOT NULL THEN ROUND(EXTRACT(EPOCH FROM (w.ended_at - w.started_at))/60)::text || ' min' ELSE 'In progress' END as \"Duration\", CASE '${unit}' WHEN 'lbs' THEN ROUND((COALESCE(SUM(s.weight_kg * s.reps), 0) * 2.20462)::numeric, 1) ELSE ROUND((COALESCE(SUM(s.weight_kg * s.reps), 0))::numeric, 1) END as \"Volume (${unit})\" FROM workouts w JOIN workout_exercises we ON we.workout_id = w.id JOIN exercises e ON e.id = we.exercise_id LEFT JOIN sets s ON s.workout_exercise_id = we.id AND s.set_type != 'warmup' AND s.weight_kg IS NOT NULL AND s.reps IS NOT NULL WHERE w.user_id = (SELECT id FROM users WHERE username = 'pete') GROUP BY w.id, w.started_at, w.ended_at ORDER BY w.started_at DESC"
+                        "rawQuery": true,
+                        "rawSql": "SELECT w.id::text as \"id\", to_char(w.started_at AT TIME ZONE 'America/Chicago', 'YYYY-MM-DD') as \"Date\", STRING_AGG(DISTINCT e.name, ', ' ORDER BY e.name) as \"Exercises\", CASE WHEN w.ended_at IS NOT NULL THEN ROUND(EXTRACT(EPOCH FROM (w.ended_at - w.started_at))/60)::text || ' min' ELSE 'In progress' END as \"Duration\", CASE '${unit}' WHEN 'lbs' THEN ROUND((COALESCE(SUM(s.weight_kg * s.reps), 0) * 2.20462)::numeric, 1) ELSE ROUND((COALESCE(SUM(s.weight_kg * s.reps), 0))::numeric, 1) END as \"Volume (${unit})\" FROM workouts w JOIN workout_exercises we ON we.workout_id = w.id JOIN exercises e ON e.id = we.exercise_id LEFT JOIN sets s ON s.workout_exercise_id = we.id AND s.set_type != 'warmup' AND s.weight_kg IS NOT NULL AND s.reps IS NOT NULL WHERE w.user_id = (SELECT id FROM users WHERE username = 'pete') GROUP BY w.id, w.started_at, w.ended_at ORDER BY w.started_at DESC",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
                       },
                       "version": "v0"
                     },
@@ -259,7 +278,7 @@
           "description": "",
           "id": 4,
           "links": [],
-          "title": "Workouts",
+          "title": "",
           "vizConfig": {
             "group": "table",
             "kind": "VizConfig",
@@ -343,7 +362,117 @@
               "options": {
                 "cellHeight": "sm",
                 "showHeader": true,
-                "sortBy": []
+                "sortBy": [
+                  {
+                    "desc": false,
+                    "displayName": "Exercises"
+                  }
+                ]
+              }
+            },
+            "version": "13.1.0-24910154156"
+          }
+        }
+      },
+      "panel-5": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "dataset": "ironwall",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT e.name AS \"Exercise\", COUNT(DISTINCT we.workout_id) AS \"Times Done\", CASE '${unit}' WHEN 'lbs' THEN ROUND((MAX(s.weight_kg) * 2.20462)::numeric, 1) ELSE ROUND(MAX(s.weight_kg)::numeric, 2) END AS \"Weight Record (${unit})\", MAX(s.reps) AS \"Rep Record\" FROM exercises e LEFT JOIN workout_exercises we ON we.exercise_id = e.id LEFT JOIN sets s ON s.workout_exercise_id = we.id AND s.set_type != 'warmup' WHERE e.user_id IS NULL GROUP BY e.name ORDER BY e.name",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 5,
+          "links": [],
+          "title": "",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": true,
+                    "displayName": "Times Done"
+                  }
+                ]
               }
             },
             "version": "13.1.0-24910154156"
@@ -352,59 +481,114 @@
       }
     },
     "layout": {
-      "kind": "GridLayout",
+      "kind": "RowsLayout",
       "spec": {
-        "items": [
+        "rows": [
           {
-            "kind": "GridLayoutItem",
+            "kind": "RowsLayoutRow",
             "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-1"
+              "collapse": false,
+              "fillScreen": false,
+              "hideHeader": true,
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-1"
+                        },
+                        "height": 6,
+                        "width": 16,
+                        "x": 0,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-2"
+                        },
+                        "height": 6,
+                        "width": 4,
+                        "x": 16,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-3"
+                        },
+                        "height": 6,
+                        "width": 4,
+                        "x": 20,
+                        "y": 0
+                      }
+                    }
+                  ]
+                }
               },
-              "height": 6,
-              "width": 16,
-              "x": 0,
-              "y": 0
+              "title": "Main"
             }
           },
           {
-            "kind": "GridLayoutItem",
+            "kind": "RowsLayoutRow",
             "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-2"
+              "collapse": false,
+              "layout": {
+                "kind": "AutoGridLayout",
+                "spec": {
+                  "columnWidthMode": "standard",
+                  "items": [
+                    {
+                      "kind": "AutoGridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-4"
+                        }
+                      }
+                    }
+                  ],
+                  "maxColumnCount": 3,
+                  "rowHeightMode": "standard"
+                }
               },
-              "height": 6,
-              "width": 4,
-              "x": 16,
-              "y": 0
+              "title": "Workouts"
             }
           },
           {
-            "kind": "GridLayoutItem",
+            "kind": "RowsLayoutRow",
             "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-3"
+              "collapse": false,
+              "layout": {
+                "kind": "AutoGridLayout",
+                "spec": {
+                  "columnWidthMode": "standard",
+                  "items": [
+                    {
+                      "kind": "AutoGridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-5"
+                        }
+                      }
+                    }
+                  ],
+                  "maxColumnCount": 3,
+                  "rowHeightMode": "standard"
+                }
               },
-              "height": 6,
-              "width": 4,
-              "x": 20,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-4"
-              },
-              "height": 16,
-              "width": 24,
-              "x": 0,
-              "y": 6
+              "title": "Exercises"
             }
           }
         ]
