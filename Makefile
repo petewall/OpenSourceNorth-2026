@@ -34,26 +34,60 @@ copy-dashboards: grafana/dashboards/house-climate.json grafana/dashboards/mortga
 
 .PHONY: clean
 clean: ## Remove generated files
-	rm grafana/provisioning/datasources/datasources.yaml grafana/resources/repository.yaml
+	rm -rf data
+	rm grafana/provisioning/datasources/datasources.yaml
+	rm grafana/resources/repository.yaml
 
 ##@ Test Data
 
 data/mortgage-burndown-data.csv:
+	@mkdir -p $(shell dirname $@)
 	python3 scripts/generate_mortgage_data.py > $@
+
+data/pg/seeds/users.sql: ../ironwall/seeds/users.sql
+	@mkdir -p $(shell dirname $@)
+	cp $< $@
+
+data/pg/seeds/tags.sql: ../ironwall/seeds/tags.sql
+	@mkdir -p $(shell dirname $@)
+	cp $< $@
+
+data/pg/seeds/exercises.sql: ../ironwall/seeds/exercises.sql
+	@mkdir -p $(shell dirname $@)
+	cp $< $@
+
+data/pg/seeds/workouts.sql: ../ironwall/seeds/workouts.sql
+	@mkdir -p $(shell dirname $@)
+	cp $< $@
+
+data/pg/seeds/fitbod.sql: ../ironwall/seeds/fitbod.sql
+	@mkdir -p $(shell dirname $@)
+	cp $< $@
+
+postgres/migrations/001_init.sql: ../ironwall/db/migrations/001_init.sql
+	@mkdir -p $(shell dirname $@)
+	cp $< $@
+
+pg-seeds: data/pg/seeds/users.sql data/pg/seeds/tags.sql data/pg/seeds/exercises.sql data/pg/seeds/workouts.sql data/pg/seeds/fitbod.sql
 
 ##@ Local Instance
 .PHONY: start
-start: grafana/provisioning/datasources/datasources.yaml ## Start the local services
+start: grafana/provisioning/datasources/datasources.yaml postgres/migrations/001_init.sql ## Start the local services
 	docker compose up -d
 	@sleep 1
 	gcx config check
 
 .PHONY: prep
-prep: start grafana/resources/repository.yaml ## Seed the databases after startup
+prep: start grafana/resources/repository.yaml pg-seeds ## Seed the databases after startup
 	# Push the Git Sync repository
 	gcx resources push --path grafana/resources
 	# Seed the Prometheus database
 	# Seed the PostgreSQL database
+	psql "$${POSTGRES_URL}" -f data/pg/seeds/users.sql
+	psql "$${POSTGRES_URL}" -f data/pg/seeds/tags.sql
+	psql "$${POSTGRES_URL}" -f data/pg/seeds/exercises.sql
+	psql "$${POSTGRES_URL}" -f data/pg/seeds/fitbod.sql
+	psql "$${POSTGRES_URL}" -f data/pg/seeds/workouts.sql
 
 .PHONY: stop
 stop: ## Stop the local services

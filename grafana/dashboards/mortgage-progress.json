@@ -247,6 +247,7 @@
                       {
                         "id": "color",
                         "value": {
+                          "fixedColor": "blue",
                           "mode": "fixed"
                         }
                       }
@@ -803,6 +804,28 @@
                       "filters": [
                         {
                           "config": {
+                            "id": "between",
+                            "options": {
+                              "from": "$__from",
+                              "to": "$__to"
+                            }
+                          },
+                          "fieldName": "Date"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                },
+                {
+                  "group": "filterByValue",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
                             "id": "equal",
                             "options": {
                               "value": "Bank Transfer"
@@ -948,6 +971,28 @@
                       "filters": [
                         {
                           "config": {
+                            "id": "between",
+                            "options": {
+                              "from": "$__from",
+                              "to": "$__to"
+                            }
+                          },
+                          "fieldName": "Date"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                },
+                {
+                  "group": "filterByValue",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
                             "id": "equal",
                             "options": {
                               "value": "Interest Payment Split Out"
@@ -1058,6 +1103,28 @@
               ],
               "queryOptions": {},
               "transformations": [
+                {
+                  "group": "filterByValue",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "between",
+                            "options": {
+                              "from": "$__from",
+                              "to": "$__to"
+                            }
+                          },
+                          "fieldName": "Date"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                },
                 {
                   "group": "filterByValue",
                   "kind": "Transformation",
@@ -1207,7 +1274,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "app": "grafana-assistant-app",
-                        "expression": "SELECT A.Date AS __time__, (SELECT MAX(`Current Home Value`) FROM B) - A.Amount AS `Home Equity` FROM A WHERE A.Description = 'Outstanding Principal' ORDER BY A.Date LIMIT 1000",
+                        "expression": "SELECT\n  A.Date AS __time__,\n  (\n    SELECT\n      MAX(`Current Home Value`)\n    FROM\n      B\n  ) - A.Amount AS `Home Equity`\nFROM\n  A\nWHERE\n  A.Description = 'Outstanding Principal'\nORDER BY\n  A.Date\nLIMIT\n  1000",
                         "type": "sql"
                       },
                       "version": "v0"
@@ -1217,13 +1284,36 @@
                 }
               ],
               "queryOptions": {},
-              "transformations": []
+              "transformations": [
+                {
+                  "group": "filterByValue",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "between",
+                            "options": {
+                              "from": "$__from",
+                              "to": "$__to"
+                            }
+                          },
+                          "fieldName": "__time__"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                }
+              ]
             }
           },
           "description": "",
           "id": 24,
           "links": [],
-          "title": "Home Equity Over Time",
+          "title": "Home Equity",
           "vizConfig": {
             "group": "stat",
             "kind": "VizConfig",
@@ -1665,10 +1755,10 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "2023-09-01T05:00:00.000Z",
+      "from": "2024-12-07T10:30:14.145Z",
       "hideTimepicker": false,
       "timezone": "browser",
-      "to": "now"
+      "to": "2025-04-11T18:46:10.914Z"
     },
     "title": "Mortgage Progress",
     "variables": [

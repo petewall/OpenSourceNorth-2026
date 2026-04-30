@@ -579,7 +579,7 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineStyle": {
                       "fill": "solid"
                     },
@@ -829,7 +829,7 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineWidth": 1,
                     "pointSize": 5,
                     "scaleDistribution": {
@@ -847,8 +847,7 @@
                     }
                   },
                   "displayName": "${__field.labels.name}",
-                  "max": 100,
-                  "min": 0,
+                  "min": 30,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -963,7 +962,7 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineWidth": 1,
                     "pointSize": 5,
                     "scaleDistribution": {
@@ -981,8 +980,7 @@
                     }
                   },
                   "displayName": "${__field.labels.name}",
-                  "max": 100,
-                  "min": 0,
+                  "min": 30,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -1670,7 +1668,7 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineStyle": {
                       "fill": "solid"
                     },
@@ -1985,7 +1983,7 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineStyle": {
                       "fill": "solid"
                     },
@@ -2515,7 +2513,7 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineWidth": 1,
                     "pointSize": 5,
                     "scaleDistribution": {
@@ -2533,7 +2531,7 @@
                     }
                   },
                   "displayName": "${__field.labels.name}",
-                  "min": 0,
+                  "min": 400,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -2648,7 +2646,7 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineWidth": 1,
                     "pointSize": 5,
                     "scaleDistribution": {
@@ -2666,7 +2664,7 @@
                     }
                   },
                   "displayName": "${__field.labels.name}",
-                  "min": 0,
+                  "min": 400,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -2781,7 +2779,7 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineWidth": 1,
                     "pointSize": 5,
                     "scaleDistribution": {
@@ -2799,7 +2797,7 @@
                     }
                   },
                   "displayName": "${__field.labels.name}",
-                  "min": 0,
+                  "min": 400,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -3009,7 +3007,7 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineWidth": 1,
                     "pointSize": 5,
                     "scaleDistribution": {
@@ -3027,8 +3025,7 @@
                     }
                   },
                   "displayName": "${__field.labels.name}",
-                  "max": 100,
-                  "min": 0,
+                  "min": 30,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -3349,7 +3346,20 @@
         ]
       }
     },
-    "links": [],
+    "links": [
+      {
+        "asDropdown": false,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [],
+        "targetBlank": true,
+        "title": "Source (GitHub)",
+        "tooltip": "View source file in repository",
+        "type": "link",
+        "url": "https://github.com/petewall/dashboards/blob/main/house-climate.json"
+      }
+    ],
     "liveNow": false,
     "preload": false,
     "tags": [],
@@ -3380,8 +3390,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "",
-            "value": ""
+            "text": "grafanacloud-petewall-prom",
+            "value": "grafanacloud-prom"
           },
           "hide": "dontHide",
           "includeAll": false,
