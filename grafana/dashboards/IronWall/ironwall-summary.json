@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
+          "name": "Annotations \u0026 Alerts",
           "query": {
             "group": "grafana",
             "kind": "DataQuery",
@@ -61,7 +61,7 @@
                 "mode": "markdown"
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-24910154156"
           }
         }
       },
@@ -141,7 +141,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-24910154156"
           }
         }
       },
@@ -221,7 +221,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-24910154156"
           }
         }
       },
@@ -299,7 +299,7 @@
                     },
                     "properties": [
                       {
-                        "id": "custom.hidden",
+                        "id": "custom.hideFrom.viz",
                         "value": true
                       }
                     ]
@@ -314,11 +314,27 @@
                         "id": "links",
                         "value": [
                           {
+                            "targetBlank": false,
                             "title": "View Workout",
-                            "url": "/d/ironwall-workout/ironwall-workout?var-workout=${__data.fields.id}&var-unit=${unit}",
-                            "targetBlank": false
+                            "url": "/d/ironwall-workout/ironwall-workout?var-workout=${__data.fields.id}\u0026var-unit=${unit}"
                           }
                         ]
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 145
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Exercises"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 1154
                       }
                     ]
                   }
@@ -330,7 +346,7 @@
                 "sortBy": []
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-24910154156"
           }
         }
       }
@@ -394,12 +410,45 @@
         ]
       }
     },
-    "links": [],
+    "links": [
+      {
+        "asDropdown": false,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [],
+        "targetBlank": true,
+        "title": "Source (GitHub)",
+        "tooltip": "View source file in repository",
+        "type": "link",
+        "url": "https://github.com/petewall/OpenSourceNorth-2026/blob/main/grafana/dashboards/IronWall/ironwall-summary.json"
+      }
+    ],
     "liveNow": false,
     "preload": false,
     "tags": [
       "ironwall"
     ],
+    "timeSettings": {
+      "autoRefresh": "",
+      "autoRefreshIntervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "fiscalYearStartMonth": 0,
+      "from": "now-6y",
+      "hideTimepicker": true,
+      "timezone": "browser",
+      "to": "now"
+    },
     "title": "IronWall - Summary",
     "variables": [
       {
@@ -427,7 +476,6 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "selected": true,
             "text": "lbs",
             "value": "lbs"
           },
@@ -436,42 +484,12 @@
           "label": "Unit",
           "multi": false,
           "name": "unit",
-          "options": [
-            {
-              "selected": true,
-              "text": "lbs",
-              "value": "lbs"
-            },
-            {
-              "selected": false,
-              "text": "kg",
-              "value": "kg"
-            }
-          ],
+          "options": [],
           "query": "lbs,kg",
-          "skipUrlSync": false
+          "skipUrlSync": false,
+          "valuesFormat": "csv"
         }
       }
-    ],
-    "timeSettings": {
-      "autoRefresh": "",
-      "autoRefreshIntervals": [
-        "5s",
-        "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
-      ],
-      "fiscalYearStartMonth": 0,
-      "from": "now-6y",
-      "hideTimepicker": true,
-      "timezone": "browser",
-      "to": "now"
-    }
+    ]
   }
 }
