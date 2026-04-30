@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations \u0026 Alerts",
+          "name": "Annotations & Alerts",
           "query": {
             "group": "grafana",
             "kind": "DataQuery",
@@ -335,7 +335,7 @@
                           {
                             "targetBlank": false,
                             "title": "View Workout",
-                            "url": "/d/ironwall-workout/ironwall-workout?var-workout=${__data.fields.id}\u0026var-unit=${unit}"
+                            "url": "/d/ironwall-workout/ironwall-workout?var-workout=${__data.fields.id}&var-unit=${unit}"
                           }
                         ]
                       },
@@ -396,7 +396,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT e.name AS \"Exercise\", COUNT(DISTINCT we.workout_id) AS \"Times Done\", CASE '${unit}' WHEN 'lbs' THEN ROUND((MAX(s.weight_kg) * 2.20462)::numeric, 1) ELSE ROUND(MAX(s.weight_kg)::numeric, 2) END AS \"Weight Record (${unit})\", MAX(s.reps) AS \"Rep Record\" FROM exercises e LEFT JOIN workout_exercises we ON we.exercise_id = e.id LEFT JOIN sets s ON s.workout_exercise_id = we.id AND s.set_type != 'warmup' WHERE e.user_id IS NULL GROUP BY e.name ORDER BY e.name",
+                        "rawSql": "SELECT e.name AS \"Exercise\", STRING_AGG(DISTINCT t.name, ', ' ORDER BY t.name) AS \"Tags\", COUNT(DISTINCT we.workout_id) AS \"Times Done\", CASE '${unit}' WHEN 'lbs' THEN ROUND((MAX(s.weight_kg) * 2.20462)::numeric, 1) ELSE ROUND(MAX(s.weight_kg)::numeric, 2) END AS \"Weight Record (${unit})\", MAX(s.reps) AS \"Rep Record\" FROM exercises e LEFT JOIN exercise_tags et ON et.exercise_id = e.id LEFT JOIN tags t ON t.id = et.tag_id LEFT JOIN workout_exercises we ON we.exercise_id = e.id LEFT JOIN sets s ON s.workout_exercise_id = we.id AND s.set_type != 'warmup' WHERE e.user_id IS NULL GROUP BY e.name ORDER BY e.name",
                         "sql": {
                           "columns": [
                             {
@@ -476,9 +476,31 @@
                           {
                             "targetBlank": false,
                             "title": "Show exercise",
-                            "url": "/d/ironwall-exercise/ironwall-exercise?var-exercise=${__data.fields.Exercise}\u0026var-unit=${unit}"
+                            "url": "/d/ironwall-exercise/ironwall-exercise?var-exercise=${__data.fields.Exercise}&var-unit=${unit}"
                           }
                         ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Tags"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "blue",
+                          "mode": "fixed"
+                        }
+                      },
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background",
+                          "mode": "basic"
+                        }
                       }
                     ]
                   }
