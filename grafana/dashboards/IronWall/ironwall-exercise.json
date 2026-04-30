@@ -472,7 +472,7 @@
           "links": [],
           "title": "${exercise}",
           "vizConfig": {
-            "group": "stat",
+            "group": "table",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
@@ -480,6 +480,16 @@
                   "color": {
                     "fixedColor": "purple",
                     "mode": "fixed"
+                  },
+                  "custom": {
+                    "align": "center",
+                    "cellOptions": {
+                      "type": "pill"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
                   },
                   "thresholds": {
                     "mode": "absolute",
@@ -495,21 +505,9 @@
                 "overrides": []
               },
               "options": {
-                "colorMode": "background",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
+                "cellHeight": "lg",
+                "showHeader": true,
+                "sortBy": []
               }
             },
             "version": "13.1.0-24910154156"
@@ -1402,8 +1400,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Barbell Bench Press",
-            "value": "Barbell Bench Press"
+            "text": "Cable Bicep Curl",
+            "value": "Cable Bicep Curl"
           },
           "hide": "dontHide",
           "includeAll": false,
