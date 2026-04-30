@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
+          "name": "Annotations \u0026 Alerts",
           "query": {
             "group": "grafana",
             "kind": "DataQuery",
@@ -335,7 +335,7 @@
                           {
                             "targetBlank": false,
                             "title": "View Workout",
-                            "url": "/d/ironwall-workout/ironwall-workout?var-workout=${__data.fields.id}&var-unit=${unit}"
+                            "url": "/d/ironwall-workout/ironwall-workout?var-workout=${__data.fields.id}\u0026var-unit=${unit}"
                           }
                         ]
                       },
@@ -476,7 +476,7 @@
                           {
                             "targetBlank": false,
                             "title": "Show exercise",
-                            "url": "/d/ironwall-exercise/ironwall-exercise?var-exercise=${__data.fields.Exercise}&var-unit=${unit}"
+                            "url": "/d/ironwall-exercise/ironwall-exercise?var-exercise=${__data.fields.Exercise}\u0026var-unit=${unit}"
                           }
                         ]
                       }
@@ -489,17 +489,9 @@
                     },
                     "properties": [
                       {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "blue",
-                          "mode": "fixed"
-                        }
-                      },
-                      {
                         "id": "custom.cellOptions",
                         "value": {
-                          "type": "color-background",
-                          "mode": "basic"
+                          "type": "pill"
                         }
                       }
                     ]
