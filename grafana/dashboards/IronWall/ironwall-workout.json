@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
+          "name": "Annotations \u0026 Alerts",
           "query": {
             "group": "grafana",
             "kind": "DataQuery",
@@ -101,7 +101,7 @@
                 "sortBy": []
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -181,7 +181,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -219,7 +219,7 @@
                 "mode": "markdown"
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -242,7 +242,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "format": "table",
-                        "rawSql": "SELECT s.set_number AS \"Set\", s.reps AS \"Reps\", CASE WHEN s.partials > 0 THEN s.partials::text ELSE '' END AS \"Partials\", CASE '${unit}' WHEN 'lbs' THEN ROUND((s.weight_kg * 2.20462)::numeric, 1) ELSE ROUND(s.weight_kg::numeric, 2) END AS \"Weight (${unit})\", s.set_type AS \"Type\" FROM workout_exercises we JOIN exercises e ON e.id = we.exercise_id JOIN sets s ON s.workout_exercise_id = we.id WHERE we.workout_id::text = '${workout}' AND e.name = '${workout_exercises}' ORDER BY s.set_number"
+                        "rawSql": "SELECT s.set_number AS \"Set\", s.reps AS \"Reps\", CASE WHEN s.partials \u003e 0 THEN s.partials::text ELSE '' END AS \"Partials\", CASE '${unit}' WHEN 'lbs' THEN ROUND((s.weight_kg * 2.20462)::numeric, 1) ELSE ROUND(s.weight_kg::numeric, 2) END AS \"Weight (${unit})\", s.set_type AS \"Type\" FROM workout_exercises we JOIN exercises e ON e.id = we.exercise_id JOIN sets s ON s.workout_exercise_id = we.id WHERE we.workout_id::text = '${workout}' AND e.name = '${workout_exercises}' ORDER BY s.set_number"
                       },
                       "version": "v0"
                     },
@@ -297,7 +297,7 @@
                 "sortBy": []
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       }
@@ -323,8 +323,8 @@
                           "kind": "ElementReference",
                           "name": "panel-1"
                         },
-                        "height": 6,
-                        "width": 16,
+                        "height": 4,
+                        "width": 19,
                         "x": 0,
                         "y": 0
                       }
@@ -336,9 +336,9 @@
                           "kind": "ElementReference",
                           "name": "panel-2"
                         },
-                        "height": 6,
-                        "width": 8,
-                        "x": 16,
+                        "height": 4,
+                        "width": 5,
+                        "x": 19,
                         "y": 0
                       }
                     }
@@ -363,7 +363,7 @@
                           "kind": "ElementReference",
                           "name": "panel-3"
                         },
-                        "height": 12,
+                        "height": 7,
                         "width": 6,
                         "x": 0,
                         "y": 0
@@ -376,7 +376,7 @@
                           "kind": "ElementReference",
                           "name": "panel-4"
                         },
-                        "height": 12,
+                        "height": 8,
                         "width": 18,
                         "x": 6,
                         "y": 0
@@ -395,12 +395,45 @@
         ]
       }
     },
-    "links": [],
+    "links": [
+      {
+        "asDropdown": false,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [],
+        "targetBlank": true,
+        "title": "Source (GitHub)",
+        "tooltip": "View source file in repository",
+        "type": "link",
+        "url": "https://github.com/petewall/OpenSourceNorth-2026/blob/main/grafana/dashboards/IronWall/ironwall-workout.json"
+      }
+    ],
     "liveNow": false,
     "preload": false,
     "tags": [
       "ironwall"
     ],
+    "timeSettings": {
+      "autoRefresh": "",
+      "autoRefreshIntervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "fiscalYearStartMonth": 0,
+      "from": "now-6y",
+      "hideTimepicker": true,
+      "timezone": "browser",
+      "to": "now"
+    },
     "title": "IronWall - Workout",
     "variables": [
       {
@@ -428,7 +461,6 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "selected": true,
             "text": "lbs",
             "value": "lbs"
           },
@@ -437,20 +469,10 @@
           "label": "Unit",
           "multi": false,
           "name": "unit",
-          "options": [
-            {
-              "selected": true,
-              "text": "lbs",
-              "value": "lbs"
-            },
-            {
-              "selected": false,
-              "text": "kg",
-              "value": "kg"
-            }
-          ],
+          "options": [],
           "query": "lbs,kg",
-          "skipUrlSync": false
+          "skipUrlSync": false,
+          "valuesFormat": "csv"
         }
       },
       {
@@ -458,11 +480,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "",
-            "value": ""
-          },
-          "datasource": {
-            "name": "${datasource}"
+            "text": "2026-04-18 08:48 — Barbell Bench Press, Cable Crossover Incline Bench Fly, Crunches, Leg Press, Leg Raise",
+            "value": "1ae7c241-4c65-4870-8467-83379a761dae"
           },
           "hide": "dontHide",
           "includeAll": false,
@@ -478,12 +497,13 @@
             "kind": "DataQuery",
             "spec": {
               "format": "table",
-              "rawSql": "SELECT w.id::text as __value, to_char(w.started_at AT TIME ZONE 'America/Chicago', 'YYYY-MM-DD HH24:MI') || ' \u2014 ' || STRING_AGG(DISTINCT e.name, ', ') as __text FROM workouts w JOIN workout_exercises we ON we.workout_id = w.id JOIN exercises e ON e.id = we.exercise_id WHERE w.user_id = (SELECT id FROM users WHERE username = 'pete') GROUP BY w.id, w.started_at ORDER BY w.started_at DESC"
+              "rawSql": "SELECT w.id::text as __value, to_char(w.started_at AT TIME ZONE 'America/Chicago', 'YYYY-MM-DD HH24:MI') || ' — ' || STRING_AGG(DISTINCT e.name, ', ') as __text FROM workouts w JOIN workout_exercises we ON we.workout_id = w.id JOIN exercises e ON e.id = we.exercise_id WHERE w.user_id = (SELECT id FROM users WHERE username = 'pete') GROUP BY w.id, w.started_at ORDER BY w.started_at DESC"
             },
             "version": "v0"
           },
           "refresh": "onDashboardLoad",
           "regex": "",
+          "regexApplyTo": "value",
           "skipUrlSync": false,
           "sort": "disabled"
         }
@@ -495,9 +515,6 @@
           "current": {
             "text": "All",
             "value": "$__all"
-          },
-          "datasource": {
-            "name": "${datasource}"
           },
           "hide": "hideVariable",
           "includeAll": true,
@@ -519,30 +536,11 @@
           },
           "refresh": "onDashboardLoad",
           "regex": "",
+          "regexApplyTo": "value",
           "skipUrlSync": false,
           "sort": "disabled"
         }
       }
-    ],
-    "timeSettings": {
-      "autoRefresh": "",
-      "autoRefreshIntervals": [
-        "5s",
-        "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
-      ],
-      "fiscalYearStartMonth": 0,
-      "from": "now-6y",
-      "hideTimepicker": true,
-      "timezone": "browser",
-      "to": "now"
-    }
+    ]
   }
 }
