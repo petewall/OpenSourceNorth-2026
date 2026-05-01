@@ -61,7 +61,7 @@
                 "mode": "markdown"
               }
             },
-            "version": "13.1.0-24910154156"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -141,7 +141,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24910154156"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -221,7 +221,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24910154156"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -370,7 +370,7 @@
                 ]
               }
             },
-            "version": "13.1.0-24910154156"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -509,7 +509,7 @@
                 ]
               }
             },
-            "version": "13.1.0-24910154156"
+            "version": "13.1.0-25229989571"
           }
         }
       }
@@ -535,7 +535,7 @@
                           "kind": "ElementReference",
                           "name": "panel-1"
                         },
-                        "height": 6,
+                        "height": 4,
                         "width": 16,
                         "x": 0,
                         "y": 0
@@ -548,7 +548,7 @@
                           "kind": "ElementReference",
                           "name": "panel-2"
                         },
-                        "height": 6,
+                        "height": 4,
                         "width": 4,
                         "x": 16,
                         "y": 0
@@ -561,7 +561,7 @@
                           "kind": "ElementReference",
                           "name": "panel-3"
                         },
-                        "height": 6,
+                        "height": 4,
                         "width": 4,
                         "x": 20,
                         "y": 0
