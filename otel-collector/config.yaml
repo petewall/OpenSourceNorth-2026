@@ -1,5 +1,43 @@
 ---
 receivers:
+  file_log/transcript:
+    include: [/logs/transcript.txt]
+    start_at: beginning
+    poll_interval: 500ms
+    force_flush_period: 500ms
+    operators:
+      - type: add
+        field: resource["service.name"]
+        value: talkbox
+      - type: add
+        field: attributes["log.iostream"]
+        value: stdout
+
+  file_log/debug:
+    include: [/logs/debug.txt]
+    start_at: beginning
+    poll_interval: 500ms
+    force_flush_period: 500ms
+    operators:
+      - type: add
+        field: resource["service.name"]
+        value: talkbox
+      - type: add
+        field: attributes["log.iostream"]
+        value: stderr
+      - type: add
+        if: 'body matches "^\\[filler\\] "'
+        field: attributes.detection
+        value: filler
+      - type: regex_parser
+        if: 'body matches "^\\[filler\\] "'
+        regex: '^\[filler\] (?P<message>.*)$'
+        parse_to: attributes
+      - type: move
+        if: 'attributes.message != nil'
+        from: attributes.message
+        to: body
+
   prometheus:
     config:
       scrape_configs:
@@ -9,12 +47,30 @@ receivers:
           static_configs:
             - targets: ['host.docker.internal:9800']
 
+        # Gets Talkbox metrics
+        - job_name: talkbox
+          scrape_interval: 15s
+          static_configs:
+            - targets: ['host.docker.internal:9186']
+          metric_relabel_configs:
+            - source_labels: ["__name__"]
+              regex: "talkbox_.*"
+              action: "keep"
+
 exporters:
   prometheusremotewrite:
     endpoint: http://prometheus:9090/api/v1/write
+
+  otlp_http/loki:
+    endpoint: http://loki:3100/otlp
+
+  debug:
 
 service:
   pipelines:
     metrics:
       receivers: [prometheus]
-      exporters: [prometheusremotewrite]
+      exporters: [prometheusremotewrite, debug]
+    logs:
+      receivers: [file_log/transcript, file_log/debug]
+      exporters: [otlp_http/loki, debug]

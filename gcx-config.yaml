@@ -5,3 +5,6 @@ contexts:
       server: http://localhost:3000
       user: admin
       org-id: 1
+    datasources:
+      prometheus: localprometheus
+      loki: localloki

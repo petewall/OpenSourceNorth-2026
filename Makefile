@@ -7,17 +7,24 @@ grafana/resources/repository.yaml: grafana/templates/repository.yaml ## Create t
 
 grafana/provisioning/datasources/datasources.yaml: grafana/templates/datasources.yaml
 	@mkdir -p $(shell dirname $@)
+	export GC_METRICS_URL="$$(op read "op://Lab/Grafana Cloud Metrics/website")/api/prom" && \
+	export GC_METRICS_USERNAME=$$(op read "op://Lab/Grafana Cloud Metrics/username") && \
+	export GC_METRICS_PASSWORD=$$(op read "op://Lab/Grafana Cloud Metrics/password") && \
 	export GCP_CLIENT_EMAIL=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.client_email') && \
 	export GCP_PROJECT=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.project_id') && \
 	export GCP_PRIVATE_KEY=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.private_key') && \
 	yq eval ' \
+		(.datasources[] | select(.name == "Grafana Cloud Prometheus")).url = strenv(GC_METRICS_URL) | \
+		(.datasources[] | select(.name == "Grafana Cloud Prometheus")).basicAuthUser = strenv(GC_METRICS_USERNAME) | \
+		(.datasources[] | select(.name == "Grafana Cloud Prometheus")).secureJsonData.basicAuthPassword = strenv(GC_METRICS_PASSWORD) | \
 		(.datasources[] | select(.name == "Google Sheets")).jsonData.clientEmail = strenv(GCP_CLIENT_EMAIL) | \
 		(.datasources[] | select(.name == "Google Sheets")).jsonData.defaultProject = strenv(GCP_PROJECT) | \
 		(.datasources[] | select(.name == "Google Sheets")).secureJsonData.privateKey = strenv(GCP_PRIVATE_KEY) \
 	  ' $< > $@
 
 grafana/dashboards/house-climate.json: ../dashboards/house-climate.json
-	cp $< $@
+	jq '(.spec.variables[] | select(.spec.name == "datasource")).spec.current.text = "Grafana Cloud Prometheus" | \
+		(.spec.variables[] | select(.spec.name == "datasource")).spec.current.value = "grafanacloudprom"' $< > $@
 
 HOUSE_IMAGE="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Neues_Rathaus_Hannover_2013.jpg/960px-Neues_Rathaus_Hannover_2013.jpg"
 SPREADSHEET_ID="1wh4Qnfli2_g4D3lblFrxfqRge3sr_eegy4JCt6NnRDE"
@@ -30,7 +37,13 @@ grafana/dashboards/mortgage-progress.json: ../dashboards/mortgage-progress.json
 		' $@ > $@.updated && mv $@.updated $@
 	sed -e 's/"spreadsheet": "[^"]*"/"spreadsheet": $(SPREADSHEET_ID)/' $@ > $@.updated && mv $@.updated $@
 
-copy-dashboards: grafana/dashboards/house-climate.json grafana/dashboards/mortgage-progress.json ## Copy dashboards from my personal repository
+grafana/dashboards/Marathon/game.json: ../dashboards/marathon/game.json
+	cp $< $@
+
+grafana/dashboards/Marathon/level.json: ../dashboards/marathon/level.json
+	cp $< $@
+
+copy-dashboards: grafana/dashboards/house-climate.json grafana/dashboards/mortgage-progress.json grafana/dashboards/Marathon/game.json grafana/dashboards/Marathon/level.json ## Copy dashboards from my personal repository
 
 .PHONY: clean
 clean: ## Remove generated files
@@ -98,7 +111,6 @@ start: grafana/provisioning/datasources/datasources.yaml postgres/migrations/001
 prep: start grafana/resources/repository.yaml pg-seeds ## Seed the databases after startup
 	# Push the Git Sync repository
 	gcx resources push --path grafana/resources
-	# Seed the Prometheus database
 	# Seed the PostgreSQL database
 	psql "$${POSTGRES_URL}" -f data/pg/seeds/users.sql
 	psql "$${POSTGRES_URL}" -f data/pg/seeds/tags.sql

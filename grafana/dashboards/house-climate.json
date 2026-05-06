@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations \u0026 Alerts",
+          "name": "Annotations & Alerts",
           "query": {
             "group": "grafana",
             "kind": "DataQuery",
@@ -23,11 +23,11 @@
         }
       }
     ],
-    "cursorSync": "Off",
+    "cursorSync": "Crosshair",
     "description": "",
     "editable": true,
     "elements": {
-      "panel-11": {
+      "panel-88": {
         "kind": "Panel",
         "spec": {
           "data": {
@@ -46,7 +46,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "avg(sensor_carbon_dioxide_ppm{entity=~\"sensor.(${sensors_basement})_carbon_dioxide\"})",
+                        "expr": "avg(sensor_temperature_celsius{entity=~\"sensor.(${floor_sensors.value:raw})_temperature\"}) * 1.8 + 32 ",
                         "instant": false,
                         "legendFormat": "__auto",
                         "range": true
@@ -62,9 +62,310 @@
             }
           },
           "description": "",
-          "id": 11,
+          "id": 88,
           "links": [],
-          "title": "CO2",
+          "title": "🌡️",
+          "vizConfig": {
+            "group": "gauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "max": 100,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "blue",
+                        "value": 0
+                      },
+                      {
+                        "color": "green",
+                        "value": 62
+                      },
+                      {
+                        "color": "red",
+                        "value": 78
+                      }
+                    ]
+                  },
+                  "unit": "fahrenheit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barShape": "round",
+                "barWidthFactor": 0.8,
+                "effects": {
+                  "barGlow": false,
+                  "centerGlow": false,
+                  "gradient": false
+                },
+                "endpointMarker": "point",
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "segmentCount": 1,
+                "segmentSpacing": 0.3,
+                "shape": "gauge",
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true,
+                "sizing": "auto",
+                "sparkline": false,
+                "textMode": "auto"
+              }
+            },
+            "version": "13.1.0-24878921911"
+          }
+        }
+      },
+      "panel-89": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "avg(sensor_humidity_percent{entity=~\"sensor.(${floor_sensors.value:raw})_humidity\"})",
+                        "instant": false,
+                        "legendFormat": "__auto",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 89,
+          "links": [],
+          "title": "💧",
+          "vizConfig": {
+            "group": "gauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "max": 100,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "red",
+                        "value": 0
+                      },
+                      {
+                        "color": "green",
+                        "value": 20
+                      },
+                      {
+                        "color": "#EAB839",
+                        "value": 50
+                      }
+                    ]
+                  },
+                  "unit": "humidity"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barShape": "round",
+                "barWidthFactor": 0.8,
+                "effects": {
+                  "barGlow": false,
+                  "centerGlow": false,
+                  "gradient": false
+                },
+                "endpointMarker": "point",
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "segmentCount": 1,
+                "segmentSpacing": 0.3,
+                "shape": "gauge",
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true,
+                "sizing": "auto",
+                "sparkline": false,
+                "textMode": "auto"
+              }
+            },
+            "version": "13.1.0-24878921911"
+          }
+        }
+      },
+      "panel-90": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "avg(sensor_volatile_organic_compounds_u0xb5g_per_mu0xb3{entity=~\"sensor.(${floor_sensors.value:raw})_.*\"})",
+                        "instant": false,
+                        "legendFormat": "__auto",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 90,
+          "links": [],
+          "title": "✨",
+          "vizConfig": {
+            "group": "gauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "max": 1000,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  "unit": "conμgm3"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barShape": "round",
+                "barWidthFactor": 0.8,
+                "effects": {
+                  "barGlow": false,
+                  "centerGlow": false,
+                  "gradient": false
+                },
+                "endpointMarker": "point",
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "segmentCount": 1,
+                "segmentSpacing": 0.3,
+                "shape": "gauge",
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true,
+                "sizing": "auto",
+                "sparkline": false,
+                "textMode": "auto"
+              }
+            },
+            "version": "13.1.0-24878921911"
+          }
+        }
+      },
+      "panel-91": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "avg(sensor_carbon_dioxide_ppm{entity=~\"sensor.(${floor_sensors.value:raw})_carbon_dioxide\"})",
+                        "instant": false,
+                        "legendFormat": "__auto",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 91,
+          "links": [],
+          "title": "☁️",
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
@@ -100,13 +401,14 @@
                         "value": 2000
                       }
                     ]
-                  }
+                  },
+                  "unit": "ppm"
                 },
                 "overrides": []
               },
               "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
+                "barShape": "round",
+                "barWidthFactor": 0.8,
                 "effects": {
                   "barGlow": false,
                   "centerGlow": false,
@@ -137,7 +439,7 @@
           }
         }
       },
-      "panel-14": {
+      "panel-92": {
         "kind": "Panel",
         "spec": {
           "data": {
@@ -156,310 +458,9 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "avg(sensor_temperature_celsius{entity=~\"sensor.(${sensors_basement})_temperature\"}) * 1.8 + 32 ",
+                        "expr": "sensor_temperature_celsius{entity=~\"sensor.(${floor_sensors.value:raw})_temperature\"} * 1.8 + 32",
                         "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 14,
-          "links": [],
-          "title": "Temperature",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 100,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "blue",
-                        "value": 0
-                      },
-                      {
-                        "color": "green",
-                        "value": 62
-                      },
-                      {
-                        "color": "red",
-                        "value": 78
-                      }
-                    ]
-                  },
-                  "unit": "fahrenheit"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-20": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "avg(sensor_humidity_percent{entity=~\"sensor.(${sensors_basement})_humidity\"})",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 20,
-          "links": [],
-          "title": "Humidity",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 100,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "red",
-                        "value": 0
-                      },
-                      {
-                        "color": "green",
-                        "value": 20
-                      },
-                      {
-                        "color": "#EAB839",
-                        "value": 50
-                      }
-                    ]
-                  },
-                  "unit": "humidity"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-24": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "avg(sensor_volatile_organic_compounds_u0xb5g_per_mu0xb3{entity=~\"sensor.(${sensors_upstairs})_.*\"})",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 24,
-          "links": [],
-          "title": "Air Quality",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 1000,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  "unit": "conμgm3"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-26": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "sensor_temperature_celsius{entity=~\"sensor.(${sensors_main_floor})_temperature\"} * 1.8 + 32",
-                        "instant": false,
-                        "legendFormat": "{{friendly_name}}",
+                        "legendFormat": "🌡️ {{friendly_name}}",
                         "range": true
                       },
                       "version": "v0"
@@ -479,7 +480,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "(climate_mode{entity=~\"climate.(${sensors_main_floor})\", mode=\"heat\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${sensors_main_floor})\"} * 1.8 + 32) \u003e 0) or (climate_mode{entity=~\"climate.(${sensors_main_floor})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_low_celsius{entity=~\"climate.(${sensors_main_floor})\"} * 1.8 + 32) \u003e 0)",
+                        "expr": "(climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"heat\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) > 0) or (climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_low_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) > 0)",
                         "instant": false,
                         "legendFormat": "Desired Heat",
                         "range": true
@@ -501,7 +502,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "(climate_mode{entity=~\"climate.(${sensors_main_floor})\", mode=\"cool\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${sensors_main_floor})\"} * 1.8 + 32) \u003e 0) or (climate_mode{entity=~\"climate.(${sensors_main_floor})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_high_celsius{entity=~\"climate.(${sensors_main_floor})\"} * 1.8 + 32) \u003e 0)",
+                        "expr": "(climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"cool\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) > 0) or (climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_high_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) > 0)",
                         "instant": false,
                         "legendFormat": "Desired Cool",
                         "range": true
@@ -532,235 +533,7 @@
                     },
                     "refId": "D"
                   }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "renameByRegex",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "regex": "Ecobee .* \\((.*)\\) Temperature",
-                      "renamePattern": "$1"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 26,
-          "links": [],
-          "title": "Temperature",
-          "vizConfig": {
-            "group": "timeseries",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "smooth",
-                    "lineStyle": {
-                      "fill": "solid"
-                    },
-                    "lineWidth": 1,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "auto",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  },
-                  "displayName": "${__field.labels.name}",
-                  "fieldMinMax": false,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  },
-                  "unit": "fahrenheit"
                 },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byFrameRefID",
-                      "options": "B"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.lineStyle",
-                        "value": {
-                          "dash": [
-                            10,
-                            10
-                          ],
-                          "fill": "dash"
-                        }
-                      },
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "red",
-                          "mode": "fixed"
-                        }
-                      },
-                      {
-                        "id": "custom.hideFrom",
-                        "value": {
-                          "legend": true,
-                          "tooltip": false,
-                          "viz": false
-                        }
-                      },
-                      {
-                        "id": "custom.fillOpacity",
-                        "value": 10
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byFrameRefID",
-                      "options": "C"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.lineStyle",
-                        "value": {
-                          "dash": [
-                            10,
-                            10
-                          ],
-                          "fill": "dash"
-                        }
-                      },
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "blue",
-                          "mode": "fixed"
-                        }
-                      },
-                      {
-                        "id": "custom.hideFrom",
-                        "value": {
-                          "legend": true,
-                          "tooltip": false,
-                          "viz": false
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byFrameRefID",
-                      "options": "D"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.fillBelowTo",
-                        "value": "Desired Cool"
-                      },
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "blue",
-                          "mode": "fixed"
-                        }
-                      },
-                      {
-                        "id": "custom.fillOpacity",
-                        "value": 10
-                      },
-                      {
-                        "id": "custom.axisPlacement",
-                        "value": "hidden"
-                      },
-                      {
-                        "id": "custom.hideFrom",
-                        "value": {
-                          "legend": true,
-                          "tooltip": true,
-                          "viz": false
-                        }
-                      },
-                      {
-                        "id": "custom.lineWidth",
-                        "value": 0
-                      },
-                      {
-                        "id": "custom.axisSoftMax",
-                        "value": 200
-                      }
-                    ]
-                  }
-                ]
-              },
-              "options": {
-                "annotations": {
-                  "clustering": -1,
-                  "multiLane": false
-                },
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-28": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
                 {
                   "kind": "PanelQuery",
                   "spec": {
@@ -773,14 +546,58 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "sensor_humidity_percent{entity=~\"sensor.(${sensors_basement})_humidity\"}",
+                        "expr": "sensor_humidity_percent{entity=~\"sensor.(${floor_sensors.value:raw})_humidity\"}",
                         "instant": false,
-                        "legendFormat": "{{friendly_name}}",
+                        "legendFormat": "💧 {{friendly_name}}",
                         "range": true
                       },
                       "version": "v0"
                     },
-                    "refId": "A"
+                    "refId": "E"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "climate_action{action=\"heating\", entity=~\"climate.(${floor_sensors.value:raw})\"} > 0",
+                        "instant": false,
+                        "legendFormat": "🔥 {{friendly_name}}",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "F"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "climate_action{action=\"cooling\", entity=~\"climate.(${floor_sensors.value:raw})\"} > 0",
+                        "instant": false,
+                        "legendFormat": "❄️ {{friendly_name}}",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "G"
                   }
                 }
               ],
@@ -791,8 +608,8 @@
                   "kind": "Transformation",
                   "spec": {
                     "options": {
-                      "regex": "Ecobee .* \\((.*)\\) Humidity",
-                      "renamePattern": "$1"
+                      "regex": "(🌡️|💧|🔥|❄️) Ecobee .* \\((.*)\\).*",
+                      "renamePattern": "$1 $2"
                     }
                   }
                 }
@@ -800,848 +617,9 @@
             }
           },
           "description": "",
-          "id": 28,
+          "id": 92,
           "links": [],
-          "title": "Humidity",
-          "vizConfig": {
-            "group": "timeseries",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "smooth",
-                    "lineWidth": 1,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "auto",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  },
-                  "displayName": "${__field.labels.name}",
-                  "min": 30,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  },
-                  "unit": "humidity"
-                },
-                "overrides": []
-              },
-              "options": {
-                "annotations": {
-                  "clustering": -1,
-                  "multiLane": false
-                },
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-29": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "sensor_humidity_percent{entity=~\"sensor.(${sensors_upstairs})_humidity\"}",
-                        "instant": false,
-                        "legendFormat": "{{friendly_name}}",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "renameByRegex",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "regex": "Ecobee .* \\((.*)\\) Humidity",
-                      "renamePattern": "$1"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 29,
-          "links": [],
-          "title": "Humidity",
-          "vizConfig": {
-            "group": "timeseries",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "smooth",
-                    "lineWidth": 1,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "auto",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  },
-                  "displayName": "${__field.labels.name}",
-                  "min": 30,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  },
-                  "unit": "humidity"
-                },
-                "overrides": []
-              },
-              "options": {
-                "annotations": {
-                  "clustering": -1,
-                  "multiLane": false
-                },
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-30": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "avg(sensor_volatile_organic_compounds_u0xb5g_per_mu0xb3{entity=~\"sensor.(${sensors_main_floor})_.*\"})",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 30,
-          "links": [],
-          "title": "Air Quality",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 1000,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  "unit": "conμgm3"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-32": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "avg(sensor_temperature_celsius{entity=~\"sensor.(${sensors_upstairs})_temperature\"}) * 1.8 + 32 ",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 32,
-          "links": [],
-          "title": "Temperature",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 100,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "blue",
-                        "value": 0
-                      },
-                      {
-                        "color": "green",
-                        "value": 62
-                      },
-                      {
-                        "color": "red",
-                        "value": 78
-                      }
-                    ]
-                  },
-                  "unit": "fahrenheit"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-33": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "avg(sensor_temperature_celsius{entity=~\"sensor.(${sensors_main_floor})_temperature\"}) * 1.8 + 32 ",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 33,
-          "links": [],
-          "title": "Temperature",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 100,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "blue",
-                        "value": 0
-                      },
-                      {
-                        "color": "green",
-                        "value": 62
-                      },
-                      {
-                        "color": "red",
-                        "value": 78
-                      }
-                    ]
-                  },
-                  "unit": "fahrenheit"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-34": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "avg(sensor_humidity_percent{entity=~\"sensor.(${sensors_main_floor})_humidity\"})",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 34,
-          "links": [],
-          "title": "Humidity",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 100,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "red",
-                        "value": 0
-                      },
-                      {
-                        "color": "green",
-                        "value": 20
-                      },
-                      {
-                        "color": "#EAB839",
-                        "value": 50
-                      }
-                    ]
-                  },
-                  "unit": "humidity"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-35": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "avg(sensor_humidity_percent{entity=~\"sensor.(${sensors_upstairs})_humidity\"})",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 35,
-          "links": [],
-          "title": "Humidity",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 100,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "red",
-                        "value": 0
-                      },
-                      {
-                        "color": "green",
-                        "value": 20
-                      },
-                      {
-                        "color": "#EAB839",
-                        "value": 50
-                      }
-                    ]
-                  },
-                  "unit": "humidity"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-36": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "sensor_temperature_celsius{entity=~\"sensor.(${sensors_basement})_temperature\"} * 1.8 + 32 ",
-                        "instant": false,
-                        "legendFormat": "{{friendly_name}}",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "(climate_mode{entity=~\"climate.(${sensors_basement})\", mode=\"heat\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${sensors_basement})\"} * 1.8 + 32) \u003e 0) or (climate_mode{entity=~\"climate.(${sensors_basement})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_low_celsius{entity=~\"climate.(${sensors_basement})\"} * 1.8 + 32) \u003e 0)",
-                        "instant": false,
-                        "legendFormat": "Desired Heat",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "B"
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "(climate_mode{entity=~\"climate.(${sensors_basement})\", mode=\"cool\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${sensors_basement})\"} * 1.8 + 32) \u003e 0) or (climate_mode{entity=~\"climate.(${sensors_basement})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_high_celsius{entity=~\"climate.(${sensors_basement})\"} * 1.8 + 32) \u003e 0)",
-                        "instant": false,
-                        "legendFormat": "Desired Cool",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "C"
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "200",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "D"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "renameByRegex",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "regex": "Ecobee .* \\((.*)\\) Temperature",
-                      "renamePattern": "$1"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 36,
-          "links": [],
-          "title": "Temperature",
+          "title": "Temperature & Humidity",
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -1739,6 +717,10 @@
                       {
                         "id": "custom.fillOpacity",
                         "value": 10
+                      },
+                      {
+                        "id": "custom.showPoints",
+                        "value": "never"
                       }
                     ]
                   },
@@ -1772,6 +754,10 @@
                           "tooltip": false,
                           "viz": false
                         }
+                      },
+                      {
+                        "id": "custom.showPoints",
+                        "value": "never"
                       }
                     ]
                   },
@@ -1815,225 +801,57 @@
                       {
                         "id": "custom.axisSoftMax",
                         "value": 200
-                      }
-                    ]
-                  }
-                ]
-              },
-              "options": {
-                "annotations": {
-                  "clustering": -1,
-                  "multiLane": false
-                },
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-37": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "sensor_temperature_celsius{entity=~\"sensor.(${sensors_upstairs})_temperature\"} * 1.8 + 32",
-                        "instant": false,
-                        "legendFormat": "{{friendly_name}}",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "(climate_mode{entity=~\"climate.(${sensors_upstairs})\", mode=\"heat\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${sensors_upstairs})\"} * 1.8 + 32) \u003e 0) or (climate_mode{entity=~\"climate.(${sensors_upstairs})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_low_celsius{entity=~\"climate.(${sensors_upstairs})\"} * 1.8 + 32) \u003e 0)",
-                        "instant": false,
-                        "legendFormat": "Desired Heat",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "B"
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "(climate_mode{entity=~\"climate.(${sensors_upstairs})\", mode=\"cool\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${sensors_upstairs})\"} * 1.8 + 32) \u003e 0) or (climate_mode{entity=~\"climate.(${sensors_upstairs})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_high_celsius{entity=~\"climate.(${sensors_upstairs})\"} * 1.8 + 32) \u003e 0)",
-                        "instant": false,
-                        "legendFormat": "Desired Cool",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "C"
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "200",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "D"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "renameByRegex",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "regex": "Ecobee .* \\((.*)\\) Temperature",
-                      "renamePattern": "$1"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 37,
-          "links": [],
-          "title": "Temperature",
-          "vizConfig": {
-            "group": "timeseries",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "smooth",
-                    "lineStyle": {
-                      "fill": "solid"
-                    },
-                    "lineWidth": 1,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "auto",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  },
-                  "displayName": "${__field.labels.name}",
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
                       },
                       {
-                        "color": "red",
-                        "value": 80
+                        "id": "custom.showPoints",
+                        "value": "never"
                       }
                     ]
                   },
-                  "unit": "fahrenheit"
-                },
-                "overrides": [
                   {
                     "matcher": {
-                      "id": "byFrameRefID",
-                      "options": "B"
+                      "id": "byName",
+                      "options": "sensor_humidity_percent",
+                      "scope": "series"
                     },
                     "properties": [
                       {
-                        "id": "custom.lineStyle",
+                        "id": "unit",
+                        "value": "humidity"
+                      },
+                      {
+                        "id": "custom.lineWidth",
+                        "value": 3
+                      },
+                      {
+                        "id": "color",
                         "value": {
-                          "dash": [
-                            10,
-                            10
-                          ],
-                          "fill": "dash"
+                          "fixedColor": "#808080",
+                          "mode": "shades"
+                        }
+                      },
+                      {
+                        "id": "custom.axisSoftMin",
+                        "value": 20
+                      },
+                      {
+                        "id": "custom.axisSoftMax",
+                        "value": 60
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byFrameRefID",
+                      "options": "F"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.hideFrom",
+                        "value": {
+                          "legend": true,
+                          "tooltip": false,
+                          "viz": false
                         }
                       },
                       {
@@ -2044,92 +862,51 @@
                         }
                       },
                       {
-                        "id": "custom.hideFrom",
-                        "value": {
-                          "legend": true,
-                          "tooltip": false,
-                          "viz": false
-                        }
+                        "id": "custom.lineWidth",
+                        "value": 2
                       },
                       {
-                        "id": "custom.fillOpacity",
-                        "value": 10
+                        "id": "custom.showPoints",
+                        "value": "never"
+                      },
+                      {
+                        "id": "unit",
+                        "value": "bool_on_off"
                       }
                     ]
                   },
                   {
                     "matcher": {
                       "id": "byFrameRefID",
-                      "options": "C"
+                      "options": "G"
                     },
                     "properties": [
-                      {
-                        "id": "custom.lineStyle",
-                        "value": {
-                          "dash": [
-                            10,
-                            10
-                          ],
-                          "fill": "dash"
-                        }
-                      },
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "blue",
-                          "mode": "fixed"
-                        }
-                      },
                       {
                         "id": "custom.hideFrom",
                         "value": {
                           "legend": true,
                           "tooltip": false,
-                          "viz": false
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byFrameRefID",
-                      "options": "D"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.fillBelowTo",
-                        "value": "Desired Cool"
-                      },
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "blue",
-                          "mode": "fixed"
-                        }
-                      },
-                      {
-                        "id": "custom.fillOpacity",
-                        "value": 10
-                      },
-                      {
-                        "id": "custom.axisPlacement",
-                        "value": "hidden"
-                      },
-                      {
-                        "id": "custom.hideFrom",
-                        "value": {
-                          "legend": true,
-                          "tooltip": true,
                           "viz": false
                         }
                       },
                       {
                         "id": "custom.lineWidth",
-                        "value": 0
+                        "value": 2
                       },
                       {
-                        "id": "custom.axisSoftMax",
-                        "value": 200
+                        "id": "custom.showPoints",
+                        "value": "never"
+                      },
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "blue",
+                          "mode": "fixed"
+                        }
+                      },
+                      {
+                        "id": "unit",
+                        "value": "bool_on_off"
                       }
                     ]
                   }
@@ -2157,7 +934,7 @@
           }
         }
       },
-      "panel-38": {
+      "panel-94": {
         "kind": "Panel",
         "spec": {
           "data": {
@@ -2176,268 +953,9 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "avg(sensor_carbon_dioxide_ppm{entity=~\"sensor.(${sensors_upstairs})_carbon_dioxide\"})",
+                        "expr": "sensor_carbon_dioxide_ppm{entity=~\"sensor.(${floor_sensors.value:raw})_.*\"}",
                         "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 38,
-          "links": [],
-          "title": "CO2",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 2200,
-                  "min": 300,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "dark-green",
-                        "value": 0
-                      },
-                      {
-                        "color": "green",
-                        "value": 500
-                      },
-                      {
-                        "color": "yellow",
-                        "value": 1000
-                      },
-                      {
-                        "color": "orange",
-                        "value": 1500
-                      },
-                      {
-                        "color": "red",
-                        "value": 2000
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-39": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "exemplar": false,
-                        "expr": "avg(sensor_carbon_dioxide_ppm{entity=~\"sensor.(${sensors_main_floor})_carbon_dioxide\"})",
-                        "instant": true,
-                        "legendFormat": "__auto",
-                        "range": false
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "exemplar": false,
-                        "expr": "co2meter_co2_ppm",
-                        "instant": true,
-                        "legendFormat": "__auto",
-                        "range": false
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "B"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "reduce",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "includeTimeField": false,
-                      "labelsToFields": false,
-                      "mode": "seriesToRows",
-                      "reducers": [
-                        "mean"
-                      ]
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 39,
-          "links": [],
-          "title": "CO2",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 2200,
-                  "min": 300,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "dark-green",
-                        "value": 0
-                      },
-                      {
-                        "color": "green",
-                        "value": 500
-                      },
-                      {
-                        "color": "yellow",
-                        "value": 1000
-                      },
-                      {
-                        "color": "orange",
-                        "value": 1500
-                      },
-                      {
-                        "color": "red",
-                        "value": 2000
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-40": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "sensor_carbon_dioxide_ppm{entity=~\"sensor.(${sensors_main_floor})_carbon_dioxide\"}",
-                        "instant": false,
-                        "legendFormat": "{{friendly_name}}",
+                        "legendFormat": "{{friendly_name}} CO₂",
                         "range": true
                       },
                       "version": "v0"
@@ -2457,9 +975,9 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "label_replace(co2meter_co2_ppm, \"name\", \"Office\", \"instance\", \".*\")",
+                        "expr": "sensor_volatile_organic_compounds_u0xb5g_per_mu0xb3{entity=~\"sensor.(${floor_sensors.value:raw}).*\"}",
                         "instant": false,
-                        "legendFormat": "__auto",
+                        "legendFormat": "{{friendly_name}} VOC",
                         "range": true
                       },
                       "version": "v0"
@@ -2475,8 +993,8 @@
                   "kind": "Transformation",
                   "spec": {
                     "options": {
-                      "regex": "Ecobee .* \\((.*)\\) Carbon dioxide",
-                      "renamePattern": "$1"
+                      "regex": "Ecobee .* \\((.*)\\) .* (CO₂|VOC)",
+                      "renamePattern": "$1 $2"
                     }
                   }
                 }
@@ -2484,9 +1002,9 @@
             }
           },
           "description": "",
-          "id": 40,
+          "id": 94,
           "links": [],
-          "title": "CO2",
+          "title": "CO₂ & VOC",
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -2494,7 +1012,8 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "palette-classic"
+                    "fixedColor": "green",
+                    "mode": "shades"
                   },
                   "custom": {
                     "axisBorderShow": false,
@@ -2547,501 +1066,28 @@
                   },
                   "unit": "ppm"
                 },
-                "overrides": []
-              },
-              "options": {
-                "annotations": {
-                  "clustering": -1,
-                  "multiLane": false
-                },
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-41": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "sensor_carbon_dioxide_ppm{entity=~\"sensor.(${sensors_upstairs})_carbon_dioxide\"}",
-                        "instant": false,
-                        "legendFormat": "{{friendly_name}}",
-                        "range": true
-                      },
-                      "version": "v0"
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "sensor_volatile_organic_compounds_u0xb5g_per_mu0xb3",
+                      "scope": "series"
                     },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "renameByRegex",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "regex": "Ecobee .* \\((.*)\\) Carbon dioxide",
-                      "renamePattern": "$1"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 41,
-          "links": [],
-          "title": "CO2",
-          "vizConfig": {
-            "group": "timeseries",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "smooth",
-                    "lineWidth": 1,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "auto",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  },
-                  "displayName": "${__field.labels.name}",
-                  "min": 400,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
+                    "properties": [
                       {
-                        "color": "green",
-                        "value": 0
+                        "id": "unit",
+                        "value": "conμgm3"
                       },
                       {
-                        "color": "red",
-                        "value": 80
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "yellow",
+                          "mode": "shades"
+                        }
                       }
                     ]
-                  },
-                  "unit": "ppm"
-                },
-                "overrides": []
-              },
-              "options": {
-                "annotations": {
-                  "clustering": -1,
-                  "multiLane": false
-                },
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-42": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "sensor_carbon_dioxide_ppm{entity=~\"sensor.(${sensors_basement})_carbon_dioxide\"}",
-                        "instant": false,
-                        "legendFormat": "{{friendly_name}}",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
                   }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "renameByRegex",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "regex": "Ecobee .* \\((.*)\\) Carbon dioxide",
-                      "renamePattern": "$1"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 42,
-          "links": [],
-          "title": "CO2",
-          "vizConfig": {
-            "group": "timeseries",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "smooth",
-                    "lineWidth": 1,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "auto",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  },
-                  "displayName": "${__field.labels.name}",
-                  "min": 400,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  },
-                  "unit": "ppm"
-                },
-                "overrides": []
-              },
-              "options": {
-                "annotations": {
-                  "clustering": -1,
-                  "multiLane": false
-                },
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-43": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "avg(sensor_volatile_organic_compounds_u0xb5g_per_mu0xb3{entity=~\"sensor.(${sensors_basement})_.*\"})",
-                        "instant": false,
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 43,
-          "links": [],
-          "title": "Air Quality",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "max": 1000,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      }
-                    ]
-                  },
-                  "unit": "conμgm3"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              }
-            },
-            "version": "13.1.0-24878921911"
-          }
-        }
-      },
-      "panel-7": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "${datasource}"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "sensor_humidity_percent{entity=~\"sensor.(${sensors_main_floor})_humidity\"}",
-                        "instant": false,
-                        "legendFormat": "{{friendly_name}}",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "renameByRegex",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "regex": "Ecobee .* \\((.*)\\) Humidity",
-                      "renamePattern": "$1"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 7,
-          "links": [],
-          "title": "Humidity",
-          "vizConfig": {
-            "group": "timeseries",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "smooth",
-                    "lineWidth": 1,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "auto",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  },
-                  "displayName": "${__field.labels.name}",
-                  "min": 30,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  },
-                  "unit": "humidity"
-                },
-                "overrides": []
+                ]
               },
               "options": {
                 "annotations": {
@@ -3067,280 +1113,103 @@
       }
     },
     "layout": {
-      "kind": "GridLayout",
+      "kind": "RowsLayout",
       "spec": {
-        "items": [
+        "rows": [
           {
-            "kind": "GridLayoutItem",
+            "kind": "RowsLayoutRow",
             "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-14"
+              "collapse": false,
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-92"
+                        },
+                        "height": 8,
+                        "width": 12,
+                        "x": 0,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-88"
+                        },
+                        "height": 4,
+                        "width": 2,
+                        "x": 12,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-94"
+                        },
+                        "height": 8,
+                        "width": 8,
+                        "x": 14,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-91"
+                        },
+                        "height": 4,
+                        "width": 2,
+                        "x": 22,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-89"
+                        },
+                        "height": 4,
+                        "width": 2,
+                        "x": 12,
+                        "y": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-90"
+                        },
+                        "height": 4,
+                        "width": 2,
+                        "x": 22,
+                        "y": 4
+                      }
+                    }
+                  ]
+                }
               },
-              "height": 4,
-              "width": 2,
-              "x": 0,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-20"
+              "repeat": {
+                "mode": "variable",
+                "value": "floor_sensors"
               },
-              "height": 4,
-              "width": 2,
-              "x": 2,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-43"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 4,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-11"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 6,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-33"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 8,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-34"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 10,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-30"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 12,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-39"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 14,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-32"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 16,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-35"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 18,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-24"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 20,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-38"
-              },
-              "height": 4,
-              "width": 2,
-              "x": 22,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-36"
-              },
-              "height": 8,
-              "width": 8,
-              "x": 0,
-              "y": 4
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-26"
-              },
-              "height": 8,
-              "width": 8,
-              "x": 8,
-              "y": 4
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-37"
-              },
-              "height": 8,
-              "width": 8,
-              "x": 16,
-              "y": 4
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-28"
-              },
-              "height": 4,
-              "width": 8,
-              "x": 0,
-              "y": 12
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-7"
-              },
-              "height": 4,
-              "width": 8,
-              "x": 8,
-              "y": 12
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-29"
-              },
-              "height": 4,
-              "width": 8,
-              "x": 16,
-              "y": 12
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-42"
-              },
-              "height": 4,
-              "width": 8,
-              "x": 0,
-              "y": 16
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-40"
-              },
-              "height": 4,
-              "width": 8,
-              "x": 8,
-              "y": 16
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-41"
-              },
-              "height": 4,
-              "width": 8,
-              "x": 16,
-              "y": 16
+              "title": "${floor_sensors.name}"
             }
           }
         ]
@@ -3378,7 +1247,7 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-6h",
+      "from": "now-3h",
       "hideTimepicker": false,
       "timezone": "browser",
       "to": "now"
@@ -3390,8 +1259,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "grafanacloud-petewall-prom",
-            "value": "grafanacloud-prom"
+            "text": "Grafana Cloud Prometheus",
+            "value": "grafanacloudprom"
           },
           "hide": "dontHide",
           "includeAll": false,
@@ -3442,6 +1311,33 @@
           "name": "sensors_upstairs",
           "query": "bwp|grace|main_bathroom|main_bedroom|upstairs|zach",
           "skipUrlSync": true
+        }
+      },
+      {
+        "kind": "CustomVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": [
+              "${sensors_upstairs}",
+              "${sensors_main_floor}",
+              "${sensors_basement}"
+            ],
+            "value": [
+              "${sensors_upstairs}",
+              "${sensors_main_floor}",
+              "${sensors_basement}"
+            ]
+          },
+          "description": "",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "multi": true,
+          "name": "floor_sensors",
+          "options": [],
+          "query": "[\n{\"name\": \"Upstairs\", \"value\": \"${sensors_upstairs}\"},\n{\"name\": \"Main Floor\", \"value\": \"${sensors_main_floor}\"},\n{\"name\": \"Basement\", \"value\": \"${sensors_basement}\"}\n]\n",
+          "skipUrlSync": false,
+          "valuesFormat": "json"
         }
       }
     ]

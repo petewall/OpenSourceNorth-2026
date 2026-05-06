@@ -4,22 +4,30 @@ range to the last 1 hour with a 10s auto-refresh.
 Include these panels:
 
 Row 1 — Environment
-* Panel 1 will be time series to plot both the CO2 and Temperature over time
+* Panel 1 will be time series to plot both the CO2 and Temperature (in F°) over time
     * Temperature comes from the metric: `co2meter_temperature_c`
     * CO2 comes from the metric: `co2meter_co2_ppm`
-* Panel 2 will be a gauge of the current Temperature
+* Panel 2 will be a gauge of the current Temperature (in F°)
 * Panel 3 will be a gauge of the current CO2
 
 Row 2 — Words Per Minute (full width time series)
 * Panel 1 will be a time series of the words per minute with annotations for when filler words are used
     * Word count will come from the metric: `talkbox_words_total`
-    * Annotations should occur from the Loki query: `{service_name="filler_words"}`
+    * Annotations should occur from the Loki query: `{service_name="talkbox"} | detection="filler"` and only placed on
+      this panel.
 * Panel 2 will be a gauge of the average WPM within the time range
-* Panel 3 will be the count of all filler words from the metric: talkbox_filler_words
+* Panel 3 will be the count of all filler words from the metric: sum(talkbox_filler_words)
 
 Row 3 - Talk transcript
-This is one large logs panel that will just contain the logs query: `{service_name="transcript"}`
+* This is one large logs panel that will just contain the logs query: `{service_name="talkbox"} | log_iostream="stdout"`
+    * It should show the most recent entries at the top.
 
-I've created a simple mockup here: dashboard-drawing.png
+I've created a simple mockup here: dashboard-drawing.jpg
 
-When it's ready, feel free to use gcx to push the dashboard to Grafana with `gcx dashboard push`!
+When it's ready, write to a file called `talk-performance.json`.
+
+First, fetch the valid dashboard schema with: gcx resources schemas dashboard -o json
+Second, make sure you've generated valid JSON by using `jq . talk-performance.json` and fixing any errors.
+Third, use the dashboards inside `grafana/dashboards` as reference
+Fourth, feel free to use `gcx metrics query` and `gcx logs query` to fetch actual data to see how they're formatted.
+Fifth

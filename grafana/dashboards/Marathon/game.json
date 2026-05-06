@@ -1,0 +1,1438 @@
+{
+  "apiVersion": "dashboard.grafana.app/v2",
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "defc53jpn3dfr4d"
+  },
+  "spec": {
+    "annotations": [
+      {
+        "kind": "AnnotationQuery",
+        "spec": {
+          "builtIn": true,
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations \u0026 Alerts",
+          "query": {
+            "datasource": {
+              "name": "-- Grafana --"
+            },
+            "group": "grafana",
+            "kind": "DataQuery",
+            "spec": {},
+            "version": "v0"
+          }
+        }
+      }
+    ],
+    "cursorSync": "Off",
+    "description": "",
+    "editable": true,
+    "elements": {
+      "panel-145": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "grafana-mongodb-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$unwind\":\"$weapons\"},{\"$replaceRoot\":{\"newRoot\":\"$weapons\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"Marathon\"}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"fired\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$firedMetric\",\"input\":\"$$this\"}},0]}}]}}},\"hits\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$hitMetric\",\"input\":\"$$this\"}},0]}}]}}}}},{\"$addFields\":{\"accuracy\":{\"$cond\":[{\"$eq\":[\"$fired\",0]},0,{\"$multiply\":[100,{\"$divide\":[\"$hits\",\"$fired\"]}]}]}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"fired\":{\"$gt\":0}}}])",
+                        "query": "marathon-game-data.marathon-game-details.aggregate([\n  { '$match': { title: '${gameName}' } },\n  { '$unwind': '$weapons' },\n  { '$replaceRoot': { newRoot: '$weapons' } },\n  {\n    '$lookup': {\n      from: 'marathon-level-data',\n      pipeline: [\n        { '$match': { 'scenario name': '${gameName}' } }\n      ],\n      as: 'levelDocs'\n    }\n  },\n  {\n    '$addFields': {\n      fired: { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: '$firedMetric', input: '$$this' } }, 0] } }] } } },\n      hits:  { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: '$hitMetric',  input: '$$this' } }, 0] } }] } } }\n    }\n  },\n  { '$addFields': { accuracy: { '$cond': [{ '$eq': ['$fired', 0] }, 0, { '$multiply': [100, { '$divide': ['$hits', '$fired'] }] }] } } },\n  { '$unset': 'levelDocs' },\n  { '$match': { fired: { '$gt': 0 } } }\n])",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {
+                        "firedMetric": true,
+                        "hitMetric": true
+                      },
+                      "includeByName": {},
+                      "indexByName": {
+                        "accuracy": 4,
+                        "fired": 2,
+                        "hits": 3,
+                        "image": 0,
+                        "name": 1
+                      },
+                      "renameByName": {
+                        "accuracy": "Accuracy",
+                        "fired": "Fired",
+                        "hits": "Hits",
+                        "image": " ",
+                        "name": "Weapon"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 145,
+          "links": [],
+          "title": "",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "image"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 50
+                      },
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "image"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "accuracy"
+                    },
+                    "properties": [
+                      {
+                        "id": "unit",
+                        "value": "percent"
+                      },
+                      {
+                        "id": "decimals",
+                        "value": 1
+                      },
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "mode": "lcd",
+                          "type": "gauge"
+                        }
+                      },
+                      {
+                        "id": "max",
+                        "value": 100
+                      },
+                      {
+                        "id": "min",
+                        "value": 0
+                      },
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "continuous-RdYlGr"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Fired"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Hits"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 80
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "lg",
+                "showHeader": true,
+                "sortBy": []
+              }
+            },
+            "version": "13.1.0-25241150568"
+          }
+        }
+      },
+      "panel-171": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "grafana-mongodb-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$unwind\":\"$monsters\"},{\"$replaceRoot\":{\"newRoot\":\"$monsters\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"Marathon\"}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"🪦\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"👊\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" punch kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"🫥\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\"s spared\"]},\"input\":\"$$this\"}},0]}}]}}}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"🪦\":{\"$gt\":0}}}])",
+                        "query": "marathon-game-data.marathon-game-details.aggregate([\n  { '$match': { title: '${gameName}' } },\n  { '$unwind': '$monsters' },\n  { '$replaceRoot': { newRoot: '$monsters' } },\n  {\n    '$lookup': {\n      from: 'marathon-level-data',\n      pipeline: [\n        { '$match': { 'scenario name': '${gameName}' } }\n      ],\n      as: 'levelDocs'\n    }\n  },\n  {\n    '$addFields': {\n      '🪦': { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: { '$concat': ['$metricPrefix', ' kills']       }, input: '$$this' } }, 0] } }] } } },\n      '👊': { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: { '$concat': ['$metricPrefix', ' punch kills'] }, input: '$$this' } }, 0] } }] } } },\n      '🫥': { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: { '$concat': ['$metricPrefix', 's spared']     }, input: '$$this' } }, 0] } }] } } }\n    }\n  },\n  { '$unset': 'levelDocs' },\n  { '$match': { '🪦': { '$gt': 0 } } }\n])",
+                        "queryType": "query",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {
+                        "metricPrefix": true
+                      },
+                      "includeByName": {},
+                      "indexByName": {
+                        "image": 0,
+                        "metricPrefix": 5,
+                        "name": 1,
+                        "👊": 3,
+                        "🪦": 2,
+                        "🫥": 4
+                      },
+                      "renameByName": {
+                        "image": " ",
+                        "name": "Enemy",
+                        "👊": "",
+                        "🪦": "",
+                        "🪶": "",
+                        "🫥": ""
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 171,
+          "links": [],
+          "title": "",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "image"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "image"
+                        }
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 50
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "lg",
+                "showHeader": true,
+                "sortBy": []
+              }
+            },
+            "version": "13.1.0-25241150568"
+          }
+        }
+      },
+      "panel-2": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 2,
+          "links": [],
+          "title": "",
+          "transparent": true,
+          "vizConfig": {
+            "group": "text",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Accuracy"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": " "
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "  "
+                    },
+                    "properties": []
+                  }
+                ]
+              },
+              "options": {
+                "code": {
+                  "language": "plaintext",
+                  "showLineNumbers": false,
+                  "showMiniMap": false
+                },
+                "content": "\u003cimg src=\"${logoUrl}\" alt=\"${gameName} logo\" /\u003e",
+                "mode": "html"
+              }
+            },
+            "version": "13.1.0-25241150568"
+          }
+        }
+      },
+      "panel-200": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "grafana-mongodb-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "query": "marathon-game-data.marathon-level-data.aggregate([\n  {\n    $match: {\n      'scenario name': '${gameName}'\n    }\n  },\n  {\n    $group: {\n      _id: null,\n      deaths: {\n        $sum: { $toInt: { $ifNull: ['$deaths', 0] } }\n      },\n      playtime: {\n        $sum: {\n          $divide: [\n            {\n              $subtract: [\n                { $toInt: { $ifNull: ['$end tick', 0] } },\n                { $toInt: { $ifNull: ['$start tick', 0] } }\n              ]\n            },\n            30\n          ]\n        }\n      }\n    }\n  },\n  {\n    $project: {\n      _id: 0,\n      deaths: 1,\n      playtime: 1\n    }\n  }\n])\n",
+                        "queryType": "query"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "deaths": 1,
+                        "playtime": 0
+                      },
+                      "renameByName": {
+                        "deaths": "🪦 Deaths",
+                        "playtime": "⏲️ Playtime"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 200,
+          "links": [],
+          "title": "",
+          "transparent": true,
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "playtime",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "unit",
+                        "value": "s"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true,
+                "sortBy": []
+              }
+            },
+            "version": "13.1.0-25241150568"
+          }
+        }
+      },
+      "panel-201": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "grafana-mongodb-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "query": "marathon-game-data.marathon-level-data.aggregate([\n  {\n    $match: {\n      'scenario name': '${gameName}'\n    }\n  },\n  {\n    $project: {\n      _id: 0,\n      date: '$date',\n      level: { $add: [{ $toInt: { $ifNull: ['$level index', 0] } }, 1] },\n      playTime: {\n        $divide: [\n          {\n            $subtract: [\n              { $toInt: { $ifNull: ['$end tick', 0] } },\n              { $toInt: { $ifNull: ['$start tick', 0] } }\n            ]\n          },\n          30\n        ]\n      },\n      difficulty: '$difficulty',\n      monsterKills: {\n        $reduce: {\n          input: {\n            $filter: {\n              input: { $objectToArray: '$$ROOT' },\n              cond: {\n                $and: [\n                  { $regexMatch: { input: '$$this.k', regex: ' kills$' } },\n                  { $not: { $regexMatch: { input: '$$this.k', regex: 'punch kills$' } } }\n                ]\n              }\n            }\n          },\n          initialValue: 0,\n          in: { $add: ['$$value', { $toInt: { $ifNull: ['$$this.v', 0] } }] }\n        }\n      },\n      result: {\n        $cond: [\n          { $eq: [{ $toInt: { $ifNull: ['$level completed', 0] } }, 1] },\n          'finished',\n          {\n            $cond: [\n              { $eq: [{ $toInt: { $ifNull: ['$deaths', 0] } }, 1] },\n              'died',\n              ''\n            ]\n          }\n        ]\n      }\n    }\n  },\n  {\n    $sort: { date: 1 }\n  }\n])\n",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "grafana-mongodb-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "query": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: { title: '${gameName}' } },\n  { $unwind: { path: '$levels', includeArrayIndex: 'levelNumber' } },\n  { $project: { _id: 0, level: { $add: ['$levelNumber', 1] }, levelName: '$levels.title' } }\n])\n",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "joinByField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "byField": "level",
+                      "mode": "outer"
+                    }
+                  }
+                },
+                {
+                  "group": "filterByValue",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "isNull",
+                            "options": {}
+                          },
+                          "fieldName": "date"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "exclude"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "date": 0,
+                        "difficulty": 3,
+                        "level": 1,
+                        "levelName": 2,
+                        "monsterKills": 5,
+                        "playTime": 4,
+                        "result": 6
+                      },
+                      "renameByName": {
+                        "date": "Date",
+                        "difficulty": "Difficulty",
+                        "level": "Level",
+                        "levelName": "Level Name",
+                        "monsterKills": "Monster Kills",
+                        "playTime": "Play Time",
+                        "result": "Result"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 201,
+          "links": [],
+          "title": "",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Date"
+                    },
+                    "properties": [
+                      {
+                        "id": "unit",
+                        "value": "dateTimeAsIso"
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 183
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Play Time"
+                    },
+                    "properties": [
+                      {
+                        "id": "unit",
+                        "value": "s"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Level"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 60
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": false,
+                            "title": "Go to Level",
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields[\"Level Name\"]}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Difficulty"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 124
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Level Name"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 579
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": false,
+                            "title": "Go to Level",
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields[\"Level Name\"]}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": true,
+                    "displayName": "Date"
+                  }
+                ]
+              }
+            },
+            "version": "13.1.0-25241150568"
+          }
+        }
+      },
+      "panel-4": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 4,
+          "links": [],
+          "title": "",
+          "transparent": true,
+          "vizConfig": {
+            "group": "text",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Accuracy"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": " "
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "  "
+                    },
+                    "properties": []
+                  }
+                ]
+              },
+              "options": {
+                "code": {
+                  "language": "plaintext",
+                  "showLineNumbers": false,
+                  "showMiniMap": false
+                },
+                "content": "# ${gameName}",
+                "mode": "markdown"
+              }
+            },
+            "version": "13.1.0-25241150568"
+          }
+        }
+      },
+      "panel-7": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 7,
+          "links": [],
+          "title": "",
+          "transparent": true,
+          "vizConfig": {
+            "group": "text",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Accuracy"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": " "
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "  "
+                    },
+                    "properties": []
+                  }
+                ]
+              },
+              "options": {
+                "code": {
+                  "language": "plaintext",
+                  "showLineNumbers": false,
+                  "showMiniMap": false
+                },
+                "content": "## ${gameReleaseDate}",
+                "mode": "markdown"
+              }
+            },
+            "version": "13.1.0-25241150568"
+          }
+        }
+      },
+      "panel-8": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "grafana-mongodb-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "query": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: {title: '$gameName'}},\n  { $unwind: {\n    path: '$levels',\n    includeArrayIndex: 'levelNumber'\n  }},\n  { $project: { _id: 0, levelNumber: { $add: ['$levelNumber', 1] }, level: '$levels.title', mapUrl: '$levels.mapUrl'}}\n])\n",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "grafana-mongodb-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "query": "marathon-game-data.marathon-level-data.aggregate([\n  {\n    $match: {\n      'scenario name': '${gameName}',\n    }\n  },\n  {\n    $group: {\n      _id: { $add: [{ $toInt: { $ifNull: ['$level index', 0] } }, 1] },\n      completions: { $sum: { $toInt: { $ifNull: ['$level completed', 0] } } },\n      deaths: { $sum: { $toInt: { $ifNull: ['$deaths', 0] } } },\n      playtime: {\n        $sum: {\n          $divide: [\n            {\n              $subtract: [\n                { $toInt: { $ifNull: ['$end tick', 0] } },\n                { $toInt: { $ifNull: ['$start tick', 0] } }\n              ]\n            },\n            30\n          ]\n        }\n      }\n    }\n  },\n  {\n    $project: {\n      _id: 0,\n      levelNumber: '$_id',\n      completions: 1,\n      deaths: 1,\n      playtime: 1\n    }\n  }\n])\n",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "joinByField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "byField": "levelNumber",
+                      "mode": "outer"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "completions": 4,
+                        "deaths": 5,
+                        "level": 2,
+                        "levelNumber": 0,
+                        "mapUrl": 1,
+                        "playtime": 3
+                      },
+                      "renameByName": {
+                        "completions": "Completions",
+                        "deaths": "Deaths",
+                        "level": "Level",
+                        "levelNumber": " ",
+                        "mapUrl": "Map",
+                        "playtime": "Playtime"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 8,
+          "links": [],
+          "title": "",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": " "
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 74
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": false,
+                            "title": "Go to Level",
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields.Level}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Map"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "image"
+                        }
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Playtime"
+                    },
+                    "properties": [
+                      {
+                        "id": "unit",
+                        "value": "s"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Level"
+                    },
+                    "properties": [
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": false,
+                            "title": "Go to Level",
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields.Level}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "lg",
+                "frameIndex": 1,
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": false,
+                    "displayName": " "
+                  }
+                ]
+              }
+            },
+            "version": "13.1.0-25241150568"
+          }
+        }
+      }
+    },
+    "layout": {
+      "kind": "RowsLayout",
+      "spec": {
+        "rows": [
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "collapse": false,
+              "hideHeader": true,
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-2"
+                        },
+                        "height": 4,
+                        "width": 2,
+                        "x": 0,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-4"
+                        },
+                        "height": 2,
+                        "width": 14,
+                        "x": 2,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-200"
+                        },
+                        "height": 4,
+                        "width": 8,
+                        "x": 16,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-7"
+                        },
+                        "height": 2,
+                        "width": 14,
+                        "x": 2,
+                        "y": 2
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-8"
+                        },
+                        "height": 18,
+                        "width": 24,
+                        "x": 0,
+                        "y": 4
+                      }
+                    }
+                  ]
+                }
+              },
+              "title": "New row"
+            }
+          },
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "collapse": false,
+              "layout": {
+                "kind": "AutoGridLayout",
+                "spec": {
+                  "columnWidthMode": "standard",
+                  "items": [
+                    {
+                      "kind": "AutoGridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-201"
+                        }
+                      }
+                    }
+                  ],
+                  "maxColumnCount": 3,
+                  "rowHeightMode": "standard"
+                }
+              },
+              "title": "Play History"
+            }
+          },
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "collapse": false,
+              "layout": {
+                "kind": "AutoGridLayout",
+                "spec": {
+                  "columnWidthMode": "standard",
+                  "items": [
+                    {
+                      "kind": "AutoGridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-145"
+                        }
+                      }
+                    }
+                  ],
+                  "maxColumnCount": 3,
+                  "rowHeightMode": "standard"
+                }
+              },
+              "title": "Weapons Summary"
+            }
+          },
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "collapse": false,
+              "fillScreen": false,
+              "hideHeader": false,
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-171"
+                        },
+                        "height": 30,
+                        "width": 24,
+                        "x": 0,
+                        "y": 0
+                      }
+                    }
+                  ]
+                }
+              },
+              "title": "Enemies Summary"
+            }
+          }
+        ]
+      }
+    },
+    "links": [
+      {
+        "asDropdown": false,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [],
+        "targetBlank": true,
+        "title": "Source (GitHub)",
+        "tooltip": "View source file in repository",
+        "type": "link",
+        "url": "https://github.com/petewall/dashboards/blob/main/marathon/game.json"
+      }
+    ],
+    "liveNow": false,
+    "preload": false,
+    "tags": [],
+    "timeSettings": {
+      "autoRefresh": "",
+      "autoRefreshIntervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "fiscalYearStartMonth": 0,
+      "from": "now-6h",
+      "hideTimepicker": false,
+      "timezone": "browser",
+      "to": "now"
+    },
+    "title": "Game",
+    "variables": [
+      {
+        "kind": "DatasourceVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": "cloud-db-mongodb-datasource",
+            "value": "ffbxubp3owa9sc"
+          },
+          "hide": "dontHide",
+          "includeAll": false,
+          "label": "Data source",
+          "multi": false,
+          "name": "datasource",
+          "options": [],
+          "pluginId": "grafana-mongodb-datasource",
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "skipUrlSync": false
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": "Marathon",
+            "value": "Marathon"
+          },
+          "definition": "marathon-game-data.marathon-game-details.aggregate([\n  { $project: { _id: 0, title: '$title'}}\n])\n",
+          "description": "",
+          "hide": "dontHide",
+          "includeAll": false,
+          "label": "Game",
+          "multi": false,
+          "name": "gameName",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "${datasource}"
+            },
+            "group": "grafana-mongodb-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$project\":{\"_id\":0,\"title\":\"$title\"}}])\n",
+              "query": "marathon-game-data.marathon-game-details.aggregate([\n  { $project: { _id: 0, title: '$title'}}\n])\n",
+              "queryType": "query"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": false,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": true,
+          "current": {
+            "text": "https://raw.githubusercontent.com/petewall/marathon-dashboards/refs/heads/main/images/M1_Logo.png",
+            "value": "https://raw.githubusercontent.com/petewall/marathon-dashboards/refs/heads/main/images/M1_Logo.png"
+          },
+          "definition": "marathon-game-data.marathon-game-details.aggregate([\n  {$match: {title: '${gameName}'}},\n  {$project: {_id: 0, logoUrl: '$logo'}}\n])\n",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "label": "",
+          "multi": false,
+          "name": "logoUrl",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "${datasource}"
+            },
+            "group": "grafana-mongodb-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$project\":{\"_id\":0,\"logoUrl\":\"$logo\"}}])\n",
+              "query": "marathon-game-data.marathon-game-details.aggregate([\n  {$match: {title: '${gameName}'}},\n  {$project: {_id: 0, logoUrl: '$logo'}}\n])\n",
+              "queryType": "query"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": false,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": "1994",
+            "value": "1994"
+          },
+          "definition": "marathon-game-data.marathon-game-details.aggregate([\n  {$match: {title: '${gameName}'}},\n  {$project: {_id: 0, releaseDate: '$releaseDate'}}\n])\n",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "label": "",
+          "multi": false,
+          "name": "gameReleaseDate",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "${datasource}"
+            },
+            "group": "grafana-mongodb-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$project\":{\"_id\":0,\"releaseDate\":\"\"}}])\n",
+              "query": "marathon-game-data.marathon-game-details.aggregate([\n  {$match: {title: '${gameName}'}},\n  {$project: {_id: 0, releaseDate: '$releaseDate'}}\n])\n",
+              "queryType": "query"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": false,
+          "sort": "disabled"
+        }
+      }
+    ]
+  }
+}
