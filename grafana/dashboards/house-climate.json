@@ -1012,7 +1012,7 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "fixedColor": "blue",
+                    "fixedColor": "purple",
                     "mode": "shades"
                   },
                   "custom": {
