@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
+          "name": "Annotations \u0026 Alerts",
           "query": {
             "group": "grafana",
             "kind": "DataQuery",
@@ -480,7 +480,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "(climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"heat\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) > 0) or (climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_low_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) > 0)",
+                        "expr": "(climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"heat\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) \u003e 0) or (climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_low_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) \u003e 0)",
                         "instant": false,
                         "legendFormat": "Desired Heat",
                         "range": true
@@ -502,7 +502,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "(climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"cool\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) > 0) or (climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_high_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) > 0)",
+                        "expr": "(climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"cool\"} * on(entity)(climate_target_temperature_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) \u003e 0) or (climate_mode{entity=~\"climate.(${floor_sensors.value:raw})\", mode=\"heat_cool\"} * on(entity)(climate_target_temperature_high_celsius{entity=~\"climate.(${floor_sensors.value:raw})\"} * 1.8 + 32) \u003e 0)",
                         "instant": false,
                         "legendFormat": "Desired Cool",
                         "range": true
@@ -568,7 +568,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "climate_action{action=\"heating\", entity=~\"climate.(${floor_sensors.value:raw})\"} > 0",
+                        "expr": "climate_action{action=\"heating\", entity=~\"climate.(${floor_sensors.value:raw})\"} \u003e 0",
                         "instant": false,
                         "legendFormat": "🔥 {{friendly_name}}",
                         "range": true
@@ -590,7 +590,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "climate_action{action=\"cooling\", entity=~\"climate.(${floor_sensors.value:raw})\"} > 0",
+                        "expr": "climate_action{action=\"cooling\", entity=~\"climate.(${floor_sensors.value:raw})\"} \u003e 0",
                         "instant": false,
                         "legendFormat": "❄️ {{friendly_name}}",
                         "range": true
@@ -619,7 +619,7 @@
           "description": "",
           "id": 92,
           "links": [],
-          "title": "Temperature & Humidity",
+          "title": "Temperature \u0026 Humidity",
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -1004,7 +1004,7 @@
           "description": "",
           "id": 94,
           "links": [],
-          "title": "CO₂ & VOC",
+          "title": "CO₂ \u0026 VOC",
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -1012,7 +1012,7 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "fixedColor": "green",
+                    "fixedColor": "blue",
                     "mode": "shades"
                   },
                   "custom": {
@@ -1081,7 +1081,7 @@
                       {
                         "id": "color",
                         "value": {
-                          "fixedColor": "yellow",
+                          "fixedColor": "red",
                           "mode": "shades"
                         }
                       }
@@ -1226,7 +1226,7 @@
         "title": "Source (GitHub)",
         "tooltip": "View source file in repository",
         "type": "link",
-        "url": "https://github.com/petewall/dashboards/blob/main/house-climate.json"
+        "url": "https://github.com/petewall/OpenSourceNorth-2026/blob/main/grafana/dashboards/house-climate.json"
       }
     ],
     "liveNow": false,
@@ -1247,7 +1247,7 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-3h",
+      "from": "now-6h",
       "hideTimepicker": false,
       "timezone": "browser",
       "to": "now"
