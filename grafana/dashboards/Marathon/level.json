@@ -272,10 +272,10 @@
                       },
                       "renameByName": {
                         "image": " ",
-                        "kills": "🪦",
+                        "kills": "\ud83e\udea6",
                         "name": "  ",
-                        "punchKills": "👊",
-                        "spared": "🫥"
+                        "punchKills": "\ud83d\udc4a",
+                        "spared": "\ud83e\udee5"
                       }
                     }
                   }
@@ -479,9 +479,9 @@
                       "includeByName": {},
                       "indexByName": {},
                       "renameByName": {
-                        "completions": "🏁 Finishes",
-                        "deaths": "🪦 Deaths",
-                        "playtime": "⏲️ Playtime"
+                        "completions": "\ud83c\udfc1 Finishes",
+                        "deaths": "\ud83e\udea6 Deaths",
+                        "playtime": "\u23f2\ufe0f Playtime"
                       }
                     }
                   }
@@ -758,7 +758,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "### ← <a href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${prevLevelName}\">${prevLevelName}</a>",
+                "content": "### \u2190 <a href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${prevLevelName}\">${prevLevelName}</a>",
                 "mode": "markdown"
               }
             },
@@ -796,7 +796,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "### <a href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${nextLevelName}\">${nextLevelName}</a> →",
+                "content": "### <a href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${nextLevelName}\">${nextLevelName}</a> \u2192",
                 "mode": "markdown"
               }
             },
@@ -1128,7 +1128,7 @@
             "kind": "DataQuery",
             "spec": {
               "collection": "marathon-game-details",
-              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelNumber\"}},{\"$match\":{\"levels.title\":\"${levelNames}\"}},{\"$project\":{\"_id\":0,\"value\":{\"$add\":[\"$levelNumber\",1]}}}]",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelNumber\"}},{\"$match\":{\"levels.title\":\"${levelNames}\"}},{\"$project\":{\"_id\":0,\"value\":{\"$toString\":{\"$add\":[\"$levelNumber\",1]}}}}]",
               "queryLanguage": "json"
             },
             "version": "v0"
