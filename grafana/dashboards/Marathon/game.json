@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
+          "name": "Annotations \u0026 Alerts",
           "query": {
             "datasource": {
               "name": "-- Grafana --"
@@ -49,8 +49,8 @@
                       "kind": "DataQuery",
                       "spec": {
                         "collection": "marathon-game-details",
-                        "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":\"$weapons\"},{\"$replaceRoot\":{\"newRoot\":\"$weapons\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"${gameName}\"}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"fired\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$firedMetric\",\"input\":\"$$this\"}},0]}}]}}},\"hits\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$hitMetric\",\"input\":\"$$this\"}},0]}}]}}}}},{\"$addFields\":{\"accuracy\":{\"$cond\":[{\"$eq\":[\"$fired\",0]},0,{\"$multiply\":[100,{\"$divide\":[\"$hits\",\"$fired\"]}]}]}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"fired\":{\"$gt\":0}}}]",
-                        "queryLanguage": "json"
+                        "queryLanguage": "json",
+                        "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":\"$weapons\"},{\"$replaceRoot\":{\"newRoot\":\"$weapons\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"${gameName}\"}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"fired\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$firedMetric\",\"input\":\"$$this\"}},0]}}]}}},\"hits\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$hitMetric\",\"input\":\"$$this\"}},0]}}]}}}}},{\"$addFields\":{\"accuracy\":{\"$cond\":[{\"$eq\":[\"$fired\",0]},0,{\"$multiply\":[100,{\"$divide\":[\"$hits\",\"$fired\"]}]}]}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"fired\":{\"$gt\":0}}}]"
                       },
                       "version": "v0"
                     },
@@ -212,7 +212,7 @@
                 "sortBy": []
               }
             },
-            "version": "13.1.0-25241150568"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -235,8 +235,8 @@
                       "kind": "DataQuery",
                       "spec": {
                         "collection": "marathon-game-details",
-                        "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":\"$monsters\"},{\"$replaceRoot\":{\"newRoot\":\"$monsters\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"${gameName}\"}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"\\ud83e\\udea6\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"\\ud83d\\udc4a\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" punch kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"\\ud83e\\udee5\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\"s spared\"]},\"input\":\"$$this\"}},0]}}]}}}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"\\ud83e\\udea6\":{\"$gt\":0}}}]",
-                        "queryLanguage": "json"
+                        "queryLanguage": "json",
+                        "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":\"$monsters\"},{\"$replaceRoot\":{\"newRoot\":\"$monsters\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"${gameName}\"}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"\\ud83e\\udea6\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"\\ud83d\\udc4a\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" punch kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"\\ud83e\\udee5\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\"s spared\"]},\"input\":\"$$this\"}},0]}}]}}}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"\\ud83e\\udea6\":{\"$gt\":0}}}]"
                       },
                       "version": "v0"
                     },
@@ -334,7 +334,7 @@
                 "sortBy": []
               }
             },
-            "version": "13.1.0-25241150568"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -390,11 +390,11 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "<img src=\"${logoUrl}\" alt=\"${gameName} logo\" />",
+                "content": "\u003cimg src=\"${logoUrl}\" alt=\"${gameName} logo\" /\u003e",
                 "mode": "html"
               }
             },
-            "version": "13.1.0-25241150568"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -417,8 +417,8 @@
                       "kind": "DataQuery",
                       "spec": {
                         "collection": "marathon-level-data",
-                        "queryText": "[{\"$match\":{\"scenario name\":\"${gameName}\"}},{\"$group\":{\"_id\":null,\"deaths\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}}},\"playtime\":{\"$sum\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]}}}},{\"$project\":{\"_id\":0,\"deaths\":1,\"playtime\":1}}]",
-                        "queryLanguage": "json"
+                        "queryLanguage": "json",
+                        "queryText": "[{\"$match\":{\"scenario name\":\"${gameName}\"}},{\"$group\":{\"_id\":null,\"deaths\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}}},\"playtime\":{\"$sum\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]}}}},{\"$project\":{\"_id\":0,\"deaths\":1,\"playtime\":1}}]"
                       },
                       "version": "v0"
                     },
@@ -509,7 +509,7 @@
                 "sortBy": []
               }
             },
-            "version": "13.1.0-25241150568"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -532,8 +532,8 @@
                       "kind": "DataQuery",
                       "spec": {
                         "collection": "marathon-level-data",
-                        "queryText": "[{\"$match\":{\"scenario name\":\"${gameName}\"}},{\"$project\":{\"_id\":0,\"date\":\"$date\",\"level\":{\"$add\":[{\"$toInt\":{\"$ifNull\":[\"$level index\",0]}},1]},\"playTime\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]},\"difficulty\":\"$difficulty\",\"monsterKills\":{\"$reduce\":{\"input\":{\"$filter\":{\"input\":{\"$objectToArray\":\"$$ROOT\"},\"cond\":{\"$and\":[{\"$regexMatch\":{\"input\":\"$$this.k\",\"regex\":\" kills$\"}},{\"$not\":{\"$regexMatch\":{\"input\":\"$$this.k\",\"regex\":\"punch kills$\"}}}]}}},\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[\"$$this.v\",0]}}]}}},\"result\":{\"$cond\":[{\"$eq\":[{\"$toInt\":{\"$ifNull\":[\"$level completed\",0]}},1]},\"finished\",{\"$cond\":[{\"$eq\":[{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}},1]},\"died\",\"\"]}]}}},{\"$sort\":{\"date\":1}}]",
-                        "queryLanguage": "json"
+                        "queryLanguage": "json",
+                        "queryText": "[{\"$match\":{\"scenario name\":\"${gameName}\"}},{\"$project\":{\"_id\":0,\"date\":\"$date\",\"level\":{\"$add\":[{\"$toInt\":{\"$ifNull\":[\"$level index\",0]}},1]},\"playTime\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]},\"difficulty\":\"$difficulty\",\"monsterKills\":{\"$reduce\":{\"input\":{\"$filter\":{\"input\":{\"$objectToArray\":\"$$ROOT\"},\"cond\":{\"$and\":[{\"$regexMatch\":{\"input\":\"$$this.k\",\"regex\":\" kills$\"}},{\"$not\":{\"$regexMatch\":{\"input\":\"$$this.k\",\"regex\":\"punch kills$\"}}}]}}},\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[\"$$this.v\",0]}}]}}},\"result\":{\"$cond\":[{\"$eq\":[{\"$toInt\":{\"$ifNull\":[\"$level completed\",0]}},1]},\"finished\",{\"$cond\":[{\"$eq\":[{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}},1]},\"died\",\"\"]}]}}},{\"$sort\":{\"date\":1}}]"
                       },
                       "version": "v0"
                     },
@@ -552,8 +552,8 @@
                       "kind": "DataQuery",
                       "spec": {
                         "collection": "marathon-game-details",
-                        "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelNumber\"}},{\"$project\":{\"_id\":0,\"level\":{\"$add\":[\"$levelNumber\",1]},\"levelName\":\"$levels.title\"}}]",
-                        "queryLanguage": "json"
+                        "queryLanguage": "json",
+                        "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelNumber\"}},{\"$project\":{\"_id\":0,\"level\":{\"$add\":[\"$levelNumber\",1]},\"levelName\":\"$levels.title\"}}]"
                       },
                       "version": "v0"
                     },
@@ -569,7 +569,7 @@
                   "spec": {
                     "options": {
                       "byField": "level",
-                      "mode": "outer"
+                      "mode": "outerTabular"
                     }
                   }
                 },
@@ -584,7 +584,7 @@
                             "id": "isNull",
                             "options": {}
                           },
-                          "fieldName": "date"
+                          "fieldName": "date A"
                         }
                       ],
                       "match": "any",
@@ -600,22 +600,28 @@
                       "excludeByName": {},
                       "includeByName": {},
                       "indexByName": {
-                        "date": 0,
-                        "difficulty": 3,
+                        "date A": 0,
+                        "difficulty A": 5,
                         "level": 1,
-                        "levelName": 2,
-                        "monsterKills": 5,
-                        "playTime": 4,
-                        "result": 6
+                        "levelName B": 2,
+                        "monsterKills A": 6,
+                        "playTime A": 4,
+                        "result A": 3
                       },
                       "renameByName": {
                         "date": "Date",
+                        "date A": "Date",
                         "difficulty": "Difficulty",
+                        "difficulty A": "Difficulty",
                         "level": "Level",
                         "levelName": "Level Name",
+                        "levelName B": "Level Name",
                         "monsterKills": "Monster Kills",
+                        "monsterKills A": "🪦 Monster Kills",
                         "playTime": "Play Time",
-                        "result": "Result"
+                        "playTime A": "Play Time",
+                        "result": "Result",
+                        "result A": "Result"
                       }
                     }
                   }
@@ -664,7 +670,8 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "Date"
+                      "options": "date",
+                      "scope": "series"
                     },
                     "properties": [
                       {
@@ -680,7 +687,8 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "Play Time"
+                      "options": "playTime",
+                      "scope": "series"
                     },
                     "properties": [
                       {
@@ -692,7 +700,8 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "Level"
+                      "options": "level",
+                      "scope": "series"
                     },
                     "properties": [
                       {
@@ -705,7 +714,7 @@
                           {
                             "targetBlank": false,
                             "title": "Go to Level",
-                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${__data.fields[\"Level Name\"]}"
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields[\"Level Name\"]}"
                           }
                         ]
                       }
@@ -714,7 +723,8 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "Difficulty"
+                      "options": "difficulty",
+                      "scope": "series"
                     },
                     "properties": [
                       {
@@ -726,7 +736,8 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "Level Name"
+                      "options": "levelName",
+                      "scope": "series"
                     },
                     "properties": [
                       {
@@ -739,7 +750,7 @@
                           {
                             "targetBlank": false,
                             "title": "Go to Level",
-                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${__data.fields[\"Level Name\"]}"
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields[\"Level Name\"]}"
                           }
                         ]
                       }
@@ -758,7 +769,7 @@
                 ]
               }
             },
-            "version": "13.1.0-25241150568"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -818,7 +829,7 @@
                 "mode": "markdown"
               }
             },
-            "version": "13.1.0-25241150568"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -878,7 +889,7 @@
                 "mode": "markdown"
               }
             },
-            "version": "13.1.0-25241150568"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -901,8 +912,8 @@
                       "kind": "DataQuery",
                       "spec": {
                         "collection": "marathon-game-details",
-                        "queryText": "[{\"$match\":{\"title\":\"$gameName\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelNumber\"}},{\"$project\":{\"_id\":0,\"levelNumber\":{\"$add\":[\"$levelNumber\",1]},\"level\":\"$levels.title\",\"mapUrl\":\"$levels.mapUrl\"}}]",
-                        "queryLanguage": "json"
+                        "queryLanguage": "json",
+                        "queryText": "[{\"$match\":{\"title\":\"$gameName\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelNumber\"}},{\"$project\":{\"_id\":0,\"levelNumber\":{\"$add\":[\"$levelNumber\",1]},\"level\":\"$levels.title\",\"mapUrl\":\"$levels.mapUrl\"}}]"
                       },
                       "version": "v0"
                     },
@@ -921,8 +932,8 @@
                       "kind": "DataQuery",
                       "spec": {
                         "collection": "marathon-level-data",
-                        "queryText": "[{\"$match\":{\"scenario name\":\"${gameName}\"}},{\"$group\":{\"_id\":{\"$add\":[{\"$toInt\":{\"$ifNull\":[\"$level index\",0]}},1]},\"completions\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$level completed\",0]}}},\"deaths\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}}},\"playtime\":{\"$sum\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]}}}},{\"$project\":{\"_id\":0,\"levelNumber\":\"$_id\",\"completions\":1,\"deaths\":1,\"playtime\":1}}]",
-                        "queryLanguage": "json"
+                        "queryLanguage": "json",
+                        "queryText": "[{\"$match\":{\"scenario name\":\"${gameName}\"}},{\"$group\":{\"_id\":{\"$add\":[{\"$toInt\":{\"$ifNull\":[\"$level index\",0]}},1]},\"completions\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$level completed\",0]}}},\"deaths\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}}},\"playtime\":{\"$sum\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]}}}},{\"$project\":{\"_id\":0,\"levelNumber\":\"$_id\",\"completions\":1,\"deaths\":1,\"playtime\":1}}]"
                       },
                       "version": "v0"
                     },
@@ -959,11 +970,16 @@
                       },
                       "renameByName": {
                         "completions": "Completions",
+                        "completions B": "🏁 Completions",
                         "deaths": "Deaths",
+                        "deaths B": "🪦 Deaths",
                         "level": "Level",
+                        "level A": "Level",
                         "levelNumber": " ",
                         "mapUrl": "Map",
-                        "playtime": "Playtime"
+                        "mapUrl A": "Map",
+                        "playtime": "Playtime",
+                        "playtime B": "⏲️ Playtime"
                       }
                     }
                   }
@@ -1012,7 +1028,8 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": " "
+                      "options": "levelNumber",
+                      "scope": "series"
                     },
                     "properties": [
                       {
@@ -1025,7 +1042,7 @@
                           {
                             "targetBlank": false,
                             "title": "Go to Level",
-                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${__data.fields.Level}"
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields.Level}"
                           }
                         ]
                       }
@@ -1034,7 +1051,8 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "Map"
+                      "options": "mapUrl",
+                      "scope": "series"
                     },
                     "properties": [
                       {
@@ -1052,7 +1070,8 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "Playtime"
+                      "options": "playtime",
+                      "scope": "series"
                     },
                     "properties": [
                       {
@@ -1064,7 +1083,8 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "Level"
+                      "options": "level",
+                      "scope": "series"
                     },
                     "properties": [
                       {
@@ -1073,7 +1093,7 @@
                           {
                             "targetBlank": false,
                             "title": "Go to Level",
-                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${__data.fields.Level}"
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields.Level}"
                           }
                         ]
                       }
@@ -1093,7 +1113,7 @@
                 ]
               }
             },
-            "version": "13.1.0-25241150568"
+            "version": "13.1.0-25229989571"
           }
         }
       }
@@ -1277,7 +1297,7 @@
         "title": "Source (GitHub)",
         "tooltip": "View source file in repository",
         "type": "link",
-        "url": "https://github.com/petewall/dashboards/blob/main/marathon/game.json"
+        "url": "https://github.com/petewall/OpenSourceNorth-2026/blob/main/grafana/dashboards/Marathon/game.json"
       }
     ],
     "liveNow": false,
@@ -1310,8 +1330,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "cloud-db-mongodb-datasource",
-            "value": "ffbxubp3owa9sc"
+            "text": "MongoDB",
+            "value": "mongodb"
           },
           "hide": "dontHide",
           "includeAll": false,
@@ -1349,8 +1369,8 @@
             "kind": "DataQuery",
             "spec": {
               "collection": "marathon-game-details",
-              "queryText": "[{\"$project\":{\"_id\":0,\"value\":\"$title\"}}]",
-              "queryLanguage": "json"
+              "queryLanguage": "json",
+              "queryText": "[{\"$project\":{\"_id\":0,\"value\":\"$title\"}}]"
             },
             "version": "v0"
           },
@@ -1384,8 +1404,8 @@
             "kind": "DataQuery",
             "spec": {
               "collection": "marathon-game-details",
-              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$project\":{\"_id\":0,\"value\":\"$logo\"}}]",
-              "queryLanguage": "json"
+              "queryLanguage": "json",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$project\":{\"_id\":0,\"value\":\"$logo\"}}]"
             },
             "version": "v0"
           },
@@ -1419,8 +1439,8 @@
             "kind": "DataQuery",
             "spec": {
               "collection": "marathon-game-details",
-              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$project\":{\"_id\":0,\"value\":\"$releaseDate\"}}]",
-              "queryLanguage": "json"
+              "queryLanguage": "json",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$project\":{\"_id\":0,\"value\":\"$releaseDate\"}}]"
             },
             "version": "v0"
           },
