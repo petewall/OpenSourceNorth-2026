@@ -64,7 +64,7 @@
           "description": "",
           "id": 88,
           "links": [],
-          "title": "🌡️",
+          "title": "🌡️ Temperature",
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
@@ -126,7 +126,7 @@
                 "textMode": "auto"
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25254801320"
           }
         }
       },
@@ -167,7 +167,7 @@
           "description": "",
           "id": 89,
           "links": [],
-          "title": "💧",
+          "title": "💧Humidity",
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
@@ -229,7 +229,7 @@
                 "textMode": "auto"
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25254801320"
           }
         }
       },
@@ -270,7 +270,7 @@
           "description": "",
           "id": 90,
           "links": [],
-          "title": "✨",
+          "title": "✨VOC",
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
@@ -324,7 +324,7 @@
                 "textMode": "auto"
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25254801320"
           }
         }
       },
@@ -365,7 +365,7 @@
           "description": "",
           "id": 91,
           "links": [],
-          "title": "☁️",
+          "title": "☁️ CO₂",
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
@@ -435,7 +435,7 @@
                 "textMode": "auto"
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25254801320"
           }
         }
       },
@@ -930,7 +930,7 @@
                 }
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25254801320"
           }
         }
       },
@@ -1107,7 +1107,7 @@
                 }
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25254801320"
           }
         }
       }

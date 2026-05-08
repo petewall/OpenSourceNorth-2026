@@ -13,13 +13,22 @@ grafana/provisioning/datasources/datasources.yaml: grafana/templates/datasources
 	export GCP_CLIENT_EMAIL=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.client_email') && \
 	export GCP_PROJECT=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.project_id') && \
 	export GCP_PRIVATE_KEY=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.private_key') && \
+	export MONGODB_URL=$$(op read "op://Lab/Cloud DB User/website") && \
+	export MONGODB_SCHEME=$$(echo "$$MONGODB_URL" | sed 's|://.*||') && \
+	export MONGODB_HOST=$$(echo "$$MONGODB_URL" | sed 's|^[^:]*://||;s|/.*||') && \
+	export MONGODB_USERNAME=$$(op read "op://Lab/Cloud DB User/username") && \
+	export MONGODB_PASSWORD=$$(op read "op://Lab/Cloud DB User/password") && \
 	yq eval ' \
 		(.datasources[] | select(.name == "Grafana Cloud Prometheus")).url = strenv(GC_METRICS_URL) | \
 		(.datasources[] | select(.name == "Grafana Cloud Prometheus")).basicAuthUser = strenv(GC_METRICS_USERNAME) | \
 		(.datasources[] | select(.name == "Grafana Cloud Prometheus")).secureJsonData.basicAuthPassword = strenv(GC_METRICS_PASSWORD) | \
 		(.datasources[] | select(.name == "Google Sheets")).jsonData.clientEmail = strenv(GCP_CLIENT_EMAIL) | \
 		(.datasources[] | select(.name == "Google Sheets")).jsonData.defaultProject = strenv(GCP_PROJECT) | \
-		(.datasources[] | select(.name == "Google Sheets")).secureJsonData.privateKey = strenv(GCP_PRIVATE_KEY) \
+		(.datasources[] | select(.name == "Google Sheets")).secureJsonData.privateKey = strenv(GCP_PRIVATE_KEY) | \
+		(.datasources[] | select(.name == "MongoDB")).jsonData.connectionStringScheme = strenv(MONGODB_SCHEME) | \
+		(.datasources[] | select(.name == "MongoDB")).jsonData.host = strenv(MONGODB_HOST) | \
+		(.datasources[] | select(.name == "MongoDB")).jsonData.username = strenv(MONGODB_USERNAME) | \
+		(.datasources[] | select(.name == "MongoDB")).secureJsonData.password = strenv(MONGODB_PASSWORD) \
 	  ' $< > $@
 
 grafana/dashboards/house-climate.json: ../dashboards/house-climate.json
@@ -117,6 +126,14 @@ prep: start grafana/resources/repository.yaml pg-seeds ## Seed the databases aft
 	psql "$${POSTGRES_URL}" -f data/pg/seeds/exercises.sql
 	psql "$${POSTGRES_URL}" -f data/pg/seeds/fitbod.sql
 	psql "$${POSTGRES_URL}" -f data/pg/seeds/workouts.sql
+
+.PHONY: check
+check:
+	@echo "Checking CO2 metrics exporter..." && curl http://localhost:9800
+	@echo "Checking Talkbox exporter..." && curl http://localhost:9186
+	@echo "Checking Talkbox logs..." && // TODO: Check that ../talkbox/logs/debug.txt is non-empty
+	@echo "Checking Talkbox transcript..." && // TODO: Check that ../talkbox/logs/transcript.txt is non-empty
+	@echo "Checking gcx..." && // TODO: Check that ../talkbox/logs/transcript.txt is non-empty
 
 .PHONY: stop
 stop: ## Stop the local services

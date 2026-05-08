@@ -1,7 +1,9 @@
-Create a Grafana dashboard called "Talk Performance" using the Prometheus and Loki data sources. Set the default time
-range to the last 1 hour with a 10s auto-refresh.
+Create a Grafana dashboard called "Talk Performance". The goal is to visualize the room climate and how fast I'm talking
+and how many filler words I use to see if they're correlated.
 
-Include these panels:
+We will use the Prometheus and Loki data sources, with a default time range to the last 1 hour with a 10s auto-refresh.
+
+We should include at least these panels:
 
 Row 1 — Environment
 * Panel 1 will be time series to plot both the CO2 and Temperature (in F°) over time
@@ -24,10 +26,11 @@ Row 3 - Talk transcript
 
 I've created a simple mockup here: dashboard-drawing.jpg
 
-When it's ready, write to a file called `talk-performance.json`.
+Other things to keep in mind:
 
-First, fetch the valid dashboard schema with: gcx resources schemas dashboard -o json
-Second, make sure you've generated valid JSON by using `jq . talk-performance.json` and fixing any errors.
-Third, use the dashboards inside `grafana/dashboards` as reference
-Fourth, feel free to use `gcx metrics query` and `gcx logs query` to fetch actual data to see how they're formatted.
-Fifth
+First, you can fetch the valid dashboard schema with: `gcx resources schemas dashboard -o json`
+Second, please ensure you've generated valid JSON by using `jq . talk-performance.json` and fixing any errors.
+Third, feel free to use the dashboards inside `grafana/dashboards` as reference
+Fourth, you can use `gcx metrics query` and `gcx logs query` to fetch actual data to see how they're formatted.
+
+When ready, save it to a file called "talk-performance.json", and also offer to push the dashboard to Grafana with gcx.

@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations \u0026 Alerts",
+          "name": "Annotations & Alerts",
           "query": {
             "datasource": {
               "name": "-- Grafana --"
@@ -45,13 +45,12 @@
                       "datasource": {
                         "name": "${datasource}"
                       },
-                      "group": "grafana-mongodb-datasource",
+                      "group": "haohanyang-mongodb-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "expand": true,
-                        "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$unwind\":\"$weapons\"},{\"$replaceRoot\":{\"newRoot\":\"$weapons\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"Marathon\",\"$expr\":{\"$eq\":[{\"$toInt\":\"$level index\"},{\"$subtract\":[{\"$toInt\":\"16\"},1]}]}}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"fired\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$firedMetric\",\"input\":\"$$this\"}},0]}}]}}},\"hits\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$hitMetric\",\"input\":\"$$this\"}},0]}}]}}}}},{\"$addFields\":{\"accuracy\":{\"$cond\":[{\"$eq\":[\"$fired\",0]},0,{\"$divide\":[\"$hits\",\"$fired\"]}]}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"fired\":{\"$gt\":0}}}])",
-                        "query": "marathon-game-data.marathon-game-details.aggregate([\n  { '$match': { title: '${gameName}' } },\n  { '$unwind': '$weapons' },\n  { '$replaceRoot': { newRoot: '$weapons' } },\n  {\n    '$lookup': {\n      from: 'marathon-level-data',\n      pipeline: [\n        {\n          '$match': {\n            'scenario name': '${gameName}',\n            '$expr': {\n              '$eq': [\n                { '$toInt': '$level index' },\n                { '$subtract': [{ '$toInt': '${levelNum}' }, 1] }\n              ]\n            }\n          }\n        }\n      ],\n      as: 'levelDocs'\n    }\n  },\n  {\n    '$addFields': {\n      fired: { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: '$firedMetric', input: '$$this' } }, 0] } }] } } },\n      hits:  { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: '$hitMetric',  input: '$$this' } }, 0] } }] } } }\n    }\n  },\n  { '$addFields': { accuracy: { '$cond': [{ '$eq': ['$fired', 0] }, 0, { '$divide': ['$hits', '$fired'] }] } } },\n  { '$unset': 'levelDocs' },\n  { '$match': { fired: { '$gt': 0 } } }\n])",
-                        "queryType": "query"
+                        "collection": "marathon-game-details",
+                        "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":\"$weapons\"},{\"$replaceRoot\":{\"newRoot\":\"$weapons\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"${gameName}\",\"$expr\":{\"$eq\":[{\"$toInt\":\"$level index\"},{\"$subtract\":[{\"$toInt\":\"${levelNum}\"},1]}]}}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"fired\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$firedMetric\",\"input\":\"$$this\"}},0]}}]}}},\"hits\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$hitMetric\",\"input\":\"$$this\"}},0]}}]}}}}},{\"$addFields\":{\"accuracy\":{\"$cond\":[{\"$eq\":[\"$fired\",0]},0,{\"$divide\":[\"$hits\",\"$fired\"]}]}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"fired\":{\"$gt\":0}}}]",
+                        "queryLanguage": "json"
                       },
                       "version": "v0"
                     },
@@ -240,13 +239,12 @@
                       "datasource": {
                         "name": "${datasource}"
                       },
-                      "group": "grafana-mongodb-datasource",
+                      "group": "haohanyang-mongodb-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "expand": true,
-                        "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$unwind\":\"$monsters\"},{\"$replaceRoot\":{\"newRoot\":\"$monsters\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"Marathon\",\"$expr\":{\"$eq\":[{\"$toInt\":\"$level index\"},{\"$subtract\":[{\"$toInt\":\"16\"},1]}]}}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"kills\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"punchKills\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" punch kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"spared\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\"s spared\"]},\"input\":\"$$this\"}},0]}}]}}}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"kills\":{\"$gt\":0}}}])",
-                        "query": "marathon-game-data.marathon-game-details.aggregate([\n  { '$match': { title: '${gameName}' } },\n  { '$unwind': '$monsters' },\n  { '$replaceRoot': { newRoot: '$monsters' } },\n  {\n    '$lookup': {\n      from: 'marathon-level-data',\n      pipeline: [\n        {\n          '$match': {\n            'scenario name': '${gameName}',\n            '$expr': {\n              '$eq': [\n                { '$toInt': '$level index' },\n                { '$subtract': [{ '$toInt': '${levelNum}' }, 1] }\n              ]\n            }\n          }\n        }\n      ],\n      as: 'levelDocs'\n    }\n  },\n  {\n    '$addFields': {\n      kills:      { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: { '$concat': ['$metricPrefix', ' kills']       }, input: '$$this' } }, 0] } }] } } },\n      punchKills: { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: { '$concat': ['$metricPrefix', ' punch kills'] }, input: '$$this' } }, 0] } }] } } },\n      spared:     { '$reduce': { input: '$levelDocs', initialValue: 0, in: { '$add': ['$$value', { '$toInt': { '$ifNull': [{ '$getField': { field: { '$concat': ['$metricPrefix', 's spared']     }, input: '$$this' } }, 0] } }] } } }\n    }\n  },\n  { '$unset': 'levelDocs' },\n  { '$match': { kills: { '$gt': 0 } } }\n])",
-                        "queryType": "query"
+                        "collection": "marathon-game-details",
+                        "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":\"$monsters\"},{\"$replaceRoot\":{\"newRoot\":\"$monsters\"}},{\"$lookup\":{\"from\":\"marathon-level-data\",\"pipeline\":[{\"$match\":{\"scenario name\":\"${gameName}\",\"$expr\":{\"$eq\":[{\"$toInt\":\"$level index\"},{\"$subtract\":[{\"$toInt\":\"${levelNum}\"},1]}]}}}],\"as\":\"levelDocs\"}},{\"$addFields\":{\"kills\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"punchKills\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\" punch kills\"]},\"input\":\"$$this\"}},0]}}]}}},\"spared\":{\"$reduce\":{\"input\":\"$levelDocs\",\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[{\"$getField\":{\"field\":{\"$concat\":[\"$metricPrefix\",\"s spared\"]},\"input\":\"$$this\"}},0]}}]}}}}},{\"$unset\":\"levelDocs\"},{\"$match\":{\"kills\":{\"$gt\":0}}}]",
+                        "queryLanguage": "json"
                       },
                       "version": "v0"
                     },
@@ -396,7 +394,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "\u003cdiv style=\"position:relative; display:inline-block; width:100%;\"\u003e\n  \u003cimg src=\"${mapUrl}\" style=\"display:block; width:100%; height:auto;\" /\u003e\n\u003c/div\u003e\n",
+                "content": "<div style=\"position:relative; display:inline-block; width:100%;\">\n  <img src=\"${mapUrl}\" style=\"display:block; width:100%; height:auto;\" />\n</div>\n",
                 "mode": "html"
               }
             },
@@ -434,7 +432,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "\u003cbr\u003e\n\u003ch1\u003e${levelNum} - ${levelNames}\u003c/h1\u003e\n\u003ch2\u003e\u003ca href=\"/d/defc53jpn3dfr4d?var-datasource=${datasource}\u0026var-gameName=${gameName}\"\u003e${gameName}\u003c/a\u003e\u003c/h2\u003e\n",
+                "content": "<br>\n<h1>${levelNum} - ${levelNames}</h1>\n<h2><a href=\"/d/defc53jpn3dfr4d?var-datasource=${datasource}&var-gameName=${gameName}\">${gameName}</a></h2>\n",
                 "mode": "html"
               }
             },
@@ -457,12 +455,12 @@
                       "datasource": {
                         "name": "${datasource}"
                       },
-                      "group": "grafana-mongodb-datasource",
+                      "group": "haohanyang-mongodb-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "parsedQuery": "marathon-game-data.marathon-level-data.aggregate([{\"$match\":{\"scenario name\":\"Marathon\",\"$expr\":{\"$eq\":[{\"$toInt\":\"$level index\"},{\"$subtract\":[{\"$toInt\":\"17\"},1]}]}}},{\"$group\":{\"_id\":null,\"completions\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$level completed\",0]}}},\"deaths\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}}},\"playtime\":{\"$sum\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]}}}},{\"$project\":{\"_id\":0,\"completions\":1,\"deaths\":1,\"playtime\":1}}])\n",
-                        "query": "marathon-game-data.marathon-level-data.aggregate([\n  {\n    $match: {\n      'scenario name': '${gameName}',\n\t\t  $expr: {$eq: [\n\t\t\t\t{ $toInt: '$level index' },\n\t\t\t\t{ $subtract: [{ $toInt: '${levelNum}' }, 1] }\n      ]}\n    }\n  },\n  {\n    $group: {\n      _id: null,\n      completions: {\n        $sum: { $toInt: { $ifNull: ['$level completed', 0] } }\n      },\n      deaths: {\n        $sum: { $toInt: { $ifNull: ['$deaths', 0] } }\n      },\n      playtime: {\n        $sum: {\n          $divide: [\n            {\n              $subtract: [\n                { $toInt: { $ifNull: ['$end tick', 0] } },\n                { $toInt: { $ifNull: ['$start tick', 0] } }\n              ]\n            },\n            30\n          ]\n        }\n      }\n    }\n  },\n  {\n    $project: {\n      _id: 0,\n      completions: 1,\n      deaths: 1,\n      playtime: 1\n    }\n  }\n])\n",
-                        "queryType": "query"
+                        "collection": "marathon-level-data",
+                        "queryText": "[{\"$match\":{\"scenario name\":\"${gameName}\",\"$expr\":{\"$eq\":[{\"$toInt\":\"$level index\"},{\"$subtract\":[{\"$toInt\":\"${levelNum}\"},1]}]}}},{\"$group\":{\"_id\":null,\"completions\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$level completed\",0]}}},\"deaths\":{\"$sum\":{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}}},\"playtime\":{\"$sum\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]}}}},{\"$project\":{\"_id\":0,\"completions\":1,\"deaths\":1,\"playtime\":1}}]",
+                        "queryLanguage": "json"
                       },
                       "version": "v0"
                     },
@@ -584,7 +582,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "\u003cimg src=\"${logoUrl}\" /\u003e",
+                "content": "<img src=\"${logoUrl}\" />",
                 "mode": "html"
               }
             },
@@ -607,12 +605,12 @@
                       "datasource": {
                         "name": "${datasource}"
                       },
-                      "group": "grafana-mongodb-datasource",
+                      "group": "haohanyang-mongodb-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "parsedQuery": "marathon-game-data.marathon-level-data.aggregate([{\"$match\":{\"scenario name\":\"${gameName}\",\"$expr\":{\"$eq\":[{\"$toInt\":\"$level index\"},{\"$subtract\":[{\"$toInt\":\"${levelNum}\"},1]}]}}},{\"$project\":{\"_id\":0,\"date\":\"$date\",\"playTime\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]},\"difficulty\":\"$difficulty\",\"monsterKills\":{\"$reduce\":{\"input\":{\"$filter\":{\"input\":{\"$objectToArray\":\"$$ROOT\"},\"cond\":{\"$and\":[{\"$regexMatch\":{\"input\":\"$$this.k\",\"regex\":\" kills$\"}},{\"$not\":{\"$regexMatch\":{\"input\":\"$$this.k\",\"regex\":\"punch kills$\"}}}]}}},\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[\"$$this.v\",0]}}]}}},\"result\":{\"$cond\":[{\"$eq\":[{\"$toInt\":{\"$ifNull\":[\"$level completed\",0]}},1]},\"finished\",{\"$cond\":[{\"$eq\":[{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}},1]},\"died\",\"\"]}]},\"deathLocation\":{\"$cond\":[{\"$eq\":[{\"$ifNull\":[\"$death locations\",\"\"]},\"\"]},\"\",{\"$let\":{\"vars\":{\"parts\":{\"$split\":[{\"$trim\":{\"input\":\"$death locations\"}},\",\"]}},\"in\":{\"$concat\":[\"\u003c\",{\"$trim\":{\"input\":{\"$arrayElemAt\":[\"$$parts\",0]}}},\", \",{\"$trim\":{\"input\":{\"$arrayElemAt\":[\"$$parts\",1]}}},\", \",{\"$trim\":{\"input\":{\"$arrayElemAt\":[\"$$parts\",2]}}},\"\u003e\"]}}}]}}},{\"$sort\":{\"date\":1}}])\n",
-                        "query": "marathon-game-data.marathon-level-data.aggregate([\n  {\n    $match: {\n      'scenario name': '${gameName}',\n      $expr: {\n        $eq: [\n          { $toInt: '$level index' },\n          { $subtract: [{ $toInt: '${levelNum}' }, 1] }\n        ]\n      }\n    }\n  },\n  {\n    $project: {\n      _id: 0,\n      date: '$date',\n      playTime: {\n        $divide: [\n          {\n            $subtract: [\n              { $toInt: { $ifNull: ['$end tick', 0] } },\n              { $toInt: { $ifNull: ['$start tick', 0] } }\n            ]\n          },\n          30\n        ]\n      },\n      difficulty: '$difficulty',\n      monsterKills: {\n        $reduce: {\n          input: {\n            $filter: {\n              input: { $objectToArray: '$$ROOT' },\n              cond: {\n                $and: [\n                  { $regexMatch: { input: '$$this.k', regex: ' kills$' } },\n                  { $not: { $regexMatch: { input: '$$this.k', regex: 'punch kills$' } } }\n                ]\n              }\n            }\n          },\n          initialValue: 0,\n          in: { $add: ['$$value', { $toInt: { $ifNull: ['$$this.v', 0] } }] }\n        }\n      },\n      result: {\n        $cond: [\n          { $eq: [{ $toInt: { $ifNull: ['$level completed', 0] } }, 1] },\n          'finished',\n          {\n            $cond: [\n              { $eq: [{ $toInt: { $ifNull: ['$deaths', 0] } }, 1] },\n              'died',\n              ''\n            ]\n          }\n        ]\n      },\n      deathLocation: {\n        $cond: [\n          { $eq: [{ $ifNull: ['$death locations', ''] }, ''] },\n          '',\n          { $let: {\n              vars: { parts: { $split: [{ $trim: { input: '$death locations' } }, ','] } },\n              in: { $concat: [\n                '\u003c',\n                { $trim: { input: { $arrayElemAt: ['$$parts', 0] } } },\n                ', ',\n                { $trim: { input: { $arrayElemAt: ['$$parts', 1] } } },\n                ', ',\n                { $trim: { input: { $arrayElemAt: ['$$parts', 2] } } },\n                '\u003e'\n              ]}\n          }}\n        ]\n      }\n    }\n  },\n  {\n    $sort: { date: 1 }\n  }\n])\n",
-                        "queryType": "query"
+                        "collection": "marathon-level-data",
+                        "queryText": "[{\"$match\":{\"scenario name\":\"${gameName}\",\"$expr\":{\"$eq\":[{\"$toInt\":\"$level index\"},{\"$subtract\":[{\"$toInt\":\"${levelNum}\"},1]}]}}},{\"$project\":{\"_id\":0,\"date\":\"$date\",\"playTime\":{\"$divide\":[{\"$subtract\":[{\"$toInt\":{\"$ifNull\":[\"$end tick\",0]}},{\"$toInt\":{\"$ifNull\":[\"$start tick\",0]}}]},30]},\"difficulty\":\"$difficulty\",\"monsterKills\":{\"$reduce\":{\"input\":{\"$filter\":{\"input\":{\"$objectToArray\":\"$$ROOT\"},\"cond\":{\"$and\":[{\"$regexMatch\":{\"input\":\"$$this.k\",\"regex\":\" kills$\"}},{\"$not\":{\"$regexMatch\":{\"input\":\"$$this.k\",\"regex\":\"punch kills$\"}}}]}}},\"initialValue\":0,\"in\":{\"$add\":[\"$$value\",{\"$toInt\":{\"$ifNull\":[\"$$this.v\",0]}}]}}},\"result\":{\"$cond\":[{\"$eq\":[{\"$toInt\":{\"$ifNull\":[\"$level completed\",0]}},1]},\"finished\",{\"$cond\":[{\"$eq\":[{\"$toInt\":{\"$ifNull\":[\"$deaths\",0]}},1]},\"died\",\"\"]}]},\"deathLocation\":{\"$cond\":[{\"$eq\":[{\"$ifNull\":[\"$death locations\",\"\"]},\"\"]},\"\",\"$death locations\"]}}},{\"$sort\":{\"date\":1}}]",
+                        "queryLanguage": "json"
                       },
                       "version": "v0"
                     },
@@ -760,7 +758,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "### ← \u003ca href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${prevLevelName}\"\u003e${prevLevelName}\u003c/a\u003e",
+                "content": "### ← <a href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${prevLevelName}\">${prevLevelName}</a>",
                 "mode": "markdown"
               }
             },
@@ -798,7 +796,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "### \u003ca href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${nextLevelName}\"\u003e${nextLevelName}\u003c/a\u003e →",
+                "content": "### <a href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${nextLevelName}\">${nextLevelName}</a> →",
                 "mode": "markdown"
               }
             },
@@ -984,7 +982,7 @@
           "multi": false,
           "name": "datasource",
           "options": [],
-          "pluginId": "grafana-mongodb-datasource",
+          "pluginId": "haohanyang-mongodb-datasource",
           "refresh": "onDashboardLoad",
           "regex": "",
           "skipUrlSync": false
@@ -1024,12 +1022,12 @@
             "datasource": {
               "name": "${datasource}"
             },
-            "group": "grafana-mongodb-datasource",
+            "group": "haohanyang-mongodb-datasource",
             "kind": "DataQuery",
             "spec": {
-              "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$unwind\":\"$levels\"},{\"$project\":{\"_id\":0,\"title\":\"$levels.title\"}}])\n",
-              "query": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: {title: '$gameName'}},\n  { $unwind: '$levels' },\n  { $project: { _id: 0, title: '$levels.title'}}\n])\n",
-              "queryType": "query"
+              "collection": "marathon-game-details",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":\"$levels\"},{\"$project\":{\"_id\":0,\"value\":\"$levels.title\"}}]",
+              "queryLanguage": "json"
             },
             "version": "v0"
           },
@@ -1058,12 +1056,12 @@
             "datasource": {
               "name": "${datasource}"
             },
-            "group": "grafana-mongodb-datasource",
+            "group": "haohanyang-mongodb-datasource",
             "kind": "DataQuery",
             "spec": {
-              "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$unwind\":\"$levels\"},{\"$match\":{\"levels.title\":\"Arrival\"}},{\"$project\":{\"_id\":0,\"mapUrl\":\"$levels.mapUrl\"}}])\n",
-              "query": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: {title: '${gameName}'}},\n  { $unwind: '$levels'},\n  { $match: {'levels.title': '${levelNames}'}},\n  { $project: {\n      _id: 0,\n      mapUrl: '$levels.mapUrl'\n    }\n  }\n])\n",
-              "queryType": "query"
+              "collection": "marathon-game-details",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":\"$levels\"},{\"$match\":{\"levels.title\":\"${levelNames}\"}},{\"$project\":{\"_id\":0,\"value\":\"$levels.mapUrl\"}}]",
+              "queryLanguage": "json"
             },
             "version": "v0"
           },
@@ -1092,12 +1090,12 @@
             "datasource": {
               "name": "${datasource}"
             },
-            "group": "grafana-mongodb-datasource",
+            "group": "haohanyang-mongodb-datasource",
             "kind": "DataQuery",
             "spec": {
-              "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$project\":{\"_id\":0,\"logoUrl\":\"$logo\"}}])\n",
-              "query": "marathon-game-data.marathon-game-details.aggregate([\n  {$match: {title: '${gameName}'}},\n  {$project: {_id: 0, logoUrl: '$logo'}}\n])\n",
-              "queryType": "query"
+              "collection": "marathon-game-details",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$project\":{\"_id\":0,\"value\":\"$logo\"}}]",
+              "queryLanguage": "json"
             },
             "version": "v0"
           },
@@ -1126,12 +1124,12 @@
             "datasource": {
               "name": "${datasource}"
             },
-            "group": "grafana-mongodb-datasource",
+            "group": "haohanyang-mongodb-datasource",
             "kind": "DataQuery",
             "spec": {
-              "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelNumber\"}},{\"$match\":{\"levels.title\":\"Arrival\"}},{\"$project\":{\"_id\":0,\"levelNumber\":{\"$add\":[\"1\",1]}}}])\n",
-              "query": "marathon-game-data.marathon-game-details.aggregate([\n  {\n    $match: {\n      title: '${gameName}'\n    }\n  },\n  {\n    $unwind: {\n      path: '$levels',\n      includeArrayIndex: 'levelNumber'\n    }\n  },\n  {\n    $match: {\n      'levels.title': '${levelNames}'\n    }\n  },\n  {\n    $project: {\n      _id: 0,\n      levelNumber: { $add: ['$levelNumber', 1] }\n    }\n  }\n])\n",
-              "queryType": "query"
+              "collection": "marathon-game-details",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelNumber\"}},{\"$match\":{\"levels.title\":\"${levelNames}\"}},{\"$project\":{\"_id\":0,\"value\":{\"$add\":[\"$levelNumber\",1]}}}]",
+              "queryLanguage": "json"
             },
             "version": "v0"
           },
@@ -1160,12 +1158,12 @@
             "datasource": {
               "name": "${datasource}"
             },
-            "group": "grafana-mongodb-datasource",
+            "group": "haohanyang-mongodb-datasource",
             "kind": "DataQuery",
             "spec": {
-              "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$subtract\":[15,2]}]}}},{\"$project\":{\"_id\":0,\"title\":\"$levels.title\"}}])\n",
-              "query": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: { title: '${gameName}' } },\n  { $unwind: { path: '$levels', includeArrayIndex: 'levelIndex' } },\n  { $match: { $expr: { $eq: ['$levelIndex', { $subtract: [{ $toInt: '${levelNum}' }, 2] }] } } },\n  { $project: { _id: 0, title: '$levels.title' } }\n])\n",
-              "queryType": "query"
+              "collection": "marathon-game-details",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$subtract\":[{\"$toInt\":\"${levelNum}\"},2]}]}}},{\"$project\":{\"_id\":0,\"value\":\"$levels.title\"}}]",
+              "queryLanguage": "json"
             },
             "version": "v0"
           },
@@ -1194,12 +1192,12 @@
             "datasource": {
               "name": "${datasource}"
             },
-            "group": "grafana-mongodb-datasource",
+            "group": "haohanyang-mongodb-datasource",
             "kind": "DataQuery",
             "spec": {
-              "parsedQuery": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"Marathon\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",15]}}},{\"$project\":{\"_id\":0,\"title\":\"$levels.title\"}}])\n",
-              "query": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: { title: '${gameName}' } },\n  { $unwind: { path: '$levels', includeArrayIndex: 'levelIndex' } },\n  { $match: { $expr: { $eq: ['$levelIndex', { $toInt: '${levelNum}' }] } } },\n  { $project: { _id: 0, title: '$levels.title' } }\n])\n",
-              "queryType": "query"
+              "collection": "marathon-game-details",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$toInt\":\"${levelNum}\"}]}}},{\"$project\":{\"_id\":0,\"value\":\"$levels.title\"}}]",
+              "queryLanguage": "json"
             },
             "version": "v0"
           },
