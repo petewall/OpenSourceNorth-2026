@@ -989,18 +989,39 @@
         }
       },
       {
-        "kind": "ConstantVariable",
+        "kind": "QueryVariable",
         "spec": {
+          "allowCustomValue": false,
           "current": {
             "text": "Marathon",
             "value": "Marathon"
           },
+          "definition": "marathon-game-data.marathon-game-details.aggregate([\n  { $project: { _id: 0, title: '$title'}}\n])\n",
           "description": "",
-          "hide": "hideVariable",
-          "label": "",
+          "hide": "dontHide",
+          "includeAll": false,
+          "label": "Game",
+          "multi": false,
           "name": "gameName",
-          "query": "Marathon",
-          "skipUrlSync": true
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "${datasource}"
+            },
+            "group": "haohanyang-mongodb-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "collection": "marathon-game-details",
+              "queryLanguage": "json",
+              "queryText": "[{\"$project\":{\"_id\":0,\"value\":\"$title\"}}]"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": false,
+          "sort": "disabled"
         }
       },
       {
