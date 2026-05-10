@@ -996,7 +996,7 @@
             "text": "Marathon",
             "value": "Marathon"
           },
-          "definition": "marathon-game-data.marathon-game-details.aggregate([\n  { $project: { _id: 0, title: '$title'}}\n])\n",
+          "definition": "",
           "description": "",
           "hide": "dontHide",
           "includeAll": false,
@@ -1029,8 +1029,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Arrival",
-            "value": "1"
+            "text": "Never Burn Money",
+            "value": "3"
           },
           "definition": "",
           "hide": "dontHide",
@@ -1064,8 +1064,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "",
-            "value": ""
+            "text": "https://www.lhowon.org/levels/marathon/standard/2.png",
+            "value": "https://www.lhowon.org/levels/marathon/standard/2.png"
           },
           "definition": "",
           "hide": "hideVariable",
@@ -1132,8 +1132,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "",
-            "value": ""
+            "text": "Bigger Guns Nearby",
+            "value": "2"
           },
           "definition": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: { title: '${gameName}' } },\n  { $unwind: { path: '$levels', includeArrayIndex: 'levelIndex' } },\n  { $match: { $expr: { $eq: ['$levelIndex', { $subtract: [{ $toInt: '${selectedLevel}' }, 2] }] } } },\n  { $project: { _id: 0, text: '$levels.title', value: { $toString: { $add: ['$levelIndex', 1] } } } }\n])\n",
           "hide": "hideVariable",
@@ -1166,8 +1166,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Bigger Guns Nearby",
-            "value": "Bigger Guns Nearby"
+            "text": "Defend THIS!",
+            "value": "4"
           },
           "definition": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: { title: '${gameName}' } },\n  { $unwind: { path: '$levels', includeArrayIndex: 'levelIndex' } },\n  { $match: { $expr: { $eq: ['$levelIndex', { $toInt: '${selectedLevel}' }] } } },\n  { $project: { _id: 0, text: '$levels.title', value: { $toString: { $add: ['$levelIndex', 1] } } } }\n])\n",
           "hide": "hideVariable",
