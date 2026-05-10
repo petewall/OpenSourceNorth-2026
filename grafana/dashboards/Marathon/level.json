@@ -1029,8 +1029,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Never Burn Money",
-            "value": "3"
+            "text": "Arrival",
+            "value": "1"
           },
           "definition": "",
           "hide": "dontHide",
@@ -1064,8 +1064,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "https://www.lhowon.org/levels/marathon/standard/2.png",
-            "value": "https://www.lhowon.org/levels/marathon/standard/2.png"
+            "text": "https://www.lhowon.org/levels/marathon/standard/0.png",
+            "value": "https://www.lhowon.org/levels/marathon/standard/0.png"
           },
           "definition": "",
           "hide": "hideVariable",
@@ -1132,8 +1132,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Bigger Guns Nearby",
-            "value": "2"
+            "text": "",
+            "value": ""
           },
           "definition": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: { title: '${gameName}' } },\n  { $unwind: { path: '$levels', includeArrayIndex: 'levelIndex' } },\n  { $match: { $expr: { $eq: ['$levelIndex', { $subtract: [{ $toInt: '${selectedLevel}' }, 2] }] } } },\n  { $project: { _id: 0, text: '$levels.title', value: { $toString: { $add: ['$levelIndex', 1] } } } }\n])\n",
           "hide": "hideVariable",
@@ -1166,8 +1166,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Defend THIS!",
-            "value": "4"
+            "text": "Bigger Guns Nearby",
+            "value": "2"
           },
           "definition": "marathon-game-data.marathon-game-details.aggregate([\n  { $match: { title: '${gameName}' } },\n  { $unwind: { path: '$levels', includeArrayIndex: 'levelIndex' } },\n  { $match: { $expr: { $eq: ['$levelIndex', { $toInt: '${selectedLevel}' }] } } },\n  { $project: { _id: 0, text: '$levels.title', value: { $toString: { $add: ['$levelIndex', 1] } } } }\n])\n",
           "hide": "hideVariable",
