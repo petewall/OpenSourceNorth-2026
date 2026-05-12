@@ -64,7 +64,7 @@
           "description": "",
           "id": 88,
           "links": [],
-          "title": "🌡️",
+          "title": "🌡️ Temperature",
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
@@ -167,7 +167,7 @@
           "description": "",
           "id": 89,
           "links": [],
-          "title": "💧",
+          "title": "💧Humidity",
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
@@ -270,7 +270,7 @@
           "description": "",
           "id": 90,
           "links": [],
-          "title": "✨",
+          "title": "✨VOC",
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
@@ -365,7 +365,7 @@
           "description": "",
           "id": 91,
           "links": [],
-          "title": "☁️",
+          "title": "☁️ CO₂",
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
@@ -1012,7 +1012,7 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "fixedColor": "purple",
+                    "fixedColor": "orange",
                     "mode": "shades"
                   },
                   "custom": {
@@ -1081,7 +1081,7 @@
                       {
                         "id": "color",
                         "value": {
-                          "fixedColor": "red",
+                          "fixedColor": "purple",
                           "mode": "shades"
                         }
                       }
@@ -1247,7 +1247,7 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-6h",
+      "from": "now-24h",
       "hideTimepicker": false,
       "timezone": "browser",
       "to": "now"
