@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gcx *)"
+      "Bash(gcx *)",
+      "Bash(grep *)",
+      "Bash(make check *)",
+      "Bash(docker compose *)",
+      "Bash(docker compose restart *)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:grafana.com)",
+      "WebSearch"
     ]
   }
 }

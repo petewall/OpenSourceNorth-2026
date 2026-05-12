@@ -46,11 +46,11 @@ grafana/dashboards/mortgage-progress.json: ../dashboards/mortgage-progress.json
 		' $@ > $@.updated && mv $@.updated $@
 	sed -e 's/"spreadsheet": "[^"]*"/"spreadsheet": $(SPREADSHEET_ID)/' $@ > $@.updated && mv $@.updated $@
 
-grafana/dashboards/Marathon/game.json: ../dashboards/marathon/game.json
-	cp $< $@
+grafana/dashboards/Marathon/game.json: ../dashboards/marathon/game.json scripts/to_oss_mongodb.py
+	python3 scripts/to_oss_mongodb.py < $< > $@
 
-grafana/dashboards/Marathon/level.json: ../dashboards/marathon/level.json
-	cp $< $@
+grafana/dashboards/Marathon/level.json: ../dashboards/marathon/level.json scripts/to_oss_mongodb.py
+	python3 scripts/to_oss_mongodb.py < $< > $@
 
 copy-dashboards: grafana/dashboards/house-climate.json grafana/dashboards/mortgage-progress.json grafana/dashboards/Marathon/game.json grafana/dashboards/Marathon/level.json ## Copy dashboards from my personal repository
 
@@ -68,11 +68,14 @@ FAKE_MORTGAGE_RATE=0.045
 data/mortgage-burndown.csv:
 	@mkdir -p $(shell dirname $@)
 	python3 scripts/generate_mortgage_data.py \
+		--start-date 2020-01-01 \
 		--principal $(FAKE_MORTGAGE_AMOUNT) \
 		--annual-rate $(FAKE_MORTGAGE_RATE) \
-		--extra-principal 6:1000 \
-		--extra-principal 12:1000 \
 		--extra-principal 18:1000 \
+		--extra-principal 24:1000 \
+		--extra-principal 36:1000 \
+		--extra-principal 48:1000 \
+		--extra-principal 128:1000 \
 		> $@
 
 data/mortgage-details.csv:
@@ -131,9 +134,9 @@ prep: start grafana/resources/repository.yaml pg-seeds ## Seed the databases aft
 check:
 	@echo "Checking CO2 metrics exporter..." && curl http://localhost:9800
 	@echo "Checking Talkbox exporter..." && curl http://localhost:9186
-	@echo "Checking Talkbox logs..." && // TODO: Check that ../talkbox/logs/debug.txt is non-empty
-	@echo "Checking Talkbox transcript..." && // TODO: Check that ../talkbox/logs/transcript.txt is non-empty
-	@echo "Checking gcx..." && // TODO: Check that ../talkbox/logs/transcript.txt is non-empty
+	@echo "Checking Talkbox logs..." && test -s ../talkbox/logs/debug.txt && echo "OK" || echo "WARN: debug.txt is empty or missing"
+	@echo "Checking Talkbox transcript..." && test -s ../talkbox/logs/transcript.txt && echo "OK" || echo "WARN: transcript.txt is empty or missing"
+	@echo "Checking gcx..." && gcx config check
 
 .PHONY: stop
 stop: ## Stop the local services
