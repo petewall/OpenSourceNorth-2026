@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
+          "name": "Annotations \u0026 Alerts",
           "query": {
             "group": "grafana",
             "kind": "DataQuery",
@@ -273,7 +273,7 @@
                 }
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -400,7 +400,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -643,7 +643,7 @@
                 "textMode": "auto"
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -724,7 +724,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -758,11 +758,11 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "<img src=\"${image_url}\" />",
+                "content": "\u003cimg src=\"${image_url}\" /\u003e",
                 "mode": "html"
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -929,7 +929,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -1069,7 +1069,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -1209,7 +1209,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -1359,7 +1359,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       },
@@ -1539,7 +1539,7 @@
                 "wideLayout": true
               }
             },
-            "version": "13.1.0-24878921911"
+            "version": "13.1.0-25229989571"
           }
         }
       }
@@ -1734,7 +1734,7 @@
         "title": "Source (GitHub)",
         "tooltip": "View source file in repository",
         "type": "link",
-        "url": "https://github.com/petewall/dashboards/blob/main/mortgage-progress.json"
+        "url": "https://github.com/petewall/OpenSourceNorth-2026/blob/main/grafana/dashboards/mortgage-progress.json"
       }
     ],
     "liveNow": false,
@@ -1755,10 +1755,10 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "2024-12-07T10:30:14.145Z",
+      "from": "now-5y",
       "hideTimepicker": false,
       "timezone": "browser",
-      "to": "2025-04-11T18:46:10.914Z"
+      "to": "now"
     },
     "title": "Mortgage Progress",
     "variables": [
@@ -1767,8 +1767,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "grafana-googlesheets-datasource",
-            "value": "cdbbt46ojwwlca"
+            "text": "Google Sheets",
+            "value": "PF109802A741F4AED"
           },
           "hide": "dontHide",
           "includeAll": false,
