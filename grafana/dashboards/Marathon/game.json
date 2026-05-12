@@ -13,7 +13,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
+          "name": "Annotations \u0026 Alerts",
           "query": {
             "datasource": {
               "name": "-- Grafana --"
@@ -390,7 +390,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "<img src=\"${logoUrl}\" alt=\"${gameName} logo\" />",
+                "content": "\u003cimg src=\"${logoUrl}\" alt=\"${gameName} logo\" /\u003e",
                 "mode": "html"
               }
             },
@@ -714,7 +714,7 @@
                           {
                             "targetBlank": false,
                             "title": "Go to Level",
-                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${__data.fields[\"Level Name\"]}"
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields[\"Level Name\"]}"
                           }
                         ]
                       }
@@ -750,7 +750,7 @@
                           {
                             "targetBlank": false,
                             "title": "Go to Level",
-                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${__data.fields[\"Level Name\"]}"
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-levelNames=${__data.fields[\"Level Name\"]}"
                           }
                         ]
                       }
@@ -975,7 +975,7 @@
                         "deaths B": "🪦 Deaths",
                         "level": "Level",
                         "level A": "Level",
-                        "levelNumber": " ",
+                        "levelNumber": "Number",
                         "mapUrl": "Map",
                         "mapUrl A": "Map",
                         "playtime": "Playtime",
@@ -1042,7 +1042,7 @@
                           {
                             "targetBlank": false,
                             "title": "Go to Level",
-                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${__data.fields.Level}"
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-selectedLevel=${__data.fields.Number}"
                           }
                         ]
                       }
@@ -1093,7 +1093,7 @@
                           {
                             "targetBlank": false,
                             "title": "Go to Level",
-                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}&var-gameName=${gameName}&var-levelNames=${__data.fields.Level}"
+                            "url": "/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-selectedLevel=${__data.fields.Number}"
                           }
                         ]
                       }
