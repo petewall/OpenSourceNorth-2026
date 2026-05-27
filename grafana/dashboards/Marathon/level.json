@@ -970,7 +970,7 @@
       ],
       "fiscalYearStartMonth": 0,
       "from": "now-6h",
-      "hideTimepicker": true,
+      "hideTimepicker": false,
       "timezone": "browser",
       "to": "now"
     },
@@ -1004,7 +1004,7 @@
             "text": "Marathon",
             "value": "Marathon"
           },
-          "definition": "",
+          "definition": "marathon-game-data.marathon-game-details.aggregate([\n  { $project: { _id: 0, title: '$title'}}\n])\n",
           "description": "",
           "hide": "dontHide",
           "includeAll": false,
@@ -1037,78 +1037,6 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-<<<<<<< HEAD
-            "text": "Arrival",
-            "value": "1"
-          },
-          "definition": "",
-          "hide": "dontHide",
-          "includeAll": false,
-          "label": "Level",
-          "multi": false,
-          "name": "selectedLevel",
-          "options": [],
-          "query": {
-            "datasource": {
-              "name": "${datasource}"
-            },
-            "group": "haohanyang-mongodb-datasource",
-            "kind": "DataQuery",
-            "spec": {
-              "collection": "marathon-game-details",
-              "queryLanguage": "json",
-              "queryText": "[\n  {\n    \"$match\": {\n      \"title\": \"${gameName}\"\n    }\n  },\n  {\n    \"$unwind\": {\n      \"path\": \"$levels\",\n      \"includeArrayIndex\": \"levelNumber\"\n    }\n  },\n  {\n    \"$project\": {\n      \"_id\": 0,\n      \"text\": \"$levels.title\",\n      \"value\": {\"$toString\":{\"$add\":[\"$levelNumber\",1]}}\n    }\n  }\n]\n"
-            },
-            "version": "v0"
-          },
-          "refresh": "onDashboardLoad",
-          "regex": "",
-          "regexApplyTo": "value",
-          "skipUrlSync": false,
-          "sort": "disabled"
-        }
-      },
-      {
-        "kind": "QueryVariable",
-        "spec": {
-          "allowCustomValue": false,
-          "current": {
-            "text": "https://www.lhowon.org/levels/marathon/standard/0.png",
-            "value": "https://www.lhowon.org/levels/marathon/standard/0.png"
-          },
-          "definition": "",
-          "hide": "hideVariable",
-          "includeAll": false,
-          "multi": false,
-          "name": "mapUrl",
-          "options": [],
-          "query": {
-            "datasource": {
-              "name": "${datasource}"
-            },
-            "group": "haohanyang-mongodb-datasource",
-            "kind": "DataQuery",
-            "spec": {
-              "collection": "marathon-game-details",
-              "queryLanguage": "json",
-              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[{\"$add\":[\"$levelIndex\",1]},{\"$toInt\":\"${selectedLevel}\"}]}}},{\"$project\":{\"_id\":0,\"value\":\"$levels.mapUrl\"}}]"
-            },
-            "version": "v0"
-          },
-          "refresh": "onDashboardLoad",
-          "regex": "",
-          "regexApplyTo": "value",
-          "skipUrlSync": false,
-          "sort": "disabled"
-        }
-      },
-      {
-        "kind": "QueryVariable",
-        "spec": {
-          "allowCustomValue": false,
-          "current": {
-=======
->>>>>>> 5f599b6 (Update dashbaords and settings)
             "text": "https://raw.githubusercontent.com/petewall/marathon-dashboards/refs/heads/main/images/M1_Logo.png",
             "value": "https://raw.githubusercontent.com/petewall/marathon-dashboards/refs/heads/main/images/M1_Logo.png"
           },
@@ -1178,10 +1106,6 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-<<<<<<< HEAD
-            "text": "Bigger Guns Nearby",
-            "value": "2"
-=======
             "text": "https://www.lhowon.org/levels/marathon/standard/0.png",
             "value": "https://www.lhowon.org/levels/marathon/standard/0.png"
           },
@@ -1252,7 +1176,6 @@
           "current": {
             "text": "2",
             "value": "Bigger Guns Nearby"
->>>>>>> 5f599b6 (Update dashbaords and settings)
           },
           "definition": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$toInt\":\"${selectedLevel:text}\"}]}}},{\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}])",
           "hide": "hideVariable",
