@@ -1,3 +1,4 @@
 data/
+grafana/plugins/
 grafana/provisioning/
 grafana/resources/
