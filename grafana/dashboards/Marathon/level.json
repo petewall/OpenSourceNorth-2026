@@ -1124,7 +1124,7 @@
             "spec": {
               "collection": "marathon-game-details",
               "queryLanguage": "json",
-              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[{\"$add\":[\"$levelIndex\",1]},{\"$toInt\":\"${selectedLevel:text}\"}]}}},{\"$project\":{\"_id\":0,\"value\":\"$levels.mapUrl\"}}]"
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[{\"$add\":[\"$levelIndex\",1]},{\"$toInt\":\"${selectedLevel}\"}]}}},{\"$project\":{\"_id\":0,\"value\":\"$levels.mapUrl\"}}]"
             },
             "version": "v0"
           },
