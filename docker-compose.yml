@@ -26,8 +26,10 @@ services:
         condition: service_started
       loki:
         condition: service_started
-      postgres:
-          condition: service_healthy
+      mongo:
+        condition: service_healthy
+      # postgres:
+      #     condition: service_healthy
 
   prometheus:
     image: prom/prometheus:latest
@@ -52,22 +54,34 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     restart: unless-stopped
 
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_DB:       ironwall
-      POSTGRES_USER:     ironwall
-      POSTGRES_PASSWORD: ironwall
+  # postgres:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_DB:       ironwall
+  #     POSTGRES_USER:     ironwall
+  #     POSTGRES_PASSWORD: ironwall
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #     - ./postgres/migrations:/docker-entrypoint-initdb.d:rodb
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ironwall"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
+
+  mongo:
+    image: mongo:7
     ports:
-      - "5432:5432"
+      - "27017:27017"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./postgres/migrations:/docker-entrypoint-initdb.d:rodb
+      - mongo-data:/data/db
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ironwall"]
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   otel-collector:
     image: otel/opentelemetry-collector-contrib:latest
@@ -87,4 +101,5 @@ volumes:
   grafana-data:
   prometheus-data:
   loki-data:
-  postgres-data:
+  mongo-data:
+  # postgres-data:

@@ -13,22 +13,13 @@ grafana/provisioning/datasources/datasources.yaml: grafana/templates/datasources
 	export GCP_CLIENT_EMAIL=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.client_email') && \
 	export GCP_PROJECT=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.project_id') && \
 	export GCP_PRIVATE_KEY=$$(op read "op://Lab/GCP Grafana Cloud Service Account/notes" | jq -r '.private_key') && \
-	export MONGODB_URL=$$(op read "op://Lab/Cloud DB User/website") && \
-	export MONGODB_SCHEME=$$(echo "$$MONGODB_URL" | sed 's|://.*||') && \
-	export MONGODB_HOST=$$(echo "$$MONGODB_URL" | sed 's|^[^:]*://||;s|/.*||') && \
-	export MONGODB_USERNAME=$$(op read "op://Lab/Cloud DB User/username") && \
-	export MONGODB_PASSWORD=$$(op read "op://Lab/Cloud DB User/password") && \
 	yq eval ' \
 		(.datasources[] | select(.name == "Grafana Cloud Prometheus")).url = strenv(GC_METRICS_URL) | \
 		(.datasources[] | select(.name == "Grafana Cloud Prometheus")).basicAuthUser = strenv(GC_METRICS_USERNAME) | \
 		(.datasources[] | select(.name == "Grafana Cloud Prometheus")).secureJsonData.basicAuthPassword = strenv(GC_METRICS_PASSWORD) | \
 		(.datasources[] | select(.name == "Google Sheets")).jsonData.clientEmail = strenv(GCP_CLIENT_EMAIL) | \
 		(.datasources[] | select(.name == "Google Sheets")).jsonData.defaultProject = strenv(GCP_PROJECT) | \
-		(.datasources[] | select(.name == "Google Sheets")).secureJsonData.privateKey = strenv(GCP_PRIVATE_KEY) | \
-		(.datasources[] | select(.name == "MongoDB")).jsonData.connectionStringScheme = strenv(MONGODB_SCHEME) | \
-		(.datasources[] | select(.name == "MongoDB")).jsonData.host = strenv(MONGODB_HOST) | \
-		(.datasources[] | select(.name == "MongoDB")).jsonData.username = strenv(MONGODB_USERNAME) | \
-		(.datasources[] | select(.name == "MongoDB")).secureJsonData.password = strenv(MONGODB_PASSWORD) \
+		(.datasources[] | select(.name == "Google Sheets")).secureJsonData.privateKey = strenv(GCP_PRIVATE_KEY) \
 	  ' $< > $@
 
 grafana/dashboards/house-climate.json: ../dashboards/house-climate.json
@@ -86,49 +77,75 @@ data/mortgage-details.csv:
 .PHONY: mortgage-data
 mortgage-data: data/mortgage-burndown.csv data/mortgage-details.csv ## Generate fake mortgage data
 
-data/pg/seeds/users.sql: ../ironwall/seeds/users.sql
-	@mkdir -p $(shell dirname $@)
-	cp $< $@
+# data/pg/seeds/users.sql: ../ironwall/seeds/users.sql
+# 	@mkdir -p $(shell dirname $@)
+# 	cp $< $@
+#
+# data/pg/seeds/tags.sql: ../ironwall/seeds/tags.sql
+# 	@mkdir -p $(shell dirname $@)
+# 	cp $< $@
+#
+# data/pg/seeds/exercises.sql: ../ironwall/seeds/exercises.sql
+# 	@mkdir -p $(shell dirname $@)
+# 	cp $< $@
+#
+# data/pg/seeds/workouts.sql: ../ironwall/seeds/workouts.sql
+# 	@mkdir -p $(shell dirname $@)
+# 	cp $< $@
+#
+# data/pg/seeds/fitbod.sql: ../ironwall/seeds/fitbod.sql
+# 	@mkdir -p $(shell dirname $@)
+# 	cp $< $@
+#
+# postgres/migrations/001_init.sql: ../ironwall/db/migrations/001_init.sql
+# 	@mkdir -p $(shell dirname $@)
+# 	cp $< $@
+#
+# pg-seeds: data/pg/seeds/users.sql data/pg/seeds/tags.sql data/pg/seeds/exercises.sql data/pg/seeds/workouts.sql data/pg/seeds/fitbod.sql
 
-data/pg/seeds/tags.sql: ../ironwall/seeds/tags.sql
-	@mkdir -p $(shell dirname $@)
-	cp $< $@
+MONGO_DB=marathon-game-data
+MONGO_DUMP_DIR=data/mongo-dump
 
-data/pg/seeds/exercises.sql: ../ironwall/seeds/exercises.sql
-	@mkdir -p $(shell dirname $@)
-	cp $< $@
+$(MONGO_DUMP_DIR)/$(MONGO_DB): ## Dump the marathon database from Atlas
+	@mkdir -p $(MONGO_DUMP_DIR)
+	export MONGODB_URI=$$(op read "op://Lab/Cloud DB User/website") && \
+	export MONGODB_USERNAME=$$(op read "op://Lab/Cloud DB User/username") && \
+	export MONGODB_PASSWORD=$$(op read "op://Lab/Cloud DB User/password") && \
+	docker run --rm \
+		-v $(PWD)/$(MONGO_DUMP_DIR):/dump \
+		mongo:7 \
+		mongodump \
+			--uri="$$MONGODB_URI" \
+			--username="$$MONGODB_USERNAME" \
+			--password="$$MONGODB_PASSWORD" \
+			--db=$(MONGO_DB) \
+			--out=/dump
 
-data/pg/seeds/workouts.sql: ../ironwall/seeds/workouts.sql
-	@mkdir -p $(shell dirname $@)
-	cp $< $@
+.PHONY: mongo-dump
+mongo-dump: $(MONGO_DUMP_DIR)/$(MONGO_DB) ## Dump the marathon database from Atlas to ./data/mongo-dump
 
-data/pg/seeds/fitbod.sql: ../ironwall/seeds/fitbod.sql
-	@mkdir -p $(shell dirname $@)
-	cp $< $@
-
-postgres/migrations/001_init.sql: ../ironwall/db/migrations/001_init.sql
-	@mkdir -p $(shell dirname $@)
-	cp $< $@
-
-pg-seeds: data/pg/seeds/users.sql data/pg/seeds/tags.sql data/pg/seeds/exercises.sql data/pg/seeds/workouts.sql data/pg/seeds/fitbod.sql
+.PHONY: seed-mongo
+seed-mongo: $(MONGO_DUMP_DIR)/$(MONGO_DB) ## Restore the Atlas dump into the local mongo container
+	docker compose cp $(MONGO_DUMP_DIR) mongo:/tmp/mongo-dump
+	docker compose exec -T mongo mongorestore --drop --dir=/tmp/mongo-dump
 
 ##@ Local Instance
 .PHONY: start
-start: grafana/provisioning/datasources/datasources.yaml postgres/migrations/001_init.sql ## Start the local services
+start: grafana/provisioning/datasources/datasources.yaml ## Start the local services
 	docker compose up -d
 	@sleep 1
 	gcx config check
 
 .PHONY: prep
-prep: start grafana/resources/repository.yaml pg-seeds ## Seed the databases after startup
+prep: start grafana/resources/repository.yaml seed-mongo ## Seed the databases after startup
 	# Push the Git Sync repository
 	gcx resources push --path grafana/resources
 	# Seed the PostgreSQL database
-	psql "$${POSTGRES_URL}" -f data/pg/seeds/users.sql
-	psql "$${POSTGRES_URL}" -f data/pg/seeds/tags.sql
-	psql "$${POSTGRES_URL}" -f data/pg/seeds/exercises.sql
-	psql "$${POSTGRES_URL}" -f data/pg/seeds/fitbod.sql
-	psql "$${POSTGRES_URL}" -f data/pg/seeds/workouts.sql
+	# psql "$${POSTGRES_URL}" -f data/pg/seeds/users.sql
+	# psql "$${POSTGRES_URL}" -f data/pg/seeds/tags.sql
+	# psql "$${POSTGRES_URL}" -f data/pg/seeds/exercises.sql
+	# psql "$${POSTGRES_URL}" -f data/pg/seeds/fitbod.sql
+	# psql "$${POSTGRES_URL}" -f data/pg/seeds/workouts.sql
 
 .PHONY: check
 check:

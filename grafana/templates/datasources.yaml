@@ -28,16 +28,16 @@ datasources:
     access: proxy
     url: http://loki:3100
 
-  - name: PostgreSQL
-    type: postgres
-    access: proxy
-    url: postgres:5432
-    user: ironwall
-    jsonData:
-      sslmode: disable
-      database: ironwall
-    secureJsonData:
-      password: ironwall
+  # - name: PostgreSQL
+  #   type: postgres
+  #   access: proxy
+  #   url: postgres:5432
+  #   user: ironwall
+  #   jsonData:
+  #     sslmode: disable
+  #     database: ironwall
+  #   secureJsonData:
+  #     password: ironwall
 
   - name: Google Sheets
     type: grafana-googlesheets-datasource
@@ -63,12 +63,9 @@ datasources:
     basicAuth: false
     withCredentials: false
     jsonData:
-      connectionStringScheme: REPLACE_WITH_MONGODB_SCHEME
-      host: REPLACE_WITH_MONGODB_HOST
-      authType: username-password
-      username: REPLACE_WITH_MONGODB_USERNAME
+      connectionStringScheme: mongodb
+      host: mongo:27017
+      authType: none
       database: marathon-game-data
       pdcInjected: false
-      tlsOption: enabled
-    secureJsonData:
-      password: REPLACE_WITH_MONGODB_PASSWORD
+      tlsOption: disabled
