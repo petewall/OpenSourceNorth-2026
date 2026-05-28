@@ -24,7 +24,7 @@
       }
     ],
     "cursorSync": "Off",
-    "description": "",
+    "description": "A burndown chart for a home mortgage.",
     "editable": true,
     "elements": {
       "panel-14": {
