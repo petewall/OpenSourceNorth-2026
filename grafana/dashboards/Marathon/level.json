@@ -1071,8 +1071,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Arrival",
-            "value": "1"
+            "text": "The Rose",
+            "value": "6"
           },
           "definition": "",
           "hide": "dontHide",
@@ -1140,8 +1140,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "",
-            "value": ""
+            "text": "Couch Fishing",
+            "value": "5"
           },
           "definition": "",
           "hide": "hideVariable",
@@ -1158,7 +1158,7 @@
             "spec": {
               "collection": "marathon-game-details",
               "queryLanguage": "json",
-              "queryText": "[\n  {\"$match\":{\"title\":\"${gameName}\"}},\n  {\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},\n  {\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$subtract\":[{\"$toInt\":\"${selectedLevel}\"},2]}]}}},\n  {\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}\n  ]"
+              "queryText": "[\n  {\"$match\":{\"title\":\"${gameName}\"}},\n  {\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},\n  {\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$subtract\":[{\"$toInt\":\"${selectedLevel}\"},2]}]}}},\n  {\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}\n]"
             },
             "version": "v0"
           },
@@ -1174,8 +1174,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Bigger Guns Nearby",
-            "value": "2"
+            "text": "Smells Like Napalm, Tastes Like Chicken!",
+            "value": "7"
           },
           "definition": "",
           "hide": "hideVariable",
@@ -1192,7 +1192,7 @@
             "spec": {
               "collection": "marathon-game-details",
               "queryLanguage": "json",
-              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},\n{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},\n{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$toInt\":\"${selectedLevel}\"}]}}},\n{\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}\n]"
+              "queryText": "[\n  {\"$match\":{\"title\":\"${gameName}\"}},\n  {\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},\n  {\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$toInt\":\"${selectedLevel}\"}]}}},\n  {\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}\n]\n"
             },
             "version": "v0"
           },
