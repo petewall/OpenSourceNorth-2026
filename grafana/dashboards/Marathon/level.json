@@ -27,7 +27,7 @@
       }
     ],
     "cursorSync": "Off",
-    "description": "",
+    "description": "Show stats for an individual level.",
     "editable": true,
     "elements": {
       "panel-1": {
@@ -1071,8 +1071,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Arrival",
-            "value": "1"
+            "text": "The Rose",
+            "value": "6"
           },
           "definition": "",
           "hide": "dontHide",
@@ -1106,8 +1106,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "https://www.lhowon.org/levels/marathon/standard/0.png",
-            "value": "https://www.lhowon.org/levels/marathon/standard/0.png"
+            "text": "https://www.lhowon.org/levels/marathon/standard/5.png",
+            "value": "https://www.lhowon.org/levels/marathon/standard/5.png"
           },
           "definition": "",
           "hide": "hideVariable",
@@ -1140,8 +1140,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "",
-            "value": ""
+            "text": "Couch Fishing",
+            "value": "5"
           },
           "definition": "",
           "hide": "hideVariable",
@@ -1174,8 +1174,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Bigger Guns Nearby",
-            "value": "2"
+            "text": "Smells Like Napalm, Tastes Like Chicken!",
+            "value": "7"
           },
           "definition": "",
           "hide": "hideVariable",
