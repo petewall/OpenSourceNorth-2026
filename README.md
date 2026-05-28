@@ -1,4 +1,4 @@
-# Open Source North 2026 — Kigali v1
+# Open Source North 2026
 
 A live demo environment for an Open Source North 2026 talk, showing a full local
 observability stack with Grafana, Prometheus, Loki, and an OpenTelemetry Collector
