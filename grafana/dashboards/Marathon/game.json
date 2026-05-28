@@ -1353,7 +1353,7 @@
             "text": "Marathon",
             "value": "Marathon"
           },
-          "definition": "marathon-game-data.marathon-game-details.aggregate([\n  { $project: { _id: 0, title: '$title'}}\n])\n",
+          "definition": "",
           "description": "",
           "hide": "dontHide",
           "includeAll": false,
@@ -1370,7 +1370,7 @@
             "spec": {
               "collection": "marathon-game-details",
               "queryLanguage": "json",
-              "queryText": "[{\"$project\":{\"_id\":0,\"value\":\"$title\"}}]"
+              "queryText": "[\n  {\"$sort\":{\"releaseDate\":1}},\n  {\"$project\":{\"_id\":0,\"value\":\"$title\"}}\n]"
             },
             "version": "v0"
           },
