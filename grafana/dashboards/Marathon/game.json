@@ -27,7 +27,7 @@
       }
     ],
     "cursorSync": "Off",
-    "description": "",
+    "description": "Show stats for the whole game.",
     "editable": true,
     "elements": {
       "panel-145": {
