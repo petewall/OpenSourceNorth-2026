@@ -1071,8 +1071,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "The Rose",
-            "value": "6"
+            "text": "Arrival",
+            "value": "1"
           },
           "definition": "",
           "hide": "dontHide",
@@ -1140,8 +1140,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Couch Fishing",
-            "value": "5"
+            "text": "",
+            "value": ""
           },
           "definition": "",
           "hide": "hideVariable",
@@ -1174,8 +1174,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Smells Like Napalm, Tastes Like Chicken!",
-            "value": "7"
+            "text": "Bigger Guns Nearby",
+            "value": "2"
           },
           "definition": "",
           "hide": "hideVariable",
