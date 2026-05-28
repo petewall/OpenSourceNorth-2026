@@ -766,7 +766,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "### ← \u003ca href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-selectedLevel=${prevLevelName}\"\u003e${prevLevelName}\u003c/a\u003e",
+                "content": "### ← \u003ca href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-selectedLevel=${prevLevel}\"\u003e${prevLevel:text}\u003c/a\u003e",
                 "mode": "markdown"
               }
             },
@@ -804,7 +804,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "### \u003ca href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-selectedLevel=${nextLevelName}\"\u003e${nextLevelName}\u003c/a\u003e →",
+                "content": "### \u003ca href=\"/d/dffch95jj8xybkc?var-datasource=${datasource}\u0026var-gameName=${gameName}\u0026var-selectedLevel=${nextLevel}\"\u003e${nextLevel:text}\u003c/a\u003e →",
                 "mode": "markdown"
               }
             },
@@ -1071,8 +1071,8 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "Arrival",
-            "value": "1"
+            "text": "Bigger Guns Nearby",
+            "value": "2"
           },
           "definition": "",
           "hide": "dontHide",
@@ -1143,7 +1143,7 @@
             "text": "",
             "value": ""
           },
-          "definition": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$subtract\":[{\"$toInt\":\"${selectedLevel:text}\"},2]}]}}},{\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}])",
+          "definition": "",
           "hide": "hideVariable",
           "includeAll": false,
           "multi": false,
@@ -1174,14 +1174,14 @@
         "spec": {
           "allowCustomValue": false,
           "current": {
-            "text": "2",
-            "value": "Bigger Guns Nearby"
+            "text": "Arrival",
+            "value": "1"
           },
-          "definition": "marathon-game-data.marathon-game-details.aggregate([{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$toInt\":\"${selectedLevel:text}\"}]}}},{\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}])",
+          "definition": "",
           "hide": "hideVariable",
           "includeAll": false,
           "multi": false,
-          "name": "nextLevelName",
+          "name": "prevLevel",
           "options": [],
           "query": {
             "datasource": {
@@ -1192,7 +1192,41 @@
             "spec": {
               "collection": "marathon-game-details",
               "queryLanguage": "json",
-              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$toInt\":\"${selectedLevel:text}\"}]}}},{\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}]"
+              "queryText": "[\n  {\"$match\":{\"title\":\"${gameName}\"}},\n  {\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},\n  {\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$subtract\":[{\"$toInt\":\"${selectedLevel}\"},2]}]}}},\n  {\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}\n  ]"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": false,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": "Never Burn Money",
+            "value": "3"
+          },
+          "definition": "",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "multi": false,
+          "name": "nextLevel",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "${datasource}"
+            },
+            "group": "haohanyang-mongodb-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "collection": "marathon-game-details",
+              "queryLanguage": "json",
+              "queryText": "[{\"$match\":{\"title\":\"${gameName}\"}},\n{\"$unwind\":{\"path\":\"$levels\",\"includeArrayIndex\":\"levelIndex\"}},\n{\"$match\":{\"$expr\":{\"$eq\":[\"$levelIndex\",{\"$toInt\":\"${selectedLevel}\"}]}}},\n{\"$project\":{\"_id\":0,\"text\":\"$levels.title\",\"value\":{\"$toString\":{\"$add\":[\"$levelIndex\",1]}}}}\n]"
             },
             "version": "v0"
           },
