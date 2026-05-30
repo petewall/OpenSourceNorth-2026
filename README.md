@@ -1,6 +1,6 @@
 # Open Source North 2026
 
-A live demo environment for an Open Source North 2026 talk, in which I demonstrated three dashbaords: showing a full local
+A live demo environment for an Open Source North 2026 talk, in which I demonstrated three dashboards:
 
 * Game statistics for the 1990's game series Marathon
 * A home mortgage burndown dashboard
@@ -8,6 +8,8 @@ A live demo environment for an Open Source North 2026 talk, in which I demonstra
 
 Then, the presentation concludes with using an LLM to generate a dashboard from a [prompt](./dashboard-prompt.txt),
 which is attempting to analyze talk performance against environmental data.
+
+The slides are available here: [Slides.pdf](./Slides.pdf).
 
 ## Stack
 
